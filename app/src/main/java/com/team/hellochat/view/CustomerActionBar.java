@@ -16,8 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.team.ex.chat.R;
-import com.team.ex.chat.interf.OnClickActionBar;
+import com.team.hellochat.R;
+import com.team.hellochat.interf.OnClickActionBar;
 
 import java.net.URL;
 
@@ -61,7 +61,7 @@ public class CustomerActionBar extends LinearLayout {
         LayoutInflater.from(context).inflate(R.layout.customer_action_bar, this);
 
         layout = findViewById(R.id.action_bar_layout);
-        tvTitle = findViewById(R.id.tv_title);
+        tvTitle = findViewById(R.id.bar_title);
         rlLeft = findViewById(R.id.rl_left);
         rlRight = findViewById(R.id.rl_right);
         tvLeft = findViewById(R.id.tv_left);

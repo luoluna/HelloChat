@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_red_point"
+    android:layout_width="wrap_content"
+    android:layout_height="20dp"
+    android:layout_gravity="center"
+    android:background="@drawable/circle_red_point"
+    android:gravity="center"
+    android:singleLine="true"
+    android:text="99+"
+    android:textColor="@android:color/white"
+    android:textSize="13sp" />

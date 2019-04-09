@@ -51,8 +51,7 @@ public class MyApplication extends Application {
     }
 
     // 遍历所有Activity并finish
-    public void destory() {
-//        activitys.clear();
+    public void destroy() {
         for (Object activity : activitys) {
             ((Activity) activity).finish();
         }
