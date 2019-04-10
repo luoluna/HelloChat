@@ -9,25 +9,25 @@ import com.team.hellochat.utils.PreferenceUtil;
  * Created by Sweven on 2019/4/2.
  * Email:sweventears@Foxmail.com
  */
-public class UserSharedManager {
-    private static UserSharedManager instance;
+public class UserManager {
+    private static UserManager instance;
 
     private String user;
     private String loginAccount;
     private String password;
 
-    public static UserSharedManager getInstance() {
+    public static UserManager getInstance() {
         if (instance == null) {
-            synchronized (UserSharedManager.class) {
+            synchronized (UserManager.class) {
                 if (instance == null) {
-                    instance = new UserSharedManager();
+                    instance = new UserManager();
                 }
             }
         }
         return instance;
     }
 
-    public UserSharedManager putData(Activity activity) {
+    public UserManager putData(Activity activity) {
         user = new PreferenceUtil(activity).getString(App.SharedLabel.USER);
         loginAccount = new PreferenceUtil(activity).getString(App.SharedLabel.LOGIN_ACCOUNT);
         password = new PreferenceUtil(activity).getString(App.SharedLabel.PASSWORD);

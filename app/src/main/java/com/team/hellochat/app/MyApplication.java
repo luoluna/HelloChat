@@ -23,10 +23,10 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
         applicationContext = getApplicationContext();
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
-        LeakCanary.install(this);
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            return;
+//        }
+//        LeakCanary.install(this);
     }
 
     public static MyApplication getInstance() {

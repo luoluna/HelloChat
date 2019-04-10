@@ -80,7 +80,7 @@ public class CustomerActionBar extends LinearLayout {
         ivLeft.setVisibility(INVISIBLE);
         ivRight.setVisibility(INVISIBLE);
 
-        layout.setBackgroundColor(Color.parseColor("#000000"));
+        layout.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
         tvLeft.setOnClickListener(this::click);
         tvRight.setOnClickListener(this::click);

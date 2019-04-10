@@ -19,6 +19,7 @@ public class PersonalFragment extends BaseFragment {
 
     private View fragment;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

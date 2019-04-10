@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/action_bar_title_only" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_chat_rooms"
         android:layout_width="match_parent"

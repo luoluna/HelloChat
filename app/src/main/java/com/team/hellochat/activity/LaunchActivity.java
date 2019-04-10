@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.team.hellochat.BaseActivity;
 import com.team.hellochat.MainActivity;
 import com.team.hellochat.R;
+import com.team.hellochat.utils.WindowUtil;
 
 public class LaunchActivity extends BaseActivity {
 
@@ -44,6 +45,7 @@ public class LaunchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
+        WindowUtil.fullScreen(this);
         activity = this;
 
         bindView();

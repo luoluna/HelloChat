@@ -15,13 +15,13 @@
             android:layout_alignParentTop="true"
             android:background="@drawable/background_personal_head">
 
-            <ImageView
-                android:id="@+id/fraa"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/personal_head_picture"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="12dp"
-                android:src="@color/white" />
+                android:src="@mipmap/ic_launcher_round" />
 
             <TextView
                 android:id="@+id/personal_account_name"
@@ -29,8 +29,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="12dp"
-                android:layout_toEndOf="@id/fraa"
-                android:text="呆呆的萌妹子"
+                android:layout_toEndOf="@id/personal_head_picture"
+                android:text="@string/app_name"
                 android:textColor="#f0ffff"
                 android:textSize="@dimen/sp_16"
                 android:textStyle="bold" />

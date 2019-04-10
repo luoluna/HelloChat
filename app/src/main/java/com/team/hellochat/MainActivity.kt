@@ -160,7 +160,7 @@ class MainActivity : BaseActivity() {
             //true直接退出手机界面
             finish()
             moveTaskToBack(true)
-            MyApplication.getInstance().destroy()//销毁所有activity
+            MyApplication.getInstance().remove()//移除所有activity
         } else {
             EXIT = true
             ToastUtil.showError(this, "再按一次退出")

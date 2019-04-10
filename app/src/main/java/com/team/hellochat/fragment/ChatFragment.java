@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.team.hellochat.R;
 import com.team.hellochat.adapter.ChatRoomAdapter;
 import com.team.hellochat.bean.ChatRoom;
+import com.team.hellochat.view.XRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,14 +56,20 @@ public class ChatFragment extends Fragment {
     }
 
     protected void initData() {
-        ChatRoom room = new ChatRoom(0, "https://pic.sogou.com/d?query=%CD%B7%CF%F1&mode=1&st=191&did=11", "顽皮的小猴", "在吗？", 1, 1554106007);
-        list.add(room);
         chatRoomAdapter = new ChatRoomAdapter(getActivity(), list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(chatRoomAdapter);
 
+        getChatList();
+
+    }
+
+    private void getChatList() {
+        ChatRoom room = new ChatRoom(0, "https://pic9.iqiyipic.com/image/20181229/42/a4/p_806_m_601_m7_80_80.jpg", "顽皮的小猴", "在吗？", 1, 1554106007);
+        list.add(room);
+        recyclerView.setAdapter(chatRoomAdapter);
     }
 
 

@@ -1,6 +1,5 @@
 package com.team.hellochat.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -15,12 +14,14 @@ import java.util.Set;
  */
 public class PreferenceUtil {
 
-    private Activity activity;
     private SharedPreferences preferences;
 
-    public PreferenceUtil(Activity activity) {
-        this.activity = activity;
-        preferences = activity.getSharedPreferences(App.SHARED_PREFERENCE, Context.MODE_PRIVATE);
+    public PreferenceUtil(Context context) {
+        preferences = context.getSharedPreferences(App.SHARED_PREFERENCE, Context.MODE_PRIVATE);
+    }
+
+    public PreferenceUtil(Context context, String name) {
+        preferences = context.getSharedPreferences(name, Context.MODE_PRIVATE);
     }
 
     /**

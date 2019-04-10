@@ -15,4 +15,5 @@ public class App {
         public static final String IS_LOGIN = "isLogin";
         public static final String IS_First = "isFirst";
     }
+
 }

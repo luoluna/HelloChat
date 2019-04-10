@@ -124,8 +124,6 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
             @Override
             public void run() {
                 DisplayUtils.showToast(activity, "ViewOutRangeUp");
-                list.remove(position);
-                notifyDataSetChanged();
             }
         });
     }
@@ -140,7 +138,6 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
             @Override
             public void run() {
                 DisplayUtils.showToast(activity, "ViewOut2InRangeUp");
-                notifyDataSetChanged();
             }
         });
     }

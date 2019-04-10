@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HelloChat</string>
+    <string name="app_name">遇见</string>
     <string name="back">back</string>
     <string name="app_tab_chat_list">聊天</string>
     <string name="app_tab_friend">好友</string>
