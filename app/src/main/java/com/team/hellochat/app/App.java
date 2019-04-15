@@ -13,7 +13,8 @@ public class App {
         public static final String PASSWORD = "password";
         public static final String LOGIN_ACCOUNT = "loginAccount";
         public static final String IS_LOGIN = "isLogin";
-        public static final String IS_First = "isFirst";
+        public static final String IS_FIRST = "isFirst";
+        public static final String USER_ID = "uid";
     }
 
 }

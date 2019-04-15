@@ -1,6 +1,7 @@
 package com.team.hellochat.preferences;
 
 import android.app.Activity;
+import android.content.Context;
 
 import com.team.hellochat.app.App;
 import com.team.hellochat.utils.PreferenceUtil;
@@ -12,6 +13,7 @@ import com.team.hellochat.utils.PreferenceUtil;
 public class UserManager {
     private static UserManager instance;
 
+    private int uid;
     private String user;
     private String loginAccount;
     private String password;
@@ -28,10 +30,31 @@ public class UserManager {
     }
 
     public UserManager putData(Activity activity) {
+        uid = new PreferenceUtil(activity).getInt(App.SharedLabel.USER_ID);
         user = new PreferenceUtil(activity).getString(App.SharedLabel.USER);
         loginAccount = new PreferenceUtil(activity).getString(App.SharedLabel.LOGIN_ACCOUNT);
         password = new PreferenceUtil(activity).getString(App.SharedLabel.PASSWORD);
         return this;
+    }
+
+    public void setUid(Context context,int uid) {
+        this.uid = uid;
+    }
+
+    public void setUser(Context context,String user) {
+        this.user = user;
+    }
+
+    public void setLoginAccount(Context context,String loginAccount) {
+        this.loginAccount = loginAccount;
+    }
+
+    public void setPassword(Context context,String password) {
+        this.password = password;
+    }
+
+    public int getUid() {
+        return uid;
     }
 
     public String getUser() {

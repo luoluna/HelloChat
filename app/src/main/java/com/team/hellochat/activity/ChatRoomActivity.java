@@ -13,6 +13,8 @@ import com.team.hellochat.BaseActivity;
 import com.team.hellochat.R;
 import com.team.hellochat.adapter.ChatMessageAdapter;
 import com.team.hellochat.bean.ChatMessage;
+import com.team.hellochat.bean.MessageInfo;
+import com.team.hellochat.bean.MessageType;
 import com.team.hellochat.utils.ToastUtil;
 import com.team.hellochat.view.ChatMessageRecyclerView;
 
@@ -34,7 +36,7 @@ public class ChatRoomActivity extends BaseActivity {
     //center
     private ChatMessageRecyclerView messageRecyclerView;
     private ChatMessageAdapter chatMessageAdapter;
-    private List<ChatMessage> list = new ArrayList<>();
+    private ChatMessage message = new ChatMessage();
 
     //bottom
     private EditText etMessage;
@@ -86,14 +88,19 @@ public class ChatRoomActivity extends BaseActivity {
             putData();
         }
 
-        ChatMessage message = new ChatMessage(0, 1, "", false, "Hello", "飞翔的chat", System.currentTimeMillis());
-        message.setMessage("sf2sd1g32s4d32f1s5r41sa231cfas5e34f2sd1f5sd4f2s1df5s4f12s3d4f1253sd1f23ds4f2ds1f2d47fd");
-        list.add(message);
-        chatMessageAdapter = new ChatMessageAdapter(this, list);
+        List<MessageInfo> list = new ArrayList<>();
+        MessageInfo info = new MessageInfo(3, "ლ(′◉❥◉｀ლ)", "", System.currentTimeMillis() + "", MessageType.TEXT, "[text]你好啊[/text]");
+        list.add(info);
+        list.add(info);
+        message.setId(0);
+        message.setContent("");
+        message.setList(list);
+        chatMessageAdapter = new ChatMessageAdapter(this, message.getList());
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         messageRecyclerView.setLayoutManager(layoutManager);
         messageRecyclerView.setAdapter(chatMessageAdapter);
+        layoutManager.scrollToPositionWithOffset(message.getList().size(), 0);
 
         chatMessageAdapter.setOnSendListener(new ChatMessageAdapter.OnSendListener() {
             @Override

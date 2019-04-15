@@ -2,13 +2,12 @@ package com.team.hellochat.preferences;
 
 import android.content.Context;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team.hellochat.app.App;
 import com.team.hellochat.bean.ChatMessage;
 import com.team.hellochat.utils.PreferenceUtil;
 
-import java.util.List;
+import java.io.IOException;
 
 /**
  * Created by Sweven on 2019/4/2.
@@ -17,7 +16,7 @@ import java.util.List;
 public class MessageManager {
     private static MessageManager instance;
 
-    private List<ChatMessage> list;
+    private ChatMessage messages;
 
     public static MessageManager getInstance() {
         if (instance == null) {
@@ -30,7 +29,7 @@ public class MessageManager {
         return instance;
     }
 
-    public static MessageManager getInstance(Context context, String name) throws JsonProcessingException {
+    public static MessageManager getInstance(Context context, String name) throws IOException {
         if (instance == null) {
             synchronized (MessageManager.class) {
                 if (instance == null) {
@@ -38,7 +37,7 @@ public class MessageManager {
                 }
             }
         }
-//        instance.list = new ObjectMapper().readValues(new PreferenceUtil(context, name).getString(App.SharedLabel.PASSWORD));
+        instance.messages = new ObjectMapper().readValue(new PreferenceUtil(context, name).getString(App.SharedLabel.PASSWORD), ChatMessage.class);
         return instance;
     }
 

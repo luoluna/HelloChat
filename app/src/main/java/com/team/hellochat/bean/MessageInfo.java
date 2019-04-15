@@ -6,6 +6,7 @@ package com.team.hellochat.bean;
  */
 public class MessageInfo {
     private int uid;
+    private String nickname;
     private String headPictureUri;
     private String time;
     private MessageType type;
@@ -14,8 +15,9 @@ public class MessageInfo {
     public MessageInfo() {
     }
 
-    public MessageInfo(int uid, String headPictureUri, String time, MessageType type, String information) {
+    public MessageInfo(int uid, String nickname, String headPictureUri, String time, MessageType type, String information) {
         this.uid = uid;
+        this.nickname = nickname;
         this.headPictureUri = headPictureUri;
         this.time = time;
         this.type = type;
@@ -28,6 +30,14 @@ public class MessageInfo {
 
     public void setUid(int uid) {
         this.uid = uid;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getHeadPictureUri() {

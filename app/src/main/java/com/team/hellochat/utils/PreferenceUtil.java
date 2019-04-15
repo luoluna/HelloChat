@@ -2,6 +2,7 @@ package com.team.hellochat.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 import com.team.hellochat.app.App;
 
@@ -14,14 +15,54 @@ import java.util.Set;
  */
 public class PreferenceUtil {
 
+    private Context context;
     private SharedPreferences preferences;
 
     public PreferenceUtil(Context context) {
-        preferences = context.getSharedPreferences(App.SHARED_PREFERENCE, Context.MODE_PRIVATE);
+        this.context = context;
+        preferences = this.context.getSharedPreferences(App.SHARED_PREFERENCE, Context.MODE_PRIVATE);
     }
 
     public PreferenceUtil(Context context, String name) {
-        preferences = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        this.context = context;
+        preferences = this.context.getSharedPreferences(name, Context.MODE_PRIVATE);
+    }
+
+    private Editor getEditor() {
+        return preferences.edit();
+    }
+
+    /**
+     * save preference
+     *
+     * @param key
+     * @param o
+     */
+    public void save(String key, Object o) {
+        Editor editor = getEditor();
+        if (o instanceof String) {
+            editor.putString(key, (String) o);
+        } else if (o instanceof Integer) {
+            editor.putInt(key, (int) o);
+        } else if (o instanceof Float) {
+            editor.putFloat(key, (float) o);
+        } else if (o instanceof Boolean) {
+            editor.putBoolean(key, (boolean) o);
+        } else if (o instanceof Long) {
+            editor.putLong(key, (long) o);
+        }
+        editor.apply();
+    }
+
+    /**
+     * save preference
+     *
+     * @param key
+     * @param stringSet
+     */
+    public void save(String key, Set<String> stringSet) {
+        Editor editor = getEditor();
+        editor.putStringSet(key, stringSet).apply();
     }
 
     /**

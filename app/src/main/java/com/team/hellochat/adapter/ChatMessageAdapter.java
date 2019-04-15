@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.team.hellochat.R;
 import com.team.hellochat.base.BaseRecyclerAdapter;
-import com.team.hellochat.bean.ChatMessage;
+import com.team.hellochat.bean.MessageInfo;
+import com.team.hellochat.bean.MessageType;
+import com.team.hellochat.preferences.UserManager;
 
 import java.util.List;
 
@@ -21,9 +23,9 @@ import java.util.List;
  * Created by Sweven on 2019/3/31.
  * Email:sweventears@Foxmail.com
  */
-public class ChatMessageAdapter extends BaseRecyclerAdapter {
+public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
 
-    public ChatMessageAdapter(Activity activity, List<ChatMessage> list) {
+    public ChatMessageAdapter(Activity activity, List<MessageInfo> list) {
         super(activity, list);
         this.activity = activity;
         this.list = list;
@@ -34,37 +36,58 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter {
     @Override
     public ChatMessageHoldView onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = inflater.inflate(R.layout.item_list_chat_message, viewGroup, false);
+        switch (i) {
+            case MessageType._TEXT:
+                break;
+            case MessageType._IMAGE:
+                break;
+            case MessageType._VIDEO:
+                break;
+            case MessageType._VOICE:
+                break;
+            case MessageType._CARD:
+                break;
+        }
         return new ChatMessageHoldView(view);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        return list.get(position).getType().getIndex();
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         ChatMessageHoldView hold = (ChatMessageHoldView) viewHolder;
-        ChatMessage message = (ChatMessage) list.get(position);
+        MessageInfo message = list.get(position);
 
-        if (message.isSelf()) {
+        if (message.getUid() == UserManager.getInstance().getUid()) {
             hold.selfChat.setVisibility(View.VISIBLE);
             hold.otherChat.setVisibility(View.GONE);
 
-            hold.selfChatMessage.setText(message.getMessage());
+            hold.selfChatMessage.setText(message.getInformation());
             Glide.with(activity)
-                    .load(message.getHeadPhoto())
+                    .load(message.getHeadPictureUri())
                     .into(hold.selfHeadPhoto);
         } else {
             hold.otherChat.setVisibility(View.VISIBLE);
             hold.selfChat.setVisibility(View.GONE);
 
-            hold.otherChatMessage.setText(message.getMessage());
+            hold.otherChatMessage.setText(message.getInformation());
             Glide.with(activity)
-                    .load(message.getHeadPhoto())
+                    .load(message.getHeadPictureUri())
                     .into(hold.otherHeadPhoto);
 
         }
     }
 
     public void sendSelfMessage(String message) {
-        ChatMessage chatMessage = new ChatMessage(0, 1, "", true, message, "我", System.currentTimeMillis());
-        list.add(chatMessage);
+        MessageInfo info = new MessageInfo();
+        info.setUid(UserManager.getInstance().getUid());
+        info.setType(MessageType.TEXT);
+        info.setInformation(message);
+        list.add(info);
         notifyDataSetChanged();
         if (onSendListener != null) {
             onSendListener.onSuccess(getItemCount());
