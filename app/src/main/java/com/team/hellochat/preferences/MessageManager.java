@@ -29,7 +29,7 @@ public class MessageManager {
         return instance;
     }
 
-    public static MessageManager getInstance(Context context, String name) throws IOException {
+    public static MessageManager getInstance(Context context, String name) {
         if (instance == null) {
             synchronized (MessageManager.class) {
                 if (instance == null) {
@@ -37,7 +37,11 @@ public class MessageManager {
                 }
             }
         }
-        instance.messages = new ObjectMapper().readValue(new PreferenceUtil(context, name).getString(App.SharedLabel.PASSWORD), ChatMessage.class);
+        try {
+            instance.messages = new ObjectMapper().readValue(new PreferenceUtil(context, name).getString(App.SharedLabel.PASSWORD), ChatMessage.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return instance;
     }
 

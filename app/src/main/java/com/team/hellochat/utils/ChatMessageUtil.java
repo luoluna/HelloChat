@@ -29,16 +29,16 @@ public class ChatMessageUtil {
         }, null));
     }
 
-    public String removeTag(String information){
-        int first=information.indexOf("[text]")+1;
-        int end=information.indexOf("[/text]");
+    public String removeTag(String information) {
+        int first = information.indexOf("[text]") + 6;
+        int end = information.indexOf("[/text]");
 
-        return information.substring(first,end);
+        return information.substring(first, end);
     }
 
-    public static void main(String[] arg){
-        ChatMessageUtil util=new ChatMessageUtil();
-        String text="[text]hello[/text]";
+    public static void main(String[] arg) {
+        ChatMessageUtil util = new ChatMessageUtil();
+        String text = "[text]hello[/text]";
         System.out.println(util.removeTag(text));
     }
 }
