@@ -78,7 +78,6 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
             Glide.with(activity)
                     .load(message.getHeadPictureUri())
                     .into(hold.otherHeadPhoto);
-
         }
     }
 

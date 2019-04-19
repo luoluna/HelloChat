@@ -69,6 +69,7 @@ public class ChatFragment extends Fragment {
     private void getChatList() {
         ChatRoom room = new ChatRoom(0, "https://pic9.iqiyipic.com/image/20181229/42/a4/p_806_m_601_m7_80_80.jpg", "顽皮的小猴", "在吗？", 1, 1554106007);
         list.add(room);
+        list.add(room);
         recyclerView.setAdapter(chatRoomAdapter);
     }
 

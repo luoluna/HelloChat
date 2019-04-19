@@ -54,12 +54,12 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
         hold.roomMessage.setText(room.getMessage());
         hold.redPoint.setText(getMessageCount(room.getMessageCount()));
 
-        StickyViewHelper stickyViewHelper = new StickyViewHelper(activity, hold.redPoint, R.layout.red_point);
-        setViewOut2InRangeUp(stickyViewHelper);
-        setViewOutRangeUp(position, stickyViewHelper);
-        setViewInRangeUp(stickyViewHelper);
-        setViewInRangeMove(stickyViewHelper);
-        setViewOutRangeMove(stickyViewHelper);
+//        StickyViewHelper stickyViewHelper = new StickyViewHelper(activity, hold.redPoint, R.layout.red_point);
+//        setViewOut2InRangeUp(stickyViewHelper);
+//        setViewOutRangeUp(position, stickyViewHelper);
+//        setViewInRangeUp(stickyViewHelper);
+//        setViewInRangeMove(stickyViewHelper);
+//        setViewOutRangeMove(stickyViewHelper);
     }
 
     private String getMessageCount(int count) {
@@ -70,77 +70,77 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
         }
     }
 
-    /**
-     * view在范围外移动执行此Runnable
-     *
-     * @param stickyViewHelper
-     */
-    private void setViewOutRangeMove(StickyViewHelper stickyViewHelper) {
-        stickyViewHelper.setViewOutRangeMoveRun(new Runnable() {
-            @Override
-            public void run() {
-                DisplayUtils.showToast(activity, "ViewOutRangeMove");
-            }
-        });
-    }
-
-    /**
-     * view在范围内移动指此此Runnable
-     *
-     * @param stickyViewHelper
-     */
-    private void setViewInRangeMove(StickyViewHelper stickyViewHelper) {
-        stickyViewHelper.setViewInRangeMoveRun(new Runnable() {
-            @Override
-            public void run() {
-                DisplayUtils.showToast(activity, "ViewInRangeMove");
-            }
-        });
-    }
-
-    /**
-     * view没有移出过范围，在范围内松手
-     *
-     * @param stickyViewHelper
-     */
-    private void setViewInRangeUp(StickyViewHelper stickyViewHelper) {
-        stickyViewHelper.setViewInRangeUpRun(new Runnable() {
-            @Override
-            public void run() {
-                DisplayUtils.showToast(activity, "ViewInRangeUp");
-                notifyDataSetChanged();
-            }
-        });
-    }
-
-    /**
-     * view移出范围，最后在范围外松手
-     *
-     * @param position
-     * @param stickyViewHelper
-     */
-    private void setViewOutRangeUp(final int position, StickyViewHelper stickyViewHelper) {
-        stickyViewHelper.setViewOutRangeUpRun(new Runnable() {
-            @Override
-            public void run() {
-                DisplayUtils.showToast(activity, "ViewOutRangeUp");
-            }
-        });
-    }
-
-    /**
-     * view移出过范围，最后在范围内松手执行次Runnable
-     *
-     * @param stickyViewHelper
-     */
-    private void setViewOut2InRangeUp(StickyViewHelper stickyViewHelper) {
-        stickyViewHelper.setViewOut2InRangeUpRun(new Runnable() {
-            @Override
-            public void run() {
-                DisplayUtils.showToast(activity, "ViewOut2InRangeUp");
-            }
-        });
-    }
+//    /**
+//     * view在范围外移动执行此Runnable
+//     *
+//     * @param stickyViewHelper
+//     */
+//    private void setViewOutRangeMove(StickyViewHelper stickyViewHelper) {
+//        stickyViewHelper.setViewOutRangeMoveRun(new Runnable() {
+//            @Override
+//            public void run() {
+//                DisplayUtils.showToast(activity, "ViewOutRangeMove");
+//            }
+//        });
+//    }
+//
+//    /**
+//     * view在范围内移动指此此Runnable
+//     *
+//     * @param stickyViewHelper
+//     */
+//    private void setViewInRangeMove(StickyViewHelper stickyViewHelper) {
+//        stickyViewHelper.setViewInRangeMoveRun(new Runnable() {
+//            @Override
+//            public void run() {
+//                DisplayUtils.showToast(activity, "ViewInRangeMove");
+//            }
+//        });
+//    }
+//
+//    /**
+//     * view没有移出过范围，在范围内松手
+//     *
+//     * @param stickyViewHelper
+//     */
+//    private void setViewInRangeUp(StickyViewHelper stickyViewHelper) {
+//        stickyViewHelper.setViewInRangeUpRun(new Runnable() {
+//            @Override
+//            public void run() {
+//                DisplayUtils.showToast(activity, "ViewInRangeUp");
+//                notifyDataSetChanged();
+//            }
+//        });
+//    }
+//
+//    /**
+//     * view移出范围，最后在范围外松手
+//     *
+//     * @param position
+//     * @param stickyViewHelper
+//     */
+//    private void setViewOutRangeUp(final int position, StickyViewHelper stickyViewHelper) {
+//        stickyViewHelper.setViewOutRangeUpRun(new Runnable() {
+//            @Override
+//            public void run() {
+//                DisplayUtils.showToast(activity, "ViewOutRangeUp");
+//            }
+//        });
+//    }
+//
+//    /**
+//     * view移出过范围，最后在范围内松手执行次Runnable
+//     *
+//     * @param stickyViewHelper
+//     */
+//    private void setViewOut2InRangeUp(StickyViewHelper stickyViewHelper) {
+//        stickyViewHelper.setViewOut2InRangeUpRun(new Runnable() {
+//            @Override
+//            public void run() {
+//                DisplayUtils.showToast(activity, "ViewOut2InRangeUp");
+//            }
+//        });
+//    }
 
     @Override
     public int getItemCount() {
@@ -173,6 +173,8 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
             intent.putExtra("type", room.isGroup());
             intent.putExtra("message", room.getMessage());
             activity.startActivity(intent);
+            redPoint.setText(getMessageCount(0));
+            redPoint.setVisibility(View.GONE);
         }
     }
 }

@@ -10,6 +10,7 @@ public class ChatRoom {
     private String iconUri;
     private String title;
     private String message;
+    // 未读消息数
     private int messageCount;
     private long putTime;
 
