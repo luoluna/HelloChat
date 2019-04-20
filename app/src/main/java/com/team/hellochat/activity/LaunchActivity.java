@@ -67,4 +67,14 @@ public class LaunchActivity extends BaseActivity {
         super.onStart();
         handler.postDelayed(runnable, 1000);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

@@ -1,17 +1,19 @@
 package com.team.hellochat
 
+import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.team.hellochat.utils.LogUtil
-import com.team.hellochat.utils.ToastUtil
+import com.umeng.analytics.MobclickAgent
+import com.umeng.commonsdk.UMConfigure
 
 /**
  * Created by Sweven on 2019/3/23.
  * Email:sweventears@Foxmail.com
  */
+@SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity(), View.OnClickListener {
 
     var log: LogUtil? = null
@@ -21,6 +23,9 @@ open class BaseActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         log = LogUtil(application.packageName)
+
+        UMConfigure.setLogEnabled(true)
+        UMConfigure.setEncryptEnabled(true)
     }
 
     fun isRunningForeground(): Boolean {
@@ -45,6 +50,16 @@ open class BaseActivity : AppCompatActivity(), View.OnClickListener {
         if (isCurrentRunningForeground) {
 
         }
+    }
+
+    override fun onResume() {
+        MobclickAgent.onResume(this)
+        super.onResume()
+    }
+
+    override fun onPause() {
+        MobclickAgent.onPause(this)
+        super.onPause()
     }
 
 }

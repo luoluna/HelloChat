@@ -131,6 +131,7 @@ public class ChatRoomActivity extends BaseActivity {
 
     @Override
     public void onClick(@Nullable View v) {
+        assert v != null;
         switch (v.getId()) {
             case R.id.bar_back:
                 finish();
@@ -148,5 +149,15 @@ public class ChatRoomActivity extends BaseActivity {
             case R.id.message_voice:
                 break;
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

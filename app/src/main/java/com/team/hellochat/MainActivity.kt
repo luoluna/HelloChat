@@ -175,4 +175,12 @@ class MainActivity : BaseActivity() {
             timer.schedule(task, 1500)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+    }
 }
