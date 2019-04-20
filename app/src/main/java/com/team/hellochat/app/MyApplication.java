@@ -3,9 +3,9 @@ package com.team.hellochat.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.widget.TextView;
 
-import com.squareup.leakcanary.LeakCanary;
+import com.team.hellochat.utils.FacilityUtil;
+import com.team.hellochat.utils.MD5Util;
 import com.umeng.commonsdk.UMConfigure;
 
 import java.util.ArrayList;
@@ -26,7 +26,9 @@ public class MyApplication extends Application {
         instance = this;
         applicationContext = getApplicationContext();
 
-        UMConfigure.init(this, "5cba84070cafb2b132000337", "OuYu", UMConfigure.DEVICE_TYPE_PHONE, null);
+        UMConfigure.init(this, App.UM_APP_ID,
+                "OuYu", UMConfigure.DEVICE_TYPE_PHONE,
+                MD5Util.getMD5(FacilityUtil.getAndroidID(this)));
 
     }
 
