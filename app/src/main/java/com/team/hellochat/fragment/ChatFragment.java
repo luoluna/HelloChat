@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.team.hellochat.R;
 import com.team.hellochat.adapter.ChatRoomAdapter;
 import com.team.hellochat.bean.ChatRoom;
+import com.team.hellochat.utils.WindowUtil;
 import com.team.hellochat.view.XRecyclerView;
 
 import java.util.ArrayList;
@@ -40,8 +41,6 @@ public class ChatFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.appColor));
-        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
     }
 
     @Override

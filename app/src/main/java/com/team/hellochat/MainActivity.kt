@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.KeyEvent
 import com.team.hellochat.app.MyApplication
+import com.team.hellochat.fragment.ChatFragment
 import com.team.hellochat.fragment.DiscoveryFragment
 import com.team.hellochat.fragment.FriendFragment
-import com.team.hellochat.fragment.ChatFragment
 import com.team.hellochat.fragment.PersonalFragment
 import com.team.hellochat.utils.ToastUtil
+import com.team.hellochat.utils.WindowUtil
 import kotlinx.android.synthetic.main.tab_bottom_bar.*
 import java.util.*
 
@@ -32,6 +33,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        WindowUtil.setWhiteFontBar(this, resources.getColor(R.color.appColor))
 
         if (savedInstanceState != null) {
             currentIndex = savedInstanceState.getInt(CURRENT_FRAGMENT, 0)

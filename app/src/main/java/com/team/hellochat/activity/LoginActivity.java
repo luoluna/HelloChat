@@ -54,6 +54,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             } else if (msg.what == SUCCESS) {
                 LogInManager.getInstance().setLog(getApplicationContext(),true);
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
             } else if (msg.what == FAILS) {
                 toast.showError("用户名或密码错误");
             }
