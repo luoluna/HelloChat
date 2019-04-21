@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.team.hellochat.manager.AddressBookManager;
+import com.team.hellochat.manager.LogInManager;
+import com.team.hellochat.manager.SettingManager;
+import com.team.hellochat.manager.UserManager;
 import com.team.hellochat.utils.FacilityUtil;
 import com.team.hellochat.utils.MD5Util;
 import com.umeng.commonsdk.UMConfigure;
@@ -29,6 +33,12 @@ public class MyApplication extends Application {
         UMConfigure.init(this, App.UM_APP_ID,
                 "OuYu", UMConfigure.DEVICE_TYPE_PHONE,
                 MD5Util.getMD5(FacilityUtil.getAndroidID(this)));
+
+        // 初始化单例管理器
+        AddressBookManager.getInstance(this);
+        LogInManager.getInstance(this);
+        SettingManager.getInstance(this);
+        UserManager.getInstance(this);
 
     }
 

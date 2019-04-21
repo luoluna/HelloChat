@@ -7,15 +7,15 @@ import java.util.List;
  * Email:sweventears@Foxmail.com
  */
 public class AddressBook {
-    private int id;
+    private Integer id;
     private List<Friend> friends;
     private List<DiscussionGroup> groups;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

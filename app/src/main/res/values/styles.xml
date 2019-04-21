@@ -9,4 +9,14 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="loading">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:backgroundDimEnabled">false</item> <!-- 模糊 -->
+        <item name="android:windowIsFloating">true</item><!-- 类似windows的弹出Dialog -->
+        <item name="android:windowContentOverlay">@null</item><!-- 不要头部阴影 -->
+        <item name="android:windowBackground">@color/transparent</item><!-- 背景颜色设置透明-->
+    </style>
 </resources>

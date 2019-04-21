@@ -16,4 +16,10 @@
     <string name="forget_password">忘记密码？</string>
     <string name="register_text">注册新用户</string>
     <string name="send">发送</string>
+    <string name="text_loading">加载中 ……</string>
+    <string name="jsonError">json异常</string>
+    <string name="passNotMatch">两次密码不一致</string>
+    <string name="phoneError">电话号码不正确</string>
+    <string name="signIn">注册中……</string>
+    <string name="nicknameNotEmpty">昵称不能为空</string>
 </resources>

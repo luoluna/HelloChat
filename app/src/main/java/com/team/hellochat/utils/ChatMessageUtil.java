@@ -39,6 +39,7 @@ public class ChatMessageUtil {
     public static void main(String[] arg) {
         ChatMessageUtil util = new ChatMessageUtil();
         String text = "[text]hello[/text]";
+
         System.out.println(util.removeTag(text));
     }
 }

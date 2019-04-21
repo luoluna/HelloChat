@@ -1,5 +1,6 @@
 package com.team.hellochat.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
 public class ChatMessage {
     private int id;
     private String content;
-    private List<MessageInfo> list;
+    private List<MessageInfo> list=new ArrayList<>();
 
     public ChatMessage() {
     }

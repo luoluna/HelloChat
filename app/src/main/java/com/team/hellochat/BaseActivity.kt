@@ -14,7 +14,7 @@ import com.umeng.commonsdk.UMConfigure
  * Email:sweventears@Foxmail.com
  */
 @SuppressLint("Registered")
-open class BaseActivity : AppCompatActivity(), View.OnClickListener {
+open class BaseActivity : AppCompatActivity() {
 
     var log: LogUtil? = null
 
@@ -41,8 +41,6 @@ open class BaseActivity : AppCompatActivity(), View.OnClickListener {
         }
         return false
     }
-
-    override fun onClick(v: View?) {}
 
     override fun onStop() {
         super.onStop()

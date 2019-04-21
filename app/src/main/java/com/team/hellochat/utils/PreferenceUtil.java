@@ -28,7 +28,7 @@ public class PreferenceUtil {
         preferences = this.context.getSharedPreferences(name, Context.MODE_PRIVATE);
     }
 
-    private Editor getEditor() {
+    public Editor getEditor() {
         return preferences.edit();
     }
 

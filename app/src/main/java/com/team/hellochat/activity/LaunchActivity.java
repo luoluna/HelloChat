@@ -5,36 +5,47 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.team.hellochat.BaseActivity;
 import com.team.hellochat.MainActivity;
 import com.team.hellochat.R;
+import com.team.hellochat.manager.LogInManager;
 import com.team.hellochat.utils.WindowUtil;
 
 public class LaunchActivity extends BaseActivity {
 
-    @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler();
+    private final static long TIME = 3000;
 
-    private Runnable runnable = new Runnable() {
-        @SuppressLint("SetTextI18n")
+    private static final int COUNTDOWN = 0x01;
+    private static final int FINISH = 0x03;
+
+    private long countdown = TIME;
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
         @Override
-        public void run() {
-            countdown = countdown - 1000;
-            appText.setText(countdown / 1000 + "");
-            if (countdown > 0) {
-                handler.postDelayed(this, 1000);
-            } else {
-                startActivity(new Intent(activity, MainActivity.class));
+        public void handleMessage(Message msg) {
+            if (msg.what == COUNTDOWN) {
+                if (countdown <= 0) {
+                    handler.sendEmptyMessage(FINISH);
+                } else {
+                    countdown = countdown - 1000;
+                    handler.sendEmptyMessageDelayed(COUNTDOWN, 1000);
+                }
+            } else if (msg.what == FINISH) {
+                if (!LogInManager.getInstance().isLogin()) {
+                    startActivity(new Intent(activity, LoginActivity.class));
+                } else {
+                    startActivity(new Intent(activity, MainActivity .class));
+                }
                 finish();
             }
         }
     };
 
-    private final static long TIME = 3000;
-    private long countdown = TIME;
 
     private Activity activity;
 
@@ -48,24 +59,18 @@ public class LaunchActivity extends BaseActivity {
         WindowUtil.fullScreen(this);
         activity = this;
 
-        bindView();
-        initData();
+        init();
     }
 
-    private void bindView() {
+    private void init() {
         appIcon = findViewById(R.id.app_launch_icon);
         appText = findViewById(R.id.app_launch_tv);
-    }
-
-    @SuppressLint("SetTextI18n")
-    private void initData() {
-        appText.setText(countdown / 1000 + "");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        handler.postDelayed(runnable, 1000);
+        handler.sendEmptyMessage(COUNTDOWN);
     }
 
     @Override

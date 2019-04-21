@@ -44,19 +44,19 @@
                         tools:ignore="HardcodedText" />
 
                     <EditText
-                        android:id="@+id/input_user_name"
+                        android:id="@+id/input_user"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:layout_marginTop="10dp"
                         android:background="#F2F2F2"
-                        android:hint="请输入用户名"
+                        android:hint="请输入昵称"
                         android:imeOptions="actionNext"
                         android:inputType="text"
                         android:left="10dp"
                         android:lines="1"
                         android:maxLength="16"
                         android:paddingStart="@dimen/dp_8"
-                        android:textColor="#F2F2F2"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:top="110dp"
                         tools:ignore="Autofill,HardcodedText,RtlSymmetry" />
@@ -90,9 +90,9 @@
                         android:inputType="phone"
                         android:left="10dp"
                         android:lines="1"
-                        android:maxLength="11"
+                        android:maxLength="13"
                         android:paddingStart="@dimen/dp_8"
-                        android:textColor="#F2F2F2"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:top="110dp"
                         tools:ignore="Autofill,HardcodedText,RtlSymmetry" />
@@ -129,7 +129,7 @@
                         android:maxLength="22"
                         android:minLines="8"
                         android:paddingStart="@dimen/dp_8"
-                        android:textColor="#F2F2F2"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:top="110dp"
                         tools:ignore="Autofill,HardcodedText,RtlSymmetry" />
@@ -159,14 +159,14 @@
                         android:layout_marginTop="10dp"
                         android:background="#F2F2F2"
                         android:hint="请在次输入密码"
-                        android:imeOptions="actionNext"
+                        android:imeOptions="actionDone"
                         android:inputType="textPassword"
                         android:left="10dp"
                         android:lines="1"
                         android:maxLength="22"
                         android:minLines="8"
                         android:paddingStart="@dimen/dp_8"
-                        android:textColor="#F2F2F2"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:top="110dp"
                         tools:ignore="Autofill,HardcodedText,RtlSymmetry" />
@@ -182,11 +182,14 @@
             </LinearLayout>
 
             <TextView
-                android:layout_width="355dp"
+                android:id="@+id/tv_sure_register"
+                android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_below="@id/ll_input"
                 android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/dp_20"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/dp_20"
                 android:background="#FFF76968"
                 android:fontFamily="Roboto"
                 android:gravity="center"

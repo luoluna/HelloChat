@@ -15,7 +15,7 @@ import com.team.hellochat.R;
 import com.team.hellochat.base.BaseRecyclerAdapter;
 import com.team.hellochat.bean.MessageInfo;
 import com.team.hellochat.bean.MessageType;
-import com.team.hellochat.preferences.UserManager;
+import com.team.hellochat.manager.UserManager;
 
 import java.util.List;
 

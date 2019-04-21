@@ -27,7 +27,7 @@ import java.util.List;
  * Created by Sweven on 2019/3/31.
  * Email:sweventears@Foxmail.com
  */
-public class ChatRoomActivity extends BaseActivity {
+public class ChatRoomActivity extends BaseActivity implements View.OnClickListener {
     //top
     private ImageView back;
     private TextView title;

@@ -5,18 +5,18 @@ package com.team.hellochat.bean;
  * Email:sweventears@Foxmail.com
  */
 public class Friend {
-    private int fid;
+    private Integer uid;
     private String group;
     private String nickname;
     private String imageUri;
     private String msg;
 
-    public int getFid() {
-        return fid;
+    public Integer getUid() {
+        return uid;
     }
 
-    public void setFid(int fid) {
-        this.fid = fid;
+    public void setUid(Integer uid) {
+        this.uid = uid;
     }
 
     public String getNickname() {

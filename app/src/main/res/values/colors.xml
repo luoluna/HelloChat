@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#F64D42</color><!--D81B60-->
 
     <color name="ivory">#FFFFF0</color><!--象牙色 -->
     <color name="lightyellow">#FFFFE0</color><!--亮黄色 -->
@@ -148,6 +148,7 @@
     <color name="navy">#000080</color><!--海军色 -->
 
     <!--new customer-->
+    <color name="transparent">#00000000</color>
     <color name="black">#000000</color><!--黑色 -->
     <color name="white">#FFFFFF</color><!--白色 -->
     <color name="appColor">#fff87870</color>
