@@ -21,6 +21,14 @@ public class App {
         public static final String MESSAGE_INFO = "message_info";
         public static final String LOG_NAME = "log_name";
         public static final String TOKEN = "token";
+        public static final String CHAT_ROOM_LIST = "chat_room_list";
     }
 
+    public class IntentLabel {
+        public static final String MESSAGE_TYPE = "message_type";
+        public static final String MESSAGE_INFO = "message_info";
+        public static final String MESSAGE_FILE = "message_file";
+        public static final String CHAT_ROOM_TYPE = "chat_room_type";
+        public static final String CHAT_ROOM_TITLE = "chat_room_title";
+    }
 }

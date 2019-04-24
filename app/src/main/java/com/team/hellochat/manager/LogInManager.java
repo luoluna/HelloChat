@@ -48,10 +48,12 @@ public class LogInManager {
 
     public void setToken(Context context, String token) {
         this.token = token;
+        save(context);
     }
 
     public void setLog(Context context, boolean log) {
         isLogin = log;
+        save(context);
     }
 
     private void save(Context context) {

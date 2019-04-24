@@ -18,7 +18,8 @@ public class LoadingDialog extends Dialog {
     private TextView tvLoading;
 
     public LoadingDialog(@NonNull Context context) {
-        this(context, R.style.loading);
+        super(context);
+//        this(context, R.style.loading);
     }
 
     public LoadingDialog(@NonNull Context context, int themeResId) {

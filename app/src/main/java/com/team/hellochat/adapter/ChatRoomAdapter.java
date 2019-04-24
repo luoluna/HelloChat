@@ -2,6 +2,7 @@ package com.team.hellochat.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,13 +13,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.team.hellochat.R;
-import com.team.hellochat.activity.ChatRoomActivity;
+import com.team.hellochat.activity.ChatRoomMessageActivity;
+import com.team.hellochat.app.App;
 import com.team.hellochat.bean.ChatRoom;
+import com.team.hellochat.bean.MessageInfo;
+import com.team.hellochat.bean.MessageType;
 import com.team.hellochat.utils.DateUtil;
-import com.team.hellochat.utils.DisplayUtils;
-import com.team.hellochat.view.StickyViewHelper;
 
 import java.util.List;
+
+import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TYPE;
+import static com.team.hellochat.app.App.IntentLabel.MESSAGE_FILE;
 
 /**
  * Created by Sweven on 2019/4/1.
@@ -51,15 +56,13 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
                 .into(hold.roomIcon);
         hold.roomTitle.setText(room.getTitle());
         hold.roomTime.setText(DateUtil.getDateString(room.getPutTime()));
-        hold.roomMessage.setText(room.getMessage());
+
+        if (room.getMessage().getList().size() > 0) {
+            MessageInfo info = room.getMessage().getList().get(0);
+            hold.roomMessage.setText(info.getType() == MessageType.TEXT ? info.getInformation() : info.getType().getName());
+        }
         hold.redPoint.setText(getMessageCount(room.getMessageCount()));
 
-//        StickyViewHelper stickyViewHelper = new StickyViewHelper(activity, hold.redPoint, R.layout.red_point);
-//        setViewOut2InRangeUp(stickyViewHelper);
-//        setViewOutRangeUp(position, stickyViewHelper);
-//        setViewInRangeUp(stickyViewHelper);
-//        setViewInRangeMove(stickyViewHelper);
-//        setViewOutRangeMove(stickyViewHelper);
     }
 
     private String getMessageCount(int count) {
@@ -69,78 +72,6 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
             return "99+";
         }
     }
-
-//    /**
-//     * view在范围外移动执行此Runnable
-//     *
-//     * @param stickyViewHelper
-//     */
-//    private void setViewOutRangeMove(StickyViewHelper stickyViewHelper) {
-//        stickyViewHelper.setViewOutRangeMoveRun(new Runnable() {
-//            @Override
-//            public void run() {
-//                DisplayUtils.showToast(activity, "ViewOutRangeMove");
-//            }
-//        });
-//    }
-//
-//    /**
-//     * view在范围内移动指此此Runnable
-//     *
-//     * @param stickyViewHelper
-//     */
-//    private void setViewInRangeMove(StickyViewHelper stickyViewHelper) {
-//        stickyViewHelper.setViewInRangeMoveRun(new Runnable() {
-//            @Override
-//            public void run() {
-//                DisplayUtils.showToast(activity, "ViewInRangeMove");
-//            }
-//        });
-//    }
-//
-//    /**
-//     * view没有移出过范围，在范围内松手
-//     *
-//     * @param stickyViewHelper
-//     */
-//    private void setViewInRangeUp(StickyViewHelper stickyViewHelper) {
-//        stickyViewHelper.setViewInRangeUpRun(new Runnable() {
-//            @Override
-//            public void run() {
-//                DisplayUtils.showToast(activity, "ViewInRangeUp");
-//                notifyDataSetChanged();
-//            }
-//        });
-//    }
-//
-//    /**
-//     * view移出范围，最后在范围外松手
-//     *
-//     * @param position
-//     * @param stickyViewHelper
-//     */
-//    private void setViewOutRangeUp(final int position, StickyViewHelper stickyViewHelper) {
-//        stickyViewHelper.setViewOutRangeUpRun(new Runnable() {
-//            @Override
-//            public void run() {
-//                DisplayUtils.showToast(activity, "ViewOutRangeUp");
-//            }
-//        });
-//    }
-//
-//    /**
-//     * view移出过范围，最后在范围内松手执行次Runnable
-//     *
-//     * @param stickyViewHelper
-//     */
-//    private void setViewOut2InRangeUp(StickyViewHelper stickyViewHelper) {
-//        stickyViewHelper.setViewOut2InRangeUpRun(new Runnable() {
-//            @Override
-//            public void run() {
-//                DisplayUtils.showToast(activity, "ViewOut2InRangeUp");
-//            }
-//        });
-//    }
 
     @Override
     public int getItemCount() {
@@ -169,12 +100,19 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
         @Override
         public void onClick(View v) {
             ChatRoom room = list.get(getAdapterPosition());
-            Intent intent = new Intent(activity, ChatRoomActivity.class);
-            intent.putExtra("type", room.isGroup());
-            intent.putExtra("message", room.getMessage());
+            Intent intent = new Intent(activity, ChatRoomMessageActivity.class);
+            intent.putExtra(CHAT_ROOM_TYPE, room.isGroup());
+            intent.putExtra(MESSAGE_FILE, room.getMessage().getName());
+            intent.putExtra(App.IntentLabel.CHAT_ROOM_TITLE,room.getTitle());
             activity.startActivity(intent);
-            redPoint.setText(getMessageCount(0));
-            redPoint.setVisibility(View.GONE);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    redPoint.setText(getMessageCount(0));
+                    redPoint.setVisibility(View.GONE);
+                }
+            }, 1000);
+
         }
     }
 }

@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.team.hellochat.manager.AddressBookManager;
+import com.team.hellochat.manager.ChatRoomListManager;
 import com.team.hellochat.manager.LogInManager;
 import com.team.hellochat.manager.SettingManager;
 import com.team.hellochat.manager.UserManager;
@@ -39,7 +40,7 @@ public class MyApplication extends Application {
         LogInManager.getInstance(this);
         SettingManager.getInstance(this);
         UserManager.getInstance(this);
-
+        ChatRoomListManager.getInstance(this);
     }
 
     public static MyApplication getInstance() {

@@ -23,7 +23,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".activity.ForgetPassActivity"></activity>
+        <activity android:name=".activity.LookMessageActivity"></activity>
+        <activity android:name=".activity.ForgetPassActivity" />
         <activity android:name=".activity.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +35,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.ChatRoomActivity" />
+        <activity android:name=".activity.ChatRoomMessageActivity" />
     </application>
 
 </manifest>

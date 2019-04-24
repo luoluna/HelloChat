@@ -39,6 +39,7 @@ public class MessageManager {
         }
         instance.name = name;
         instance.messages = JsonUtil.jsonToObject(new PreferenceUtil(context, instance.name).getString(App.SharedLabel.MESSAGE_INFO), new ChatMessage());
+        instance.messages.setName(instance.name);
         return instance;
     }
 

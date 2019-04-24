@@ -33,7 +33,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        WindowUtil.setWhiteFontBar(this, resources.getColor(R.color.appColor))
+//        WindowUtil.setWhiteFontBar(this, resources.getColor(R.color.appColor))
 
         if (savedInstanceState != null) {
             currentIndex = savedInstanceState.getInt(CURRENT_FRAGMENT, 0)

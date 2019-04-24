@@ -8,14 +8,15 @@ public class MessageInfo {
     private int uid;
     private String nickname;
     private String headPictureUri;
-    private String time;
+    private long time;
     private MessageType type;
     private String information;
+    private boolean isRead;
 
     public MessageInfo() {
     }
 
-    public MessageInfo(int uid, String nickname, String headPictureUri, String time, MessageType type, String information) {
+    public MessageInfo(int uid, String nickname, String headPictureUri, long time, MessageType type, String information) {
         this.uid = uid;
         this.nickname = nickname;
         this.headPictureUri = headPictureUri;
@@ -48,11 +49,11 @@ public class MessageInfo {
         this.headPictureUri = headPictureUri;
     }
 
-    public String getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
@@ -70,6 +71,14 @@ public class MessageInfo {
 
     public void setInformation(String information) {
         this.information = information;
+    }
+
+    public boolean isRead() {
+        return isRead;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
     }
 
     @Override

@@ -14,7 +14,7 @@ import com.team.hellochat.R;
 import com.team.hellochat.adapter.ChatMessageAdapter;
 import com.team.hellochat.bean.ChatMessage;
 import com.team.hellochat.bean.MessageInfo;
-import com.team.hellochat.bean.MessageType;
+import com.team.hellochat.manager.MessageManager;
 import com.team.hellochat.utils.ToastUtil;
 import com.team.hellochat.view.ChatMessageRecyclerView;
 
@@ -23,11 +23,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TITLE;
+import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TYPE;
+import static com.team.hellochat.app.App.IntentLabel.MESSAGE_FILE;
+
 /**
  * Created by Sweven on 2019/3/31.
  * Email:sweventears@Foxmail.com
  */
-public class ChatRoomActivity extends BaseActivity implements View.OnClickListener {
+public class ChatRoomMessageActivity extends BaseActivity implements View.OnClickListener {
     //top
     private ImageView back;
     private TextView title;
@@ -37,6 +41,7 @@ public class ChatRoomActivity extends BaseActivity implements View.OnClickListen
     private ChatMessageRecyclerView messageRecyclerView;
     private ChatMessageAdapter chatMessageAdapter;
     private ChatMessage message = new ChatMessage();
+    private LinearLayoutManager layoutManager;
 
     //bottom
     private EditText etMessage;
@@ -50,13 +55,15 @@ public class ChatRoomActivity extends BaseActivity implements View.OnClickListen
 
     //data
     private boolean isGroup;
-    private String tip;
+    private String file;
+    private String topTitle;
+    private List<MessageInfo> list = new ArrayList<>();
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_room);
+        setContentView(R.layout.activity_chat_room_message);
 
         bindView();
         initData();
@@ -83,24 +90,25 @@ public class ChatRoomActivity extends BaseActivity implements View.OnClickListen
     private void initData() {
         Intent intent = getIntent();
         if (intent != null) {
-            isGroup = intent.getBooleanExtra("type", false);
-            tip = intent.getStringExtra("title");
+            isGroup = intent.getBooleanExtra(CHAT_ROOM_TYPE, false);
+            file = intent.getStringExtra(MESSAGE_FILE);
+            topTitle = intent.getStringExtra(CHAT_ROOM_TITLE);
             putData();
         }
 
-        List<MessageInfo> list = new ArrayList<>();
-        MessageInfo info = new MessageInfo(3, "ლ(′◉❥◉｀ლ)", "", System.currentTimeMillis() + "", MessageType.TEXT, "[text]你好啊[/text]");
-        list.add(info);
-        list.add(info);
-        message.setId(0);
-        message.setContent("");
-        message.setList(list);
+//        List<MessageInfo> list = new ArrayList<>();
+//        MessageInfo info = new MessageInfo(3, "ლ(′◉❥◉｀ლ)", "https://avatar.csdn.net/6/2/C/3_qq_37160247.jpg", System.currentTimeMillis() + "", MessageType.TEXT, "你好啊");
+//        list.add(info);
+//        list.add(info);
+//        message.setId(0);
+//        message.setContent("");
+//        message.setList(list);
         chatMessageAdapter = new ChatMessageAdapter(this, message.getList());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         messageRecyclerView.setLayoutManager(layoutManager);
         messageRecyclerView.setAdapter(chatMessageAdapter);
-        layoutManager.scrollToPositionWithOffset(message.getList().size(), 0);
+
 
         chatMessageAdapter.setOnSendListener(new ChatMessageAdapter.OnSendListener() {
             @Override
@@ -125,8 +133,12 @@ public class ChatRoomActivity extends BaseActivity implements View.OnClickListen
 
     private void putData() {
 
-        title.setText(tip);
+        title.setText(topTitle);
         more.setImageResource(isGroup ? R.drawable.ic_chat_group_more : R.drawable.ic_chat_room_more);
+
+        message = MessageManager.getInstance(this, file).getMessages();
+        messageRecyclerView.setAdapter(chatMessageAdapter);
+        layoutManager.scrollToPositionWithOffset(message.getList().size() - 1, 0);
     }
 
     @Override
@@ -137,6 +149,11 @@ public class ChatRoomActivity extends BaseActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.bar_more:
+                if (isGroup) {
+                    //TODO get group information
+                } else {
+                    //TODO get people information
+                }
                 break;
             case R.id.btn_send_message:
                 String message = etMessage.getText().toString();

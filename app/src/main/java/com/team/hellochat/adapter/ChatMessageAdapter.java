@@ -1,6 +1,7 @@
 package com.team.hellochat.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,16 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.team.hellochat.R;
+import com.team.hellochat.activity.LookMessageActivity;
 import com.team.hellochat.base.BaseRecyclerAdapter;
 import com.team.hellochat.bean.MessageInfo;
 import com.team.hellochat.bean.MessageType;
 import com.team.hellochat.manager.UserManager;
+import com.team.hellochat.view.MessageView;
 
 import java.util.List;
+
+import static com.team.hellochat.app.App.IntentLabel.MESSAGE_INFO;
+import static com.team.hellochat.app.App.IntentLabel.MESSAGE_TYPE;
 
 /**
  * Created by Sweven on 2019/3/31.
@@ -66,7 +71,7 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
             hold.selfChat.setVisibility(View.VISIBLE);
             hold.otherChat.setVisibility(View.GONE);
 
-            hold.selfChatMessage.setText(message.getInformation());
+            hold.selfChatMessage.setMessage(MessageView.WHO_ME, message.getType(), message.getInformation());
             Glide.with(activity)
                     .load(message.getHeadPictureUri())
                     .into(hold.selfHeadPhoto);
@@ -74,7 +79,7 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
             hold.otherChat.setVisibility(View.VISIBLE);
             hold.selfChat.setVisibility(View.GONE);
 
-            hold.otherChatMessage.setText(message.getInformation());
+            hold.otherChatMessage.setMessage(MessageView.WHO_OTHER, message.getType(), message.getInformation());
             Glide.with(activity)
                     .load(message.getHeadPictureUri())
                     .into(hold.otherHeadPhoto);
@@ -93,14 +98,14 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
         }
     }
 
-    public class ChatMessageHoldView extends RecyclerView.ViewHolder {
+    public class ChatMessageHoldView extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private RelativeLayout otherChat;
         private RelativeLayout selfChat;
         private ImageView otherHeadPhoto;
         private ImageView selfHeadPhoto;
-        private TextView otherChatMessage;
-        private TextView selfChatMessage;
+        private MessageView otherChatMessage;
+        private MessageView selfChatMessage;
 
         public ChatMessageHoldView(@NonNull View view) {
             super(view);
@@ -110,6 +115,17 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
             selfHeadPhoto = view.findViewById(R.id.self_head_photo);
             otherChatMessage = view.findViewById(R.id.other_chat_message);
             selfChatMessage = view.findViewById(R.id.self_chat_message);
+
+            otherChatMessage.setOnClickListener(this);
+            selfChatMessage.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(activity, LookMessageActivity.class);
+            intent.putExtra(MESSAGE_TYPE, list.get(getAdapterPosition()).getType().getName());
+            intent.putExtra(MESSAGE_INFO, list.get(getAdapterPosition()).getInformation());
+            activity.startActivity(intent);
         }
     }
 

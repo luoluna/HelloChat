@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 
 import com.team.hellochat.R;
 import com.team.hellochat.adapter.ChatRoomAdapter;
+import com.team.hellochat.bean.ChatMessage;
 import com.team.hellochat.bean.ChatRoom;
-import com.team.hellochat.utils.WindowUtil;
-import com.team.hellochat.view.XRecyclerView;
+import com.team.hellochat.bean.ChatRoomItem;
+import com.team.hellochat.manager.ChatRoomListManager;
+import com.team.hellochat.manager.MessageManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,9 +68,15 @@ public class ChatFragment extends Fragment {
     }
 
     private void getChatList() {
-        ChatRoom room = new ChatRoom(0, "https://pic9.iqiyipic.com/image/20181229/42/a4/p_806_m_601_m7_80_80.jpg", "顽皮的小猴", "在吗？", 1, 1554106007);
-        list.add(room);
-        list.add(room);
+        List<ChatRoomItem> items = ChatRoomListManager.getInstance(getContext()).getList();
+        for (int i = 0; i < items.size(); i++) {
+            ChatMessage chatMessage = MessageManager.getInstance(getContext(), items.get(i).getFile()).getMessages();
+            if (chatMessage.getList().size() > 0) {
+                ChatRoom room;
+                room = new ChatRoom(0, false, items.get(i).getIcon(), items.get(i).getTitle(), chatMessage.getNoReadCount(), chatMessage.getLastTime(), chatMessage);
+                list.add(room);
+            }
+        }
         recyclerView.setAdapter(chatRoomAdapter);
     }
 

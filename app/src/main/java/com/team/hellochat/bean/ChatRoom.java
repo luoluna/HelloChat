@@ -1,5 +1,7 @@
 package com.team.hellochat.bean;
 
+import java.util.List;
+
 /**
  * Created by Sweven on 2019/4/1.
  * Email:sweventears@Foxmail.com
@@ -9,31 +11,22 @@ public class ChatRoom {
     private boolean isGroup;
     private String iconUri;
     private String title;
-    private String message;
     // 未读消息数
     private int messageCount;
     private long putTime;
+    private ChatMessage message;
 
     public ChatRoom() {
     }
 
-    public ChatRoom(int id, String iconUri, String title, String message, int messageCount, long putTime) {
-        this.id = id;
-        this.iconUri = iconUri;
-        this.title = title;
-        this.message = message;
-        this.messageCount = messageCount;
-        this.putTime = putTime;
-    }
-
-    public ChatRoom(int id, boolean isGroup, String iconUri, String title, String message, int messageCount, long putTime) {
+    public ChatRoom(int id, boolean isGroup, String iconUri, String title, int messageCount, long putTime, ChatMessage message) {
         this.id = id;
         this.isGroup = isGroup;
         this.iconUri = iconUri;
         this.title = title;
-        this.message = message;
         this.messageCount = messageCount;
         this.putTime = putTime;
+        this.message = message;
     }
 
     public int getId() {
@@ -68,20 +61,23 @@ public class ChatRoom {
         this.title = title;
     }
 
-    public String getMessage() {
+    public ChatMessage getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(ChatMessage message) {
         this.message = message;
     }
 
     public int getMessageCount() {
+        List<MessageInfo> list = message.getList();
+        messageCount = 0;
+        for (MessageInfo info : list) {
+            if (!info.isRead()) {
+                messageCount++;
+            }
+        }
         return messageCount;
-    }
-
-    public void setMessageCount(int messageCount) {
-        this.messageCount = messageCount;
     }
 
     public long getPutTime() {
