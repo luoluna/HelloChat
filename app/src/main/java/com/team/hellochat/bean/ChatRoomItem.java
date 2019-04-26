@@ -1,29 +1,49 @@
 package com.team.hellochat.bean;
 
-import com.team.hellochat.manager.UserManager;
-import com.team.hellochat.utils.MD5Util;
-
 /**
  * Created by Sweven on 2019/4/24.
  * Email:sweventears@Foxmail.com
  */
 public class ChatRoomItem {
-    private int id;
     private int withUid;
+    private boolean isGroup;
     private String title;
-    private String icon;
+    private int icon;
     private boolean isTop;
+    private String file = "";
+    private ChatMessage message;
+    private MessageInfo lastMessage;
 
-    public String getFile(){
-        return MD5Util.getMD5(UserManager.getInstance().getUid() +"whith"+withUid);
+    public boolean isGroup() {
+        return isGroup;
     }
 
-    public int getId() {
-        return id;
+    public void setGroup(boolean group) {
+        isGroup = group;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public ChatMessage getMessage() {
+        return message;
+    }
+
+    public void setMessage(ChatMessage message) {
+        this.message = message;
+    }
+
+    public void setLastMessage(MessageInfo lastMessage) {
+        this.lastMessage = lastMessage;
+    }
+
+    public MessageInfo getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
+    }
+
+    public String getFile() {
+        return file;
     }
 
     public int getWithUid() {
@@ -42,11 +62,11 @@ public class ChatRoomItem {
         this.title = title;
     }
 
-    public String getIcon() {
+    public int getIcon() {
         return icon;
     }
 
-    public void setIcon(String icon) {
+    public void setIcon(int icon) {
         this.icon = icon;
     }
 

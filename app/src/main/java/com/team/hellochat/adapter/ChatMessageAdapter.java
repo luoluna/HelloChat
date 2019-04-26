@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.team.hellochat.R;
 import com.team.hellochat.activity.LookMessageActivity;
 import com.team.hellochat.base.BaseRecyclerAdapter;
+import com.team.hellochat.bean.HeadPicture;
 import com.team.hellochat.bean.MessageInfo;
 import com.team.hellochat.bean.MessageType;
 import com.team.hellochat.manager.UserManager;
@@ -32,9 +32,6 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
 
     public ChatMessageAdapter(Activity activity, List<MessageInfo> list) {
         super(activity, list);
-        this.activity = activity;
-        this.list = list;
-        inflater = LayoutInflater.from(activity);
     }
 
     @NonNull
@@ -73,7 +70,7 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
 
             hold.selfChatMessage.setMessage(MessageView.WHO_ME, message.getType(), message.getInformation());
             Glide.with(activity)
-                    .load(message.getHeadPictureUri())
+                    .load(HeadPicture.getResId(message.getAvatar()))
                     .into(hold.selfHeadPhoto);
         } else {
             hold.otherChat.setVisibility(View.VISIBLE);
@@ -81,21 +78,22 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
 
             hold.otherChatMessage.setMessage(MessageView.WHO_OTHER, message.getType(), message.getInformation());
             Glide.with(activity)
-                    .load(message.getHeadPictureUri())
+                    .load(HeadPicture.getResId(message.getAvatar()))
                     .into(hold.otherHeadPhoto);
         }
     }
 
-    public void sendSelfMessage(String message) {
-        MessageInfo info = new MessageInfo();
-        info.setUid(UserManager.getInstance().getUid());
-        info.setType(MessageType.TEXT);
-        info.setInformation(message);
+    public void sendSelfMessage(MessageInfo info) {
         list.add(info);
         notifyDataSetChanged();
         if (onSendListener != null) {
-            onSendListener.onSuccess(getItemCount());
+            onSendListener.onSuccess(getItemCount(),info);
         }
+    }
+
+    public void putMessage(List<MessageInfo> list) {
+        this.list=list;
+        notifyDataSetChanged();
     }
 
     public class ChatMessageHoldView extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -132,7 +130,7 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
     private OnSendListener onSendListener;
 
     public interface OnSendListener {
-        void onSuccess(int count);
+        void onSuccess(int count,MessageInfo messageInfo);
 
         void onFail();
     }

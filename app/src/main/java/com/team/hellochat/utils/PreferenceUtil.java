@@ -15,17 +15,22 @@ import java.util.Set;
  */
 public class PreferenceUtil {
 
+    private static final String TAG = PreferenceUtil.class.getName();
     private Context context;
     private SharedPreferences preferences;
+    private String fileName;
 
     public PreferenceUtil(Context context) {
         this.context = context;
         preferences = this.context.getSharedPreferences(App.SHARED_PREFERENCE, Context.MODE_PRIVATE);
+        fileName = App.SHARED_PREFERENCE;
     }
 
     public PreferenceUtil(Context context, String name) {
         this.context = context;
+        this.fileName = name;
         preferences = this.context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        new LogUtil(TAG).i("查询" + name + ".xml文件");
     }
 
     public Editor getEditor() {
@@ -70,7 +75,10 @@ public class PreferenceUtil {
      * @return default null
      */
     public String getString(String key) {
-        return preferences.getString(key, null);
+        new LogUtil(TAG).i("获取" + fileName + ".xml文件key为" + key + "的值");
+        Map<String, ?> map = preferences.getAll();
+        String f = (String) map.get(key);
+        return f;
     }
 
     /**

@@ -22,4 +22,9 @@
     <string name="phoneError">电话号码不正确</string>
     <string name="signIn">注册中……</string>
     <string name="nicknameNotEmpty">昵称不能为空</string>
+    <string name="input_chat_message">输入聊天消息</string>
+    <string name="loading">努力加载中……</string>
+    <string name="load_fail">加载失败 o(╥﹏╥)o</string>
+    <string name="chat_fragment_title">聊天</string>
+    <string name="friends_fragment_title">好友</string>
 </resources>

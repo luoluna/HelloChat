@@ -36,10 +36,10 @@ public class MyApplication extends Application {
                 MD5Util.getMD5(FacilityUtil.getAndroidID(this)));
 
         // 初始化单例管理器
-        AddressBookManager.getInstance(this);
-        LogInManager.getInstance(this);
         SettingManager.getInstance(this);
+        LogInManager.getInstance(this);
         UserManager.getInstance(this);
+        AddressBookManager.getInstance(this);
         ChatRoomListManager.getInstance(this);
     }
 

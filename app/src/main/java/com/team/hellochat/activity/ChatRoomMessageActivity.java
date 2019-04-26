@@ -12,15 +12,21 @@ import android.widget.TextView;
 import com.team.hellochat.BaseActivity;
 import com.team.hellochat.R;
 import com.team.hellochat.adapter.ChatMessageAdapter;
+import com.team.hellochat.app.App;
 import com.team.hellochat.bean.ChatMessage;
+import com.team.hellochat.bean.ChatRoomItem;
+import com.team.hellochat.bean.Friend;
 import com.team.hellochat.bean.MessageInfo;
+import com.team.hellochat.bean.MessageType;
+import com.team.hellochat.manager.AddressBookManager;
+import com.team.hellochat.manager.ChatRoomListManager;
 import com.team.hellochat.manager.MessageManager;
+import com.team.hellochat.manager.UserManager;
 import com.team.hellochat.utils.ToastUtil;
 import com.team.hellochat.view.ChatMessageRecyclerView;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TITLE;
@@ -32,6 +38,9 @@ import static com.team.hellochat.app.App.IntentLabel.MESSAGE_FILE;
  * Email:sweventears@Foxmail.com
  */
 public class ChatRoomMessageActivity extends BaseActivity implements View.OnClickListener {
+
+    private static final String EMPTY_MESSAGE = "";
+
     //top
     private ImageView back;
     private TextView title;
@@ -40,7 +49,6 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
     //center
     private ChatMessageRecyclerView messageRecyclerView;
     private ChatMessageAdapter chatMessageAdapter;
-    private ChatMessage message = new ChatMessage();
     private LinearLayoutManager layoutManager;
 
     //bottom
@@ -54,10 +62,13 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
     private ImageView ivFaces;
 
     //data
+    private ChatMessage message = new ChatMessage();
+    private List<MessageInfo> list = message.getList();
     private boolean isGroup;
     private String file;
     private String topTitle;
-    private List<MessageInfo> list = new ArrayList<>();
+    private MessageInfo sendInfo;
+    private int withId;
 
 
     @Override
@@ -93,37 +104,26 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
             isGroup = intent.getBooleanExtra(CHAT_ROOM_TYPE, false);
             file = intent.getStringExtra(MESSAGE_FILE);
             topTitle = intent.getStringExtra(CHAT_ROOM_TITLE);
+            withId = intent.getIntExtra(App.IntentLabel.CHAT_ROOM_WITH_ID, 0);
             putData();
         }
 
-//        List<MessageInfo> list = new ArrayList<>();
-//        MessageInfo info = new MessageInfo(3, "ლ(′◉❥◉｀ლ)", "https://avatar.csdn.net/6/2/C/3_qq_37160247.jpg", System.currentTimeMillis() + "", MessageType.TEXT, "你好啊");
-//        list.add(info);
-//        list.add(info);
-//        message.setId(0);
-//        message.setContent("");
-//        message.setList(list);
-        chatMessageAdapter = new ChatMessageAdapter(this, message.getList());
+        chatMessageAdapter = new ChatMessageAdapter(this, list);
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         messageRecyclerView.setLayoutManager(layoutManager);
         messageRecyclerView.setAdapter(chatMessageAdapter);
+        moveToBottom();
 
-
-        chatMessageAdapter.setOnSendListener(new ChatMessageAdapter.OnSendListener() {
-            @Override
-            public void onSuccess(int count) {
-                layoutManager.scrollToPositionWithOffset(count - 1, 0);
-                etMessage.setText("");
-            }
-
-            @Override
-            public void onFail() {
-
-            }
-        });
-
-
+        addAdapterCallBack();
+//
+//        etMessage.addTextChangedListener(new SendMessageTextWatch(etMessage).setSendMessageCallBack(new SendMessageCallBack() {
+//            @Override
+//            public void onResult(String message, String typeLabel) {
+//                setSendInfo(MessageType.getType(typeLabel), message);
+//                chatMessageAdapter.sendSelfMessage(sendInfo);
+//            }
+//        }));
         back.setOnClickListener(this);
         more.setOnClickListener(this);
         ivVoice.setOnClickListener(this);
@@ -131,14 +131,67 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
         ivVideo.setOnClickListener(this);
     }
 
+    private void addAdapterCallBack() {
+        chatMessageAdapter.setOnSendListener(new ChatMessageAdapter.OnSendListener() {
+            @Override
+            public void onSuccess(int count, MessageInfo messageInfo) {
+                layoutManager.scrollToPositionWithOffset(count - 1, 0);
+                etMessage.setText(EMPTY_MESSAGE);
+                MessageManager.getInstance().clearMessage();
+                MessageManager.getInstance().addMessageInfo(getApplicationContext(), file, messageInfo);
+                add2ChatList();
+            }
+
+            @Override
+            public void onFail() {
+
+            }
+        });
+    }
+
+    /**
+     * 添加该聊天室到聊天室列表
+     */
+    private void add2ChatList() {
+        boolean hasFile = ChatRoomListManager.getInstance().hasFile(file);
+        if (!hasFile) {
+            ChatRoomItem item = new ChatRoomItem();
+            if (!isGroup) {
+                List<Friend> friends = AddressBookManager.getInstance().getFriends();
+                for (int i = 0; i < friends.size(); i++) {
+                    if (friends.get(i).getId() == withId) {
+                        item.setIcon(friends.get(i).getAvatar());
+                    }
+                }
+            }
+            item.setFile(file);
+            item.setTitle(topTitle);
+            item.setTop(false);
+            item.setGroup(isGroup);
+            item.setWithUid(withId);
+            ChatRoomListManager.getInstance().addListItem(getApplicationContext(), item);
+        }
+    }
+
+    /**
+     * 设置数据
+     */
     private void putData() {
 
         title.setText(topTitle);
         more.setImageResource(isGroup ? R.drawable.ic_chat_group_more : R.drawable.ic_chat_room_more);
 
         message = MessageManager.getInstance(this, file).getMessages();
-        messageRecyclerView.setAdapter(chatMessageAdapter);
-        layoutManager.scrollToPositionWithOffset(message.getList().size() - 1, 0);
+        list = message.getList();
+    }
+
+    /**
+     *
+     */
+    private void moveToBottom() {
+        if (list.size() > 0) {
+            layoutManager.scrollToPositionWithOffset(message.getList().size() - 1, 0);
+        }
     }
 
     @Override
@@ -157,8 +210,9 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.btn_send_message:
                 String message = etMessage.getText().toString();
-                if (!message.equals("")) {
-                    chatMessageAdapter.sendSelfMessage(message);
+                if (!message.equals(EMPTY_MESSAGE)) {
+                    setSendInfo(MessageType.TEXT, message);
+                    chatMessageAdapter.sendSelfMessage(sendInfo);
                 } else {
                     ToastUtil.showError(this, "消息不能为空");
                 }
@@ -166,6 +220,16 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
             case R.id.message_voice:
                 break;
         }
+    }
+
+    private void setSendInfo(MessageType type, String message) {
+        sendInfo = new MessageInfo();
+        sendInfo.setUid(UserManager.getInstance().getUid());
+        sendInfo.setInformation(message);
+        sendInfo.setType(type);
+        sendInfo.setAvatar(UserManager.getInstance().getUser().getAvatar());
+        sendInfo.setRead(true);
+        sendInfo.setTime(System.currentTimeMillis());
     }
 
     @Override

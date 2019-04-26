@@ -4,28 +4,11 @@ package com.team.hellochat.bean;
  * Created by Sweven on 2019/4/18.
  * Email:sweventears@Foxmail.com
  */
-public class Friend {
-    private Integer uid;
+public class Friend extends User {
     private String group;
-    private String nickname;
     private String imageUri;
     private String msg;
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
+    private String remark;
 
     public String getImageUri() {
         return imageUri;
@@ -41,6 +24,14 @@ public class Friend {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public String getRemark() {
+        return (remark == null || remark.equals("")) ? getNickname() : remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getGroup() {

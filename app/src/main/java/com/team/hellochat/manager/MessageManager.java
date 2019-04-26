@@ -1,8 +1,10 @@
 package com.team.hellochat.manager;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.team.hellochat.app.App;
+import com.team.hellochat.app.Setting;
 import com.team.hellochat.bean.ChatMessage;
 import com.team.hellochat.bean.MessageInfo;
 import com.team.hellochat.utils.JsonUtil;
@@ -16,7 +18,8 @@ public class MessageManager {
     private static MessageManager instance;
 
     private ChatMessage messages;
-    private String name;
+    private String file;
+    private int withId;
 
     public static MessageManager getInstance() {
         if (instance == null) {
@@ -29,7 +32,7 @@ public class MessageManager {
         return instance;
     }
 
-    public static MessageManager getInstance(Context context, String name) {
+    public static MessageManager getInstance(Context context, int withId) {
         if (instance == null) {
             synchronized (MessageManager.class) {
                 if (instance == null) {
@@ -37,35 +40,56 @@ public class MessageManager {
                 }
             }
         }
-        instance.name = name;
-        instance.messages = JsonUtil.jsonToObject(new PreferenceUtil(context, instance.name).getString(App.SharedLabel.MESSAGE_INFO), new ChatMessage());
-        instance.messages.setName(instance.name);
+        instance.withId = withId;
+        instance.file = Setting.getChatRoomFile(instance.withId);
+        instance.messages = JsonUtil.jsonToObject(new PreferenceUtil(context, instance.file).getString(App.SharedLabel.MESSAGE_INFO), new ChatMessage());
+        instance.messages.setFile(instance.file);
+        return instance;
+    }
+
+    public static MessageManager getInstance(Context context, String file) {
+        if (instance == null) {
+            synchronized (MessageManager.class) {
+                if (instance == null) {
+                    instance = new MessageManager();
+                }
+            }
+        }
+        instance.file = file;
+        instance.messages = JsonUtil.jsonToObject(new PreferenceUtil(context, instance.file).getString(App.SharedLabel.MESSAGE_INFO), new ChatMessage());
+        instance.messages.setFile(instance.file);
         return instance;
     }
 
     public void clearMessage() {
-        MessageManager.instance = null;
+        MessageManager.instance = new MessageManager();
     }
 
     public void addMessageInfo(Context context, String name, MessageInfo messageInfo) {
         if (messages == null) {
-            messages = new ChatMessage();
+            messages = MessageManager.getInstance(context, name).getMessages();
         }
+        this.file = name;
+        messages.setFile(name);
         messages.getList().add(messageInfo);
-        save(context, name);
+        save(context);
     }
 
     public void setMessages(Context context, String name, ChatMessage messages) {
+        this.file = name;
         this.messages = messages;
-        save(context, name);
+        this.messages.setFile(name);
+        save(context);
     }
 
-    private void save(Context context, String name) {
-        new PreferenceUtil(context, name).save(App.SharedLabel.MESSAGE_INFO, JsonUtil.object2Json(messages));
+    private void save(Context context) {
+        SharedPreferences.Editor editor = new PreferenceUtil(context, file).getEditor();
+        editor.putString(App.SharedLabel.MESSAGE_INFO, JsonUtil.object2Json(messages));
+        editor.apply();
     }
 
-    public String getName() {
-        return name;
+    public String getFile() {
+        return file;
     }
 
     public ChatMessage getMessages() {

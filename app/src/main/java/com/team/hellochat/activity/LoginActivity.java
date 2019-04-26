@@ -52,7 +52,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     handler.sendEmptyMessage(FAILS);
                 }
             } else if (msg.what == SUCCESS) {
-                LogInManager.getInstance().setLog(getApplicationContext(),true);
+                LogInManager.getInstance().setLog(getApplicationContext(), true);
+                UserManager.getInstance().logIn(getApplication(), edLogName.getText().toString(), edLogPass.getText().toString());
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             } else if (msg.what == FAILS) {

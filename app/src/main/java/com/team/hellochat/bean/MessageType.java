@@ -46,6 +46,10 @@ public enum MessageType {
         return name;
     }
 
+    public String getTipName() {
+        return "[" + name + "]";
+    }
+
     public void setName(String name) {
         this.name = name;
     }

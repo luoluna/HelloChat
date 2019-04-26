@@ -1,6 +1,7 @@
 package com.team.hellochat.manager;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.team.hellochat.bean.AddressBook;
 import com.team.hellochat.bean.DiscussionGroup;
@@ -10,13 +11,14 @@ import com.team.hellochat.utils.PreferenceUtil;
 
 import java.util.List;
 
+import static com.team.hellochat.app.App.SharedLabel.ADDRESS_BOOK;
+
 /**
  * 通讯录管理
  * Created by Sweven on 2019/4/18.
  * Email:sweventears@Foxmail.com
  */
 public class AddressBookManager {
-    private static final String ADDRESS_BOOK = "address_book";
     private static AddressBookManager instance;
 
     private AddressBook addressBook;
@@ -36,7 +38,7 @@ public class AddressBookManager {
                 instance = new AddressBookManager();
             }
         }
-        instance.addressBook = JsonUtil.jsonToObject(new PreferenceUtil(context, ADDRESS_BOOK).getString(ADDRESS_BOOK), new AddressBook());
+        instance.addressBook = JsonUtil.jsonToObject(new PreferenceUtil(context).getString(ADDRESS_BOOK), new AddressBook());
         return instance;
     }
 
@@ -50,11 +52,18 @@ public class AddressBookManager {
 
     public void addNewFriend(Context context, Friend friend) {
         addressBook.getFriends().add(friend);
+        addressBook.setFriendsCount(addressBook.getFriendsCount() + 1);
         save(context);
     }
 
     public void addNewDiscussionGroup(Context context, DiscussionGroup discussionGroup) {
         addressBook.getGroups().add(discussionGroup);
+        addressBook.setGroupsCount(addressBook.getGroupsCount() + 1);
+        save(context);
+    }
+
+    public void setAddressBook(Context context, AddressBook addressBook) {
+        this.addressBook = addressBook;
         save(context);
     }
 
@@ -63,6 +72,8 @@ public class AddressBookManager {
     }
 
     private void save(Context context) {
-        new PreferenceUtil(context).save(ADDRESS_BOOK, JsonUtil.object2Json(addressBook));
+        SharedPreferences.Editor editor = new PreferenceUtil(context).getEditor();
+        editor.putString(ADDRESS_BOOK, JsonUtil.object2Json(addressBook));
+        editor.apply();
     }
 }

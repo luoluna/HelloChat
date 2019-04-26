@@ -1,10 +1,8 @@
 package com.team.hellochat.view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,11 +11,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.team.hellochat.R;
-import com.team.hellochat.activity.LookMessageActivity;
 import com.team.hellochat.bean.MessageType;
 
-import static com.team.hellochat.app.App.IntentLabel.MESSAGE_INFO;
-import static com.team.hellochat.app.App.IntentLabel.MESSAGE_TYPE;
+import static com.team.hellochat.utils.ViewUtil.notifyMeasure;
 
 /**
  * Created by Sweven on 2019/4/24.
@@ -75,6 +71,8 @@ public class MessageView extends LinearLayout {
     }
 
     private void initData() {
+        notifyMeasure(meIv);
+        notifyMeasure(otherIv);
     }
 
     public void setMessage(int who, MessageType type, String message) {
@@ -95,7 +93,9 @@ public class MessageView extends LinearLayout {
             } else if (type == MessageType.IMAGE) {
                 meTv.setVisibility(GONE);
                 meIv.setVisibility(VISIBLE);
-                Glide.with(context).load(message).into(meIv);
+                // TODO 圆角测试
+                Glide.with(context).load(message).optionalCircleCrop().into(meIv);
+                setImageHeight(meIv);
             }
         } else if (who == WHO_OTHER) {
             otherRl.setVisibility(VISIBLE);
@@ -107,9 +107,17 @@ public class MessageView extends LinearLayout {
             } else if (type == MessageType.IMAGE) {
                 otherTv.setVisibility(GONE);
                 otherIv.setVisibility(VISIBLE);
-                Glide.with(context).load(message).into(otherIv);
+                Glide.with(context).load(message).optionalCircleCrop().into(otherIv);
+                setImageHeight(otherIv);
             }
         }
+    }
+
+    private void setImageHeight(View view) {
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) view.getLayoutParams();
+        params.width = view.getMeasuredWidth();
+        params.height = view.getMeasuredWidth() / 9 * 16;
+        view.setLayoutParams(params);
     }
 
     public int getWho() {

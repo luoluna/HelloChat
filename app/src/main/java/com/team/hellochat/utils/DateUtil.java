@@ -93,7 +93,7 @@ public class DateUtil {
         if (nowYear == year) {
             if (nowMonth == month) {
                 if (day == nowDay) {
-                    return (hour>9?hour:"0"+hour) + ":" + (minute>9?minute:"0"+minute);
+                    return (hour > 9 ? hour : "0" + hour) + ":" + (minute > 9 ? minute : "0" + minute);
                 } else {
                     if (nowDay - day == 1) {
                         return "昨天";
@@ -135,7 +135,7 @@ public class DateUtil {
         if (nowYear == year) {
             if (nowMonth == month) {
                 if (day == nowDay) {
-                    return (hour>9?hour:"0"+hour) + ":" + (minute>9?minute:"0"+minute);
+                    return (hour > 9 ? hour : "0" + hour) + ":" + (minute > 9 ? minute : "0" + minute);
                 } else {
                     if (nowDay - day == 1) {
                         return "昨天";
@@ -170,7 +170,7 @@ public class DateUtil {
         int nowMonth = now.get(Calendar.MONTH) + 1;
         int nowDay = now.get(Calendar.DAY_OF_MONTH);
 
-        Date date = new Date(time * 1000);
+        Date date = new Date(time);
         Calendar put = Calendar.getInstance();
         put.setTime(date);
         int year = put.get(Calendar.YEAR);
@@ -182,7 +182,7 @@ public class DateUtil {
         if (nowYear == year) {
             if (nowMonth == month) {
                 if (day == nowDay) {
-                    return (hour>9?hour:"0"+hour) + ":" + (minute>9?minute:"0"+minute);
+                    return (hour > 9 ? hour : "0" + hour) + ":" + (minute > 9 ? minute : "0" + minute);
                 } else {
                     if (nowDay - day == 1) {
                         return "昨天";

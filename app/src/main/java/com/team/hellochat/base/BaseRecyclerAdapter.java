@@ -22,6 +22,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     public BaseRecyclerAdapter(Activity activity, List<T> list) {
         this.activity = activity;
         this.list = list;
+        inflater=LayoutInflater.from(activity);
     }
 
     public List<T> getList() {

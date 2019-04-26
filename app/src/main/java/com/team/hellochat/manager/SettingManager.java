@@ -1,6 +1,7 @@
 package com.team.hellochat.manager;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.team.hellochat.utils.PreferenceUtil;
 
@@ -41,7 +42,9 @@ public class SettingManager {
     }
 
     private void save(Context context) {
-        new PreferenceUtil(context, SETTING).save(IS_FIRST, isFirstInstall);
+        SharedPreferences.Editor editor= new PreferenceUtil(context, SETTING).getEditor();
+        editor.putBoolean(IS_FIRST, isFirstInstall);
+        editor.apply();
     }
 
     public boolean isFirstInstall() {

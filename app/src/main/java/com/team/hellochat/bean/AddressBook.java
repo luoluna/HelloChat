@@ -1,5 +1,6 @@
 package com.team.hellochat.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,8 +9,26 @@ import java.util.List;
  */
 public class AddressBook {
     private Integer id;
-    private List<Friend> friends;
-    private List<DiscussionGroup> groups;
+    private int friendsCount;
+    private int groupsCount;
+    private List<Friend> friends = new ArrayList<>();
+    private List<DiscussionGroup> groups = new ArrayList<>();
+
+    public int getFriendsCount() {
+        return friendsCount;
+    }
+
+    public void setFriendsCount(int friendsCount) {
+        this.friendsCount = friendsCount;
+    }
+
+    public int getGroupsCount() {
+        return groupsCount;
+    }
+
+    public void setGroupsCount(int groupsCount) {
+        this.groupsCount = groupsCount;
+    }
 
     public Integer getId() {
         return id;

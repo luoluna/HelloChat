@@ -6,10 +6,9 @@ import android.view.KeyEvent
 import com.team.hellochat.app.MyApplication
 import com.team.hellochat.fragment.ChatFragment
 import com.team.hellochat.fragment.DiscoveryFragment
-import com.team.hellochat.fragment.FriendFragment
+import com.team.hellochat.fragment.FriendsFragment
 import com.team.hellochat.fragment.PersonalFragment
 import com.team.hellochat.utils.ToastUtil
-import com.team.hellochat.utils.WindowUtil
 import kotlinx.android.synthetic.main.tab_bottom_bar.*
 import java.util.*
 
@@ -20,7 +19,7 @@ import java.util.*
 class MainActivity : BaseActivity() {
 
     var mainFragment = ChatFragment()
-    var friendFragment = FriendFragment()
+    var friendFragment = FriendsFragment()
     var discoveryFragment = DiscoveryFragment()
     var personalFragment = PersonalFragment()
     var fragmentManager = supportFragmentManager

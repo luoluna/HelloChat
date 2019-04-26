@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toStartOf="@id/message_voice"
                         android:background="@color/white"
-                        android:hint="输入聊天消息"
+                        android:hint="@string/input_chat_message"
                         android:maxLines="5"
                         android:minHeight="30dp"
                         android:maxLength="225"
@@ -93,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_1"
                 android:layout_marginTop="@dimen/dp_10"
-                android:background="@color/grey" />
+                android:background="@color/light_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -111,7 +111,7 @@
                 <View
                     android:layout_width="@dimen/dp_1"
                     android:layout_height="match_parent"
-                    android:background="@color/grey" />
+                    android:background="@color/light_gray" />
 
                 <ImageView
                     android:id="@+id/iv_video"
@@ -125,7 +125,7 @@
                 <View
                     android:layout_width="@dimen/dp_1"
                     android:layout_height="match_parent"
-                    android:background="@color/grey" />
+                    android:background="@color/light_gray" />
 
                 <ImageView
                     android:id="@+id/iv_image"
@@ -139,7 +139,7 @@
                 <View
                     android:layout_width="@dimen/dp_1"
                     android:layout_height="match_parent"
-                    android:background="@color/grey" />
+                    android:background="@color/light_gray" />
 
                 <ImageView
                     android:id="@+id/iv_camera"
@@ -153,7 +153,7 @@
                 <View
                     android:layout_width="@dimen/dp_1"
                     android:layout_height="match_parent"
-                    android:background="@color/grey" />
+                    android:background="@color/light_gray" />
 
                 <ImageView
                     android:id="@+id/iv_faces"

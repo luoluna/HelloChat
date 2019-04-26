@@ -7,7 +7,7 @@ package com.team.hellochat.bean;
 public class MessageInfo {
     private int uid;
     private String nickname;
-    private String headPictureUri;
+    private int avatar;
     private long time;
     private MessageType type;
     private String information;
@@ -16,13 +16,14 @@ public class MessageInfo {
     public MessageInfo() {
     }
 
-    public MessageInfo(int uid, String nickname, String headPictureUri, long time, MessageType type, String information) {
+    public MessageInfo(int uid, String nickname, int avatar, long time, MessageType type, String information, boolean isRead) {
         this.uid = uid;
         this.nickname = nickname;
-        this.headPictureUri = headPictureUri;
+        this.avatar = avatar;
         this.time = time;
         this.type = type;
         this.information = information;
+        this.isRead = isRead;
     }
 
     public int getUid() {
@@ -41,12 +42,12 @@ public class MessageInfo {
         this.nickname = nickname;
     }
 
-    public String getHeadPictureUri() {
-        return headPictureUri;
+    public int getAvatar() {
+        return avatar;
     }
 
-    public void setHeadPictureUri(String headPictureUri) {
-        this.headPictureUri = headPictureUri;
+    public void setAvatar(int avatar) {
+        this.avatar = avatar;
     }
 
     public long getTime() {
@@ -81,13 +82,4 @@ public class MessageInfo {
         isRead = read;
     }
 
-    @Override
-    public String toString() {
-        return "MessageInfo{" +
-                "uid=" + uid +
-                ", headPictureUri='" + headPictureUri + '\'' +
-                ", type=" + type +
-                ", information='" + information + '\'' +
-                '}';
-    }
 }

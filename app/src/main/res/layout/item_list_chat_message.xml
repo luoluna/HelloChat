@@ -14,6 +14,7 @@
             android:id="@+id/head_photo"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginStart="@dimen/dp_10"
             android:src="@drawable/ic_video" />
 
         <!--<TextView-->
@@ -47,6 +48,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp_10"
             android:src="@drawable/ic_video" />
 
         <com.team.hellochat.view.MessageView
