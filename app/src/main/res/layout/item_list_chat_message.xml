@@ -15,22 +15,23 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="@dimen/dp_10"
-            android:src="@drawable/ic_video" />
+            android:src="@mipmap/ic_launcher_round" />
 
-        <!--<TextView-->
-        <!--android:id="@+id/other_nickname"-->
-        <!--android:text="@string/back"-->
-        <!--android:layout_marginStart="@dimen/dp_10"-->
-        <!--android:layout_toEndOf="@id/head_photo"-->
-        <!--android:layout_marginBottom="@dimen/dp_5"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content" />-->
-        <!--android:layout_below="@id/other_nickname"-->
+        <TextView
+            android:id="@+id/other_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_5"
+            android:layout_toEndOf="@id/head_photo"
+            android:textColor="@color/black" />
 
         <com.team.hellochat.view.MessageView
             android:id="@+id/other_chat_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/other_nickname"
+            android:layout_marginStart="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_200"
             android:layout_toEndOf="@id/head_photo" />
     </RelativeLayout>
@@ -49,13 +50,14 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/dp_10"
-            android:src="@drawable/ic_video" />
+            android:src="@mipmap/ic_launcher_round" />
 
         <com.team.hellochat.view.MessageView
             android:id="@+id/self_chat_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_200"
+            android:layout_marginEnd="@dimen/dp_10"
             android:layout_toStartOf="@id/self_head_photo" />
     </RelativeLayout>
 </RelativeLayout>

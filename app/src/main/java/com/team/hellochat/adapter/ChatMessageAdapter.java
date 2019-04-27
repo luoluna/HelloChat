@@ -2,12 +2,14 @@ package com.team.hellochat.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.team.hellochat.R;
@@ -15,10 +17,10 @@ import com.team.hellochat.activity.LookMessageActivity;
 import com.team.hellochat.base.BaseRecyclerAdapter;
 import com.team.hellochat.bean.HeadPicture;
 import com.team.hellochat.bean.MessageInfo;
-import com.team.hellochat.bean.MessageType;
 import com.team.hellochat.manager.UserManager;
 import com.team.hellochat.view.MessageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.team.hellochat.app.App.IntentLabel.MESSAGE_INFO;
@@ -38,25 +40,7 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
     @Override
     public ChatMessageHoldView onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = inflater.inflate(R.layout.item_list_chat_message, viewGroup, false);
-        switch (i) {
-            case MessageType._TEXT:
-                break;
-            case MessageType._IMAGE:
-                break;
-            case MessageType._VIDEO:
-                break;
-            case MessageType._VOICE:
-                break;
-            case MessageType._CARD:
-                break;
-        }
         return new ChatMessageHoldView(view);
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-
-        return list.get(position).getType().getIndex();
     }
 
     @Override
@@ -76,6 +60,7 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
             hold.otherChat.setVisibility(View.VISIBLE);
             hold.selfChat.setVisibility(View.GONE);
 
+            hold.otherNickname.setText(message.getNickname());
             hold.otherChatMessage.setMessage(MessageView.WHO_OTHER, message.getType(), message.getInformation());
             Glide.with(activity)
                     .load(HeadPicture.getResId(message.getAvatar()))
@@ -84,15 +69,33 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
     }
 
     public void sendSelfMessage(MessageInfo info) {
-        list.add(info);
+        list.add(0, info);
         notifyDataSetChanged();
+        //TODO 发送到服务器 假设（从对方获取）
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                List<MessageInfo> uploads = new ArrayList<>();
+                uploads.add(info);
+                //send service
+//                acceptMessage(uploads);
+            }
+        });
+
         if (onSendListener != null) {
-            onSendListener.onSuccess(getItemCount(),info);
+            onSendListener.onSuccess(getItemCount(), info);
         }
     }
 
     public void putMessage(List<MessageInfo> list) {
-        this.list=list;
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
+    public void acceptMessage(List<MessageInfo> list) {
+        for (MessageInfo info : list) {
+            this.list.add(0, info);
+        }
         notifyDataSetChanged();
     }
 
@@ -104,6 +107,7 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
         private ImageView selfHeadPhoto;
         private MessageView otherChatMessage;
         private MessageView selfChatMessage;
+        private TextView otherNickname;
 
         public ChatMessageHoldView(@NonNull View view) {
             super(view);
@@ -113,6 +117,7 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
             selfHeadPhoto = view.findViewById(R.id.self_head_photo);
             otherChatMessage = view.findViewById(R.id.other_chat_message);
             selfChatMessage = view.findViewById(R.id.self_chat_message);
+            otherNickname = view.findViewById(R.id.other_nickname);
 
             otherChatMessage.setOnClickListener(this);
             selfChatMessage.setOnClickListener(this);
@@ -130,7 +135,7 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
     private OnSendListener onSendListener;
 
     public interface OnSendListener {
-        void onSuccess(int count,MessageInfo messageInfo);
+        void onSuccess(int count, MessageInfo messageInfo);
 
         void onFail();
     }

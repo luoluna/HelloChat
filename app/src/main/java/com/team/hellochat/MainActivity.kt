@@ -53,9 +53,9 @@ class MainActivity : BaseActivity() {
         ll_chat.setOnClickListener {
             currentIndex = 0
             showFragment()
-            iv_chat.setImageResource(R.drawable.ic_person_light)
-            iv_friend.setImageResource(R.drawable.ic_person_normal)
-            iv_discovery.setImageResource(R.drawable.ic_person_normal)
+            iv_chat.setImageResource(R.drawable.ic_chat_light)
+            iv_friend.setImageResource(R.drawable.ic_friends_normal)
+            iv_discovery.setImageResource(R.drawable.ic_discovery_normal)
             iv_personal.setImageResource(R.drawable.ic_person_normal)
             tv_chat.setTextColor(resources.getColor(R.color.appColor))
             tv_friend.setTextColor(resources.getColor(R.color.appTabNormal))
@@ -66,9 +66,9 @@ class MainActivity : BaseActivity() {
         ll_friend.setOnClickListener {
             currentIndex = 1
             showFragment()
-            iv_chat.setImageResource(R.drawable.ic_person_normal)
-            iv_friend.setImageResource(R.drawable.ic_person_light)
-            iv_discovery.setImageResource(R.drawable.ic_person_normal)
+            iv_chat.setImageResource(R.drawable.ic_chat_normal)
+            iv_friend.setImageResource(R.drawable.ic_friends_light)
+            iv_discovery.setImageResource(R.drawable.ic_discovery_normal)
             iv_personal.setImageResource(R.drawable.ic_person_normal)
             tv_chat.setTextColor(resources.getColor(R.color.appTabNormal))
             tv_friend.setTextColor(resources.getColor(R.color.appColor))
@@ -80,9 +80,9 @@ class MainActivity : BaseActivity() {
         ll_discovery.setOnClickListener {
             currentIndex = 2
             showFragment()
-            iv_chat.setImageResource(R.drawable.ic_person_normal)
-            iv_friend.setImageResource(R.drawable.ic_person_normal)
-            iv_discovery.setImageResource(R.drawable.ic_person_light)
+            iv_chat.setImageResource(R.drawable.ic_chat_normal)
+            iv_friend.setImageResource(R.drawable.ic_friends_normal)
+            iv_discovery.setImageResource(R.drawable.ic_discovery_light)
             iv_personal.setImageResource(R.drawable.ic_person_normal)
             tv_chat.setTextColor(resources.getColor(R.color.appTabNormal))
             tv_friend.setTextColor(resources.getColor(R.color.appTabNormal))
@@ -94,9 +94,9 @@ class MainActivity : BaseActivity() {
         ll_personal.setOnClickListener {
             currentIndex = 3
             showFragment()
-            iv_chat.setImageResource(R.drawable.ic_person_normal)
-            iv_friend.setImageResource(R.drawable.ic_person_normal)
-            iv_discovery.setImageResource(R.drawable.ic_person_normal)
+            iv_chat.setImageResource(R.drawable.ic_chat_normal)
+            iv_friend.setImageResource(R.drawable.ic_friends_normal)
+            iv_discovery.setImageResource(R.drawable.ic_discovery_normal)
             iv_personal.setImageResource(R.drawable.ic_person_light)
             tv_chat.setTextColor(resources.getColor(R.color.appTabNormal))
             tv_friend.setTextColor(resources.getColor(R.color.appTabNormal))
@@ -107,9 +107,9 @@ class MainActivity : BaseActivity() {
     }
 
     private fun resetTabBtn() {
-        iv_chat.setImageResource(R.drawable.ic_person_light)
-        iv_friend.setImageResource(R.drawable.ic_person_normal)
-        iv_discovery.setImageResource(R.drawable.ic_person_normal)
+        iv_chat.setImageResource(R.drawable.ic_chat_light)
+        iv_friend.setImageResource(R.drawable.ic_friends_normal)
+        iv_discovery.setImageResource(R.drawable.ic_discovery_normal)
         iv_personal.setImageResource(R.drawable.ic_person_normal)
         tv_chat.setTextColor(resources.getColor(R.color.appColor))
         tv_friend.setTextColor(resources.getColor(R.color.appTabNormal))

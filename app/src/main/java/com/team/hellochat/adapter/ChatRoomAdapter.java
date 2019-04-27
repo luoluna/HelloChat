@@ -24,6 +24,7 @@ import com.team.hellochat.utils.DateUtil;
 
 import java.util.List;
 
+import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_ICON;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TYPE;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_WITH_ID;
 import static com.team.hellochat.app.App.IntentLabel.MESSAGE_FILE;
@@ -59,10 +60,10 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
                 .load(HeadPicture.getResId(room.getIcon()))
                 .into(hold.roomIcon);
         hold.roomTitle.setText(room.getTitle());
-        hold.roomTime.setText(DateUtil.getDateString(room.getLastMessage().getTime()));
+        hold.roomTime.setText(DateUtil.getDateString(room.getRecentMessage().getTime()));
 
         if (room.getMessage().getList().size() > 0) {
-            MessageInfo info = message.getLastMessage();
+            MessageInfo info = message.getRecentMessage();
             hold.roomMessage.setText(info.getType() == MessageType.TEXT ? info.getInformation() : info.getType().getTipName());
         }
         if (message.getNoReadCount() > 0) {
@@ -113,6 +114,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
             intent.putExtra(CHAT_ROOM_TYPE, room.isGroup());
             intent.putExtra(MESSAGE_FILE, room.getMessage().getFile());
             intent.putExtra(CHAT_ROOM_WITH_ID, room.getWithUid());
+            intent.putExtra(CHAT_ROOM_ICON,room.getIcon());
             intent.putExtra(App.IntentLabel.CHAT_ROOM_TITLE, room.getTitle());
             activity.startActivity(intent);
             new Handler().postDelayed(new Runnable() {

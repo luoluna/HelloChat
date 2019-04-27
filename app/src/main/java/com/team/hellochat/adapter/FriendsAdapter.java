@@ -20,6 +20,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_ICON;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TITLE;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TYPE;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_WITH_ID;
@@ -50,7 +51,6 @@ public class FriendsAdapter extends BaseRecyclerAdapter<Friend> {
         hold.name.setText(friend.getRemark());
         Glide.with(activity)
                 .load(HeadPicture.getResId(friend.getAvatar()))
-                .optionalCircleCrop()
                 .into(hold.icon);
     }
 
@@ -78,8 +78,9 @@ public class FriendsAdapter extends BaseRecyclerAdapter<Friend> {
             Intent intent = new Intent(activity, ChatRoomMessageActivity.class);
             intent.putExtra(CHAT_ROOM_TYPE, false);
             intent.putExtra(MESSAGE_FILE, Setting.getChatRoomFile(friend.getId()));
+            intent.putExtra(CHAT_ROOM_ICON, friend.getAvatar());
             intent.putExtra(CHAT_ROOM_TITLE, friend.getRemark());
-            intent.putExtra(CHAT_ROOM_WITH_ID,friend.getId());
+            intent.putExtra(CHAT_ROOM_WITH_ID, friend.getId());
             activity.startActivity(intent);
         }
     }

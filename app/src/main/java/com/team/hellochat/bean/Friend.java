@@ -1,14 +1,16 @@
 package com.team.hellochat.bean;
 
+import com.team.hellochat.app.Setting;
+
 /**
  * Created by Sweven on 2019/4/18.
  * Email:sweventears@Foxmail.com
  */
 public class Friend extends User {
-    private String group;
-    private String imageUri;
-    private String msg;
-    private String remark;
+    private String group="";
+    private String imageUri="";
+    private String msg="";
+    private String remark="";
 
     public String getImageUri() {
         return imageUri;
@@ -27,7 +29,7 @@ public class Friend extends User {
     }
 
     public String getRemark() {
-        return (remark == null || remark.equals("")) ? getNickname() : remark;
+        return remark = Setting.isEmpty(remark) ? getNickname() : remark;
     }
 
     public void setRemark(String remark) {

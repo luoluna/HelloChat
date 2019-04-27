@@ -6,7 +6,7 @@
     <string name="app_tab_friend">Friend</string>
     <string name="app_tab_discovery">Discovery</string>
     <string name="app_tab_personal">Mine</string>
-    <string name="collect">Collect</string>
+    <string name="collect">My Focus</string>
     <string name="credit_grade">Credit Points</string>
     <string name="setting">Setting</string>
     <string name="help">Help and Feedback</string>
@@ -28,4 +28,7 @@
     <string name="load_fail">加载失败 o(╥﹏╥)o</string>
     <string name="chat_fragment_title">聊天</string>
     <string name="friends_fragment_title">好友</string>
+    <string name="send_message_not_allow_null">消息不能为空</string>
+    <string name="personal_data">个人资料</string>
+    <string name="discovery_fragment_title">偶遇</string>
 </resources>

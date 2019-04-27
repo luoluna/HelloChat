@@ -145,6 +145,7 @@ public class UserManager {
         user.setAddress("四川成都");
         user.setAvatar(20);
         user.setAge(16);
+        user.setCreditPoint(406);
         user.setEmail("156431@qq.com");
         user.setPhone("15528123701");
 
@@ -155,8 +156,8 @@ public class UserManager {
         List<Friend> friends = new ArrayList<>();
         Friend friend = new Friend();
         friend.setId(16);
-        friend.setNickname(nickname);
-        friend.setUser(username);
+        friend.setCreditPoint(372);
+        friend.setUser("香菜");
         friend.setSex(Sex.WOMEN);
         friend.setAddress("四川南充");
         friend.setAvatar(13);

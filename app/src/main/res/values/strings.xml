@@ -5,7 +5,7 @@
     <string name="app_tab_friend">好友</string>
     <string name="app_tab_discovery">偶遇</string>
     <string name="app_tab_personal">我的</string>
-    <string name="collect">收藏</string>
+    <string name="collect">我的关注</string>
     <string name="credit_grade">信用点</string>
     <string name="setting">设置</string>
     <string name="help">帮助与反馈</string>
@@ -27,4 +27,7 @@
     <string name="load_fail">加载失败 o(╥﹏╥)o</string>
     <string name="chat_fragment_title">聊天</string>
     <string name="friends_fragment_title">好友</string>
+    <string name="send_message_not_allow_null">消息不能为空</string>
+    <string name="personal_data">个人资料</string>
+    <string name="discovery_fragment_title">偶遇</string>
 </resources>

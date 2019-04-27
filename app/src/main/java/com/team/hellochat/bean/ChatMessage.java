@@ -9,11 +9,11 @@ import java.util.List;
  */
 public class ChatMessage {
     private int id;
-    private String file;
-    private String content;
+    private String file="";
+    private String content="";
     private List<MessageInfo> list = new ArrayList<>();
-    private MessageInfo lastMessage;
-    private long lastTime;
+    private MessageInfo recentMessage;
+    private long recentTime;
     private int noReadCount;
 
     public ChatMessage() {
@@ -33,12 +33,12 @@ public class ChatMessage {
         return list.size();
     }
 
-    public long getLastTime() {
-        return lastTime = getLastMessage().getTime();
+    public long getRecentTime() {
+        return recentTime = getRecentMessage().getTime();
     }
 
-    public MessageInfo getLastMessage() {
-        return lastMessage = getMessageCount() > 0 ? list.get(getMessageCount() - 1) : new MessageInfo();
+    public MessageInfo getRecentMessage() {
+        return recentMessage = getMessageCount() > 0 ? list.get(0) : new MessageInfo();
     }
 
     public int getId() {

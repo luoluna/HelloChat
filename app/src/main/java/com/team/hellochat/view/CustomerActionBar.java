@@ -52,12 +52,19 @@ public class CustomerActionBar extends LinearLayout {
     private Object oLeft;
     private Object oRight;
 
+    private Context context;
+
     public CustomerActionBar(Context context) {
         super(context);
     }
 
     public CustomerActionBar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        onCreate(context);
+    }
+
+    private void onCreate(Context context) {
+        this.context = context;
         LayoutInflater.from(context).inflate(R.layout.customer_action_bar, this);
 
         layout = findViewById(R.id.action_bar_layout);
@@ -394,11 +401,11 @@ public class CustomerActionBar extends LinearLayout {
 
     public void setImage(URL url) {
         if (which == LEFT_BTN) {
-            Glide.with(this)
+            Glide.with(context)
                     .load(url)
                     .into(ivLeft);
         } else if (which == RIGHT_BTN) {
-            Glide.with(this)
+            Glide.with(context)
                     .load(url)
                     .into(ivRight);
         }
@@ -406,11 +413,11 @@ public class CustomerActionBar extends LinearLayout {
 
     public void setImage(Uri uri) {
         if (which == LEFT_BTN) {
-            Glide.with(this)
+            Glide.with(context)
                     .load(uri)
                     .into(ivLeft);
         } else if (which == RIGHT_BTN) {
-            Glide.with(this)
+            Glide.with(context)
                     .load(uri)
                     .into(ivRight);
         }

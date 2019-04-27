@@ -80,7 +80,7 @@ public class ChatFragment extends Fragment {
             ChatMessage chatMessage = MessageManager.getInstance(getContext(), items.get(i).getFile()).getMessages();
             if (chatMessage.getList().size() > 0) {
                 items.get(i).setMessage(chatMessage);
-                items.get(i).setLastMessage(chatMessage.getLastMessage());
+                items.get(i).setRecentMessage(chatMessage.getRecentMessage());
                 list.add(items.get(i));
             }
         }

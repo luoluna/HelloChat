@@ -6,11 +6,11 @@ package com.team.hellochat.bean;
  */
 public class MessageInfo {
     private int uid;
-    private String nickname;
+    private String nickname="";
     private int avatar;
     private long time;
     private MessageType type;
-    private String information;
+    private String information="";
     private boolean isRead;
 
     public MessageInfo() {

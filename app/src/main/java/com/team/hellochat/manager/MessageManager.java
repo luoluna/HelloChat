@@ -66,12 +66,11 @@ public class MessageManager {
     }
 
     public void addMessageInfo(Context context, String name, MessageInfo messageInfo) {
-        if (messages == null) {
-            messages = MessageManager.getInstance(context, name).getMessages();
-        }
+        MessageManager.getInstance().clearMessage();
+        messages = MessageManager.getInstance(context, name).getMessages();
         this.file = name;
         messages.setFile(name);
-        messages.getList().add(messageInfo);
+        messages.getList().add(0,messageInfo);
         save(context);
     }
 

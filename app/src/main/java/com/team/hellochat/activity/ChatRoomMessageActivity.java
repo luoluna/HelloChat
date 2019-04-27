@@ -1,9 +1,15 @@
 package com.team.hellochat.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.service.autofill.UserData;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,25 +18,28 @@ import android.widget.TextView;
 import com.team.hellochat.BaseActivity;
 import com.team.hellochat.R;
 import com.team.hellochat.adapter.ChatMessageAdapter;
-import com.team.hellochat.app.App;
+import com.team.hellochat.app.Setting;
 import com.team.hellochat.bean.ChatMessage;
 import com.team.hellochat.bean.ChatRoomItem;
-import com.team.hellochat.bean.Friend;
 import com.team.hellochat.bean.MessageInfo;
 import com.team.hellochat.bean.MessageType;
-import com.team.hellochat.manager.AddressBookManager;
+import com.team.hellochat.bean.User;
 import com.team.hellochat.manager.ChatRoomListManager;
 import com.team.hellochat.manager.MessageManager;
+import com.team.hellochat.manager.UserDatabaseManager;
 import com.team.hellochat.manager.UserManager;
 import com.team.hellochat.utils.ToastUtil;
 import com.team.hellochat.view.ChatMessageRecyclerView;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_ICON;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TITLE;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TYPE;
+import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_WITH_ID;
 import static com.team.hellochat.app.App.IntentLabel.MESSAGE_FILE;
 
 /**
@@ -69,6 +78,7 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
     private String topTitle;
     private MessageInfo sendInfo;
     private int withId;
+    private int icon;
 
 
     @Override
@@ -104,12 +114,15 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
             isGroup = intent.getBooleanExtra(CHAT_ROOM_TYPE, false);
             file = intent.getStringExtra(MESSAGE_FILE);
             topTitle = intent.getStringExtra(CHAT_ROOM_TITLE);
-            withId = intent.getIntExtra(App.IntentLabel.CHAT_ROOM_WITH_ID, 0);
+            icon = intent.getIntExtra(CHAT_ROOM_ICON, 0);
+            withId = intent.getIntExtra(CHAT_ROOM_WITH_ID, 0);
             putData();
+            markRead();
         }
 
         chatMessageAdapter = new ChatMessageAdapter(this, list);
         layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         messageRecyclerView.setLayoutManager(layoutManager);
         messageRecyclerView.setAdapter(chatMessageAdapter);
@@ -131,15 +144,22 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
         ivVideo.setOnClickListener(this);
     }
 
+    private void hiddenSoftInput(View v) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert imm != null;
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
     private void addAdapterCallBack() {
         chatMessageAdapter.setOnSendListener(new ChatMessageAdapter.OnSendListener() {
             @Override
             public void onSuccess(int count, MessageInfo messageInfo) {
-                layoutManager.scrollToPositionWithOffset(count - 1, 0);
                 etMessage.setText(EMPTY_MESSAGE);
                 MessageManager.getInstance().clearMessage();
                 MessageManager.getInstance().addMessageInfo(getApplicationContext(), file, messageInfo);
                 add2ChatList();
+                layoutManager.scrollToPositionWithOffset(0, 0);
+                receiveMessage();
             }
 
             @Override
@@ -149,28 +169,32 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
         });
     }
 
-    /**
-     * 添加该聊天室到聊天室列表
-     */
-    private void add2ChatList() {
-        boolean hasFile = ChatRoomListManager.getInstance().hasFile(file);
-        if (!hasFile) {
-            ChatRoomItem item = new ChatRoomItem();
-            if (!isGroup) {
-                List<Friend> friends = AddressBookManager.getInstance().getFriends();
-                for (int i = 0; i < friends.size(); i++) {
-                    if (friends.get(i).getId() == withId) {
-                        item.setIcon(friends.get(i).getAvatar());
-                    }
+    private void receiveMessage() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                MessageInfo info = new MessageInfo();
+                info.setUid(withId);
+                User user=UserDatabaseManager.getInstance(getApplicationContext()).getUser(withId);
+                info.setNickname(user.getNickname());
+                info.setAvatar(user.getAvatar());
+                info.setType(MessageType.TEXT);
+                info.setInformation("你还有多久到站");
+                info.setTime(System.currentTimeMillis());
+                info.setRead(false);
+                List<MessageInfo> uploads = new ArrayList<>();
+                uploads.add(info);
+
+                for (MessageInfo upload : uploads) {
+                    MessageManager.getInstance().addMessageInfo(getApplicationContext(), file, upload);
+                }
+                MessageManager.getInstance().clearMessage();
+                chatMessageAdapter.acceptMessage(uploads);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && isActivityTransitionRunning()) {
+                    markRead();
                 }
             }
-            item.setFile(file);
-            item.setTitle(topTitle);
-            item.setTop(false);
-            item.setGroup(isGroup);
-            item.setWithUid(withId);
-            ChatRoomListManager.getInstance().addListItem(getApplicationContext(), item);
-        }
+        }, 3000);
     }
 
     /**
@@ -181,17 +205,48 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
         title.setText(topTitle);
         more.setImageResource(isGroup ? R.drawable.ic_chat_group_more : R.drawable.ic_chat_room_more);
 
+        if (file.equals("")) {
+            file = Setting.getChatRoomFile(withId);
+        }
         message = MessageManager.getInstance(this, file).getMessages();
         list = message.getList();
+
     }
 
     /**
-     *
+     * 移动到最下面
      */
     private void moveToBottom() {
         if (list.size() > 0) {
-            layoutManager.scrollToPositionWithOffset(message.getList().size() - 1, 0);
+            layoutManager.scrollToPositionWithOffset(0, 0);
         }
+    }
+
+    /**
+     * 添加该聊天室到聊天室列表
+     */
+    private void add2ChatList() {
+        boolean hasFile = ChatRoomListManager.getInstance().hasFile(file);
+        if (!hasFile) {
+            ChatRoomItem item = new ChatRoomItem();
+            item.setIcon(icon);
+            item.setFile(file);
+            item.setTitle(topTitle);
+            item.setTop(false);
+            item.setGroup(isGroup);
+            item.setWithUid(withId);
+            ChatRoomListManager.getInstance().addListItem(getApplicationContext(), item);
+        }
+    }
+
+    private void setSendInfo(MessageType type, String message) {
+        sendInfo = new MessageInfo();
+        sendInfo.setUid(UserManager.getInstance().getUid());
+        sendInfo.setInformation(message);
+        sendInfo.setType(type);
+        sendInfo.setAvatar(UserManager.getInstance().getUser().getAvatar());
+        sendInfo.setRead(true);
+        sendInfo.setTime(System.currentTimeMillis());
     }
 
     @Override
@@ -202,6 +257,7 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
                 finish();
                 break;
             case R.id.bar_more:
+                ToastUtil.showShort(this, "查看聊天室详情");
                 if (isGroup) {
                     //TODO get group information
                 } else {
@@ -214,7 +270,7 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
                     setSendInfo(MessageType.TEXT, message);
                     chatMessageAdapter.sendSelfMessage(sendInfo);
                 } else {
-                    ToastUtil.showError(this, "消息不能为空");
+                    ToastUtil.showError(this, R.string.send_message_not_allow_null);
                 }
                 break;
             case R.id.message_voice:
@@ -222,14 +278,24 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
         }
     }
 
-    private void setSendInfo(MessageType type, String message) {
-        sendInfo = new MessageInfo();
-        sendInfo.setUid(UserManager.getInstance().getUid());
-        sendInfo.setInformation(message);
-        sendInfo.setType(type);
-        sendInfo.setAvatar(UserManager.getInstance().getUser().getAvatar());
-        sendInfo.setRead(true);
-        sendInfo.setTime(System.currentTimeMillis());
+    private void markRead() {
+        message = MessageManager.getInstance(this, file).getMessages();
+        for (int i = 0; i < message.getList().size(); i++) {
+            message.getList().get(i).setRead(true);
+        }
+        MessageManager.getInstance().setMessages(this, file, message);
+    }
+
+    @Override
+    protected void onStart() {
+        markRead();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        markRead();
+        super.onStop();
     }
 
     @Override

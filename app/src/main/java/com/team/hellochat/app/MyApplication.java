@@ -6,8 +6,10 @@ import android.content.Context;
 
 import com.team.hellochat.manager.AddressBookManager;
 import com.team.hellochat.manager.ChatRoomListManager;
+import com.team.hellochat.manager.CollectManager;
 import com.team.hellochat.manager.LogInManager;
 import com.team.hellochat.manager.SettingManager;
+import com.team.hellochat.manager.UserDatabaseManager;
 import com.team.hellochat.manager.UserManager;
 import com.team.hellochat.utils.FacilityUtil;
 import com.team.hellochat.utils.MD5Util;
@@ -36,11 +38,13 @@ public class MyApplication extends Application {
                 MD5Util.getMD5(FacilityUtil.getAndroidID(this)));
 
         // 初始化单例管理器
+        UserDatabaseManager.getInstance(this);
         SettingManager.getInstance(this);
         LogInManager.getInstance(this);
         UserManager.getInstance(this);
         AddressBookManager.getInstance(this);
         ChatRoomListManager.getInstance(this);
+        CollectManager.getInstance(this);
     }
 
     public static MyApplication getInstance() {

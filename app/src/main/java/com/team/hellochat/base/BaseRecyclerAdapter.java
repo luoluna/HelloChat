@@ -1,11 +1,11 @@
 package com.team.hellochat.base;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 
-import com.team.hellochat.adapter.ChatMessageAdapter;
+import com.team.hellochat.utils.LogUtil;
+import com.team.hellochat.utils.ToastUtil;
 
 import java.util.List;
 
@@ -18,11 +18,15 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {
     protected Activity activity;
     protected List<T> list;
     protected LayoutInflater inflater;
+    protected ToastUtil toast;
+    protected LogUtil log;
 
     public BaseRecyclerAdapter(Activity activity, List<T> list) {
         this.activity = activity;
         this.list = list;
-        inflater=LayoutInflater.from(activity);
+        inflater = LayoutInflater.from(activity);
+        toast = new ToastUtil(activity);
+        log = new LogUtil(this.getClass().getName());
     }
 
     public List<T> getList() {

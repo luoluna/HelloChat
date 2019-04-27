@@ -39,7 +39,7 @@ public class ChatRoomListManager {
         Collections.sort(chatRoomList.getList(), new Comparator<ChatRoomItem>() {
             @Override
             public int compare(ChatRoomItem o1, ChatRoomItem o2) {
-                return (int) (o1.getLastMessage().getTime() - o2.getLastMessage().getTime());
+                return (int) (o1.getRecentMessage().getTime() - o2.getRecentMessage().getTime());
             }
         });
     }

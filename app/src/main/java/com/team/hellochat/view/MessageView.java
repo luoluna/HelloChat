@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.team.hellochat.R;
 import com.team.hellochat.bean.MessageType;
+import com.team.hellochat.utils.glide.GlideRoundTransformation;
 
 import static com.team.hellochat.utils.ViewUtil.notifyMeasure;
 
@@ -35,25 +36,26 @@ public class MessageView extends LinearLayout {
 
     public MessageView(Context context) {
         super(context);
-        onCreate();
+        onCreate(context);
     }
 
     public MessageView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        onCreate();
+        onCreate(context);
     }
 
     public MessageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        onCreate();
+        onCreate(context);
     }
 
     public MessageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        onCreate();
+        onCreate(context);
     }
 
-    private void onCreate() {
+    private void onCreate(Context context) {
+        this.context = context;
         inflate(getContext(), R.layout.view_message_type, this);
 
         bindView();
@@ -94,7 +96,11 @@ public class MessageView extends LinearLayout {
                 meTv.setVisibility(GONE);
                 meIv.setVisibility(VISIBLE);
                 // TODO 圆角测试
-                Glide.with(context).load(message).optionalCircleCrop().into(meIv);
+                Glide.with(context)
+                        .load(message)
+                        .centerCrop()
+                        .bitmapTransform(new GlideRoundTransformation(context))
+                        .into(meIv);
                 setImageHeight(meIv);
             }
         } else if (who == WHO_OTHER) {
@@ -107,17 +113,22 @@ public class MessageView extends LinearLayout {
             } else if (type == MessageType.IMAGE) {
                 otherTv.setVisibility(GONE);
                 otherIv.setVisibility(VISIBLE);
-                Glide.with(context).load(message).optionalCircleCrop().into(otherIv);
+                Glide.with(context)
+                        .load(message)
+                        .centerCrop()
+                        .bitmapTransform(new GlideRoundTransformation(context))
+                        .into(otherIv);
                 setImageHeight(otherIv);
             }
         }
     }
 
-    private void setImageHeight(View view) {
+    private void setImageHeight(ImageView view) {
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) view.getLayoutParams();
         params.width = view.getMeasuredWidth();
         params.height = view.getMeasuredWidth() / 9 * 16;
         view.setLayoutParams(params);
+        view.setMaxHeight(view.getMeasuredWidth() / 9 * 16);
     }
 
     public int getWho() {
