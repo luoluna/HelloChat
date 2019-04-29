@@ -39,6 +39,7 @@ import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TITLE;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TYPE;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_WITH_ID;
 import static com.team.hellochat.app.App.IntentLabel.MESSAGE_FILE;
+import static com.team.hellochat.app.App.IntentLabel.USER_ID;
 
 /**
  * Created by Sweven on 2019/3/31.
@@ -260,6 +261,9 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
                     //TODO get group information
                 } else {
                     //TODO get people information
+                    Intent intent = new Intent(this, PersonalHomePageActivity.class);
+                    intent.putExtra(USER_ID, withId);
+                    startActivity(intent);
                 }
                 break;
             case R.id.btn_send_message:

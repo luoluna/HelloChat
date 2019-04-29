@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.team.hellochat.R;
 import com.team.hellochat.activity.ChatRoomMessageActivity;
+import com.team.hellochat.activity.PersonalHomePageActivity;
 import com.team.hellochat.base.BaseRecyclerAdapter;
 import com.team.hellochat.bean.Collect;
 import com.team.hellochat.manager.CollectManager;
@@ -30,6 +31,7 @@ import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TITLE;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TYPE;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_WITH_ID;
 import static com.team.hellochat.app.App.IntentLabel.MESSAGE_FILE;
+import static com.team.hellochat.app.App.IntentLabel.USER_ID;
 
 /**
  * Created by Sweven on 2019/4/27.
@@ -114,7 +116,9 @@ public class CollectAdapter extends BaseRecyclerAdapter<Collect> {
             switch (v.getId()) {
                 case R.id.card_item:
                     if (myCredit >= collect.getCreditPoint()) {
-                        toast.showShort("打开个人主页或者详情");
+                        Intent intent = new Intent(activity, PersonalHomePageActivity.class);
+                        intent.putExtra(USER_ID, collect.getId());
+                        activity.startActivity(intent);
                     } else {
                         toast.showShort("您的信用点不足以查看对方的信息");
                     }

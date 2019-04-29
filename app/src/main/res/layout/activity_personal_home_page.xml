@@ -73,7 +73,7 @@
                     android:background="@color/line" />
 
                 <LinearLayout
-                    android:id="@+id/ly_collect"
+                    android:id="@+id/ly_add_friend"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -81,11 +81,11 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:id="@+id/iv_collect"
+                        android:id="@+id/iv_add_friend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_3"
-                        android:src="@drawable/ic_collect" />
+                        android:src="@drawable/ic_add_friend" />
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>

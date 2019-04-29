@@ -24,6 +24,7 @@
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginBottom="@dimen/dp_5"
             android:layout_toEndOf="@id/head_photo"
+            android:visibility="gone"
             android:textColor="@color/black" />
 
         <com.team.hellochat.view.MessageView
