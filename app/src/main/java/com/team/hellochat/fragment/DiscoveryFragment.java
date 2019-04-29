@@ -1,7 +1,6 @@
 package com.team.hellochat.fragment;
 
 import android.os.Bundle;
-import android.service.autofill.UserData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,8 +15,6 @@ import com.team.hellochat.R;
 import com.team.hellochat.adapter.DiscoveryAdapter;
 import com.team.hellochat.base.BaseFragment;
 import com.team.hellochat.bean.Discovery;
-import com.team.hellochat.bean.Sex;
-import com.team.hellochat.bean.User;
 import com.team.hellochat.manager.UserDatabaseManager;
 
 import java.util.ArrayList;
@@ -78,7 +75,7 @@ public class DiscoveryFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void receiveData() {
-        list=UserDatabaseManager.getInstance(activity).getDiscovery(activity);
+        list = UserDatabaseManager.getInstance().getDiscovery(activity);
     }
 
     /**
@@ -90,4 +87,15 @@ public class DiscoveryFragment extends BaseFragment implements View.OnClickListe
     public void onClick(View v) {
 
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            receiveData();
+            recyclerView.setAdapter(discoveryAdapter);
+        }
+    }
+
+
 }

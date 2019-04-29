@@ -23,7 +23,7 @@ public class LaunchActivity extends BaseActivity {
     private static final int FINISH = 0x03;
 
     private long countdown = TIME;
-
+    private Activity activity;
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -39,16 +39,12 @@ public class LaunchActivity extends BaseActivity {
                 if (!LogInManager.getInstance().isLogin()) {
                     startActivity(new Intent(activity, LoginActivity.class));
                 } else {
-                    startActivity(new Intent(activity, MainActivity .class));
+                    startActivity(new Intent(activity, MainActivity.class));
                 }
                 finish();
             }
         }
     };
-
-
-    private Activity activity;
-
     private ImageView appIcon;
     private TextView appText;
 

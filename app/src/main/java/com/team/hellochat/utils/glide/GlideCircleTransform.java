@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.bumptech.glide.request.target.Target;
 
 import java.security.MessageDigest;
 
@@ -20,10 +19,6 @@ import java.security.MessageDigest;
 public class GlideCircleTransform extends BitmapTransformation {
     public GlideCircleTransform(Context context) {
         super(context);
-    }
-
-    @Override protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
-        return circleCrop(pool, toTransform);
     }
 
     private static Bitmap circleCrop(BitmapPool pool, Bitmap source) {
@@ -48,6 +43,11 @@ public class GlideCircleTransform extends BitmapTransformation {
         float r = size / 2f;
         canvas.drawCircle(r, r, r, paint);
         return result;
+    }
+
+    @Override
+    protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
+        return circleCrop(pool, toTransform);
     }
 
     public String getId() {

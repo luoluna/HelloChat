@@ -24,7 +24,8 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         a.recycle();
     }
 
-    /** * 自定义分割线
+    /**
+     * 自定义分割线
      *
      * @param context
      * @param drawableId 分割线图片
@@ -34,7 +35,8 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         mDividerHeight = mDivider.getIntrinsicHeight();
     }
 
-    /** * 自定义分割线
+    /**
+     * 自定义分割线
      *
      * @param context
      * @param dividerHeight 分割线高度
@@ -52,6 +54,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
         drawHorizontal(c, parent);
         drawVertical(c, parent);
     }
+
     private int getSpanCount(RecyclerView parent) {
         // 列数
         int spanCount = -1;
@@ -71,7 +74,7 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration {
             final View child = parent.getChildAt(i);
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int left = child.getLeft() - params.leftMargin;
-            final int right = child.getRight() + params.rightMargin+ mDividerHeight;
+            final int right = child.getRight() + params.rightMargin + mDividerHeight;
             final int top = child.getBottom() + params.bottomMargin;
             final int bottom = top + mDividerHeight;
             if (mDivider != null) {

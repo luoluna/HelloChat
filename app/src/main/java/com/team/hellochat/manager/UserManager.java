@@ -4,16 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences.Editor;
 
 import com.team.hellochat.app.App;
-import com.team.hellochat.bean.AddressBook;
-import com.team.hellochat.bean.Friend;
-import com.team.hellochat.bean.Sex;
 import com.team.hellochat.bean.User;
 import com.team.hellochat.utils.JsonUtil;
 import com.team.hellochat.utils.PreferenceUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import static com.team.hellochat.activity.LoginActivity.EMAIL;
+import static com.team.hellochat.activity.LoginActivity.PHONE;
 import static com.team.hellochat.app.App.SharedLabel.LOG_NAME;
 import static com.team.hellochat.app.App.SharedLabel.NICKNAME;
 import static com.team.hellochat.app.App.SharedLabel.PASSWORD;
@@ -74,6 +70,11 @@ public class UserManager {
         save(context);
     }
 
+    public void setAvatar(Context context, int avatar) {
+        this.user.setAvatar(avatar);
+        save(context);
+    }
+
     public void setUid(Context context, int uid) {
         this.uid = uid;
         user.setId(this.uid);
@@ -131,43 +132,38 @@ public class UserManager {
         return user;
     }
 
-    public void logIn(Context context, String loginName, String pass) {
+    public void logIn(Context context, int logInAccount, String loginName, String pass) {
         this.loginName = loginName;
         this.password = pass;
         //default data
-        this.username = "叶子";
-        this.nickname = username;
+        if (logInAccount == PHONE) {
+            user = UserDatabaseManager.getInstance().getUserByPhone(loginName);
+        } else if (logInAccount == EMAIL) {
+            user = UserDatabaseManager.getInstance().getUserByEmail(loginName);
+        } else {
+            user = UserDatabaseManager.getInstance().getUserByUser(loginName);
+        }
+        this.username = user.getUser();
+        this.nickname = user.getNickname();
 
-        user.setNickname(nickname);
-        user.setId(20);
-        user.setUser(username);
-        user.setSex(Sex.MAN);
-        user.setAddress("四川成都");
-        user.setAvatar(20);
-        user.setAge(16);
-        user.setCreditPoint(406);
-        user.setEmail("156431@qq.com");
-        user.setPhone("15528123701");
-
-        AddressBook addressBook = new AddressBook();
-        addressBook.setId(user.getId());
-        addressBook.setFriendsCount(1);
-        addressBook.setGroupsCount(0);
-        List<Friend> friends = new ArrayList<>();
-        Friend friend = new Friend();
-        friend.setId(16);
-        friend.setCreditPoint(372);
-        friend.setUser("香菜");
-        friend.setSex(Sex.WOMEN);
-        friend.setAddress("四川南充");
-        friend.setAvatar(13);
-        friend.setAge(17);
-        friend.setEmail("15644531@qq.com");
-        friend.setPhone("15520323701");
-        friends.add(friend);
-        addressBook.setFriends(friends);
-        AddressBookManager.getInstance().setAddressBook(context, addressBook);
-
+//        AddressBook addressBook = new AddressBook();
+//        addressBook.setId(user.getId());
+//        addressBook.setFriendsCount(1);
+//        addressBook.setGroupsCount(0);
+//        List<Friend> friends = new ArrayList<>();
+//        Friend friend = new Friend();
+//        friend.setId(16);
+//        friend.setCreditPoint(372);
+//        friend.setUser("香菜");
+//        friend.setSex(Sex.WOMEN);
+//        friend.setAddress("四川南充");
+//        friend.setAvatar(13);
+//        friend.setAge(17);
+//        friend.setEmail("15644531@qq.com");
+//        friend.setPhone("15520323701");
+//        friends.add(friend);
+//        addressBook.setFriends(friends);
+//        AddressBookManager.getInstance().setAddressBook(context, addressBook);
         save(context);
     }
 }

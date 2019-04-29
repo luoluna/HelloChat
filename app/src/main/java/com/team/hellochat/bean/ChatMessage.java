@@ -9,8 +9,8 @@ import java.util.List;
  */
 public class ChatMessage {
     private int id;
-    private String file="";
-    private String content="";
+    private String file = "";
+    private String content = "";
     private List<MessageInfo> list = new ArrayList<>();
     private MessageInfo recentMessage;
     private long recentTime;

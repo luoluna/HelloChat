@@ -24,8 +24,16 @@ import java.util.List;
  */
 public class MyApplication extends Application {
     public static List<Object> activitys = new ArrayList<>();
-    private static MyApplication instance;
     public static volatile Context applicationContext;
+    private static MyApplication instance;
+
+    public static MyApplication getInstance() {
+        return instance;
+    }
+
+    public static int num() {
+        return activitys.size();
+    }
 
     @Override
     public void onCreate() {
@@ -37,6 +45,9 @@ public class MyApplication extends Application {
                 "OuYu", UMConfigure.DEVICE_TYPE_PHONE,
                 MD5Util.getMD5(FacilityUtil.getAndroidID(this)));
 
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
+
         // 初始化单例管理器
         UserDatabaseManager.getInstance(this);
         SettingManager.getInstance(this);
@@ -47,18 +58,10 @@ public class MyApplication extends Application {
         CollectManager.getInstance(this);
     }
 
-    public static MyApplication getInstance() {
-        return instance;
-    }
-
     // 添加Activity到容器中
     public void addActivity(Activity activity) {
         if (!activitys.contains(activity))
             activitys.add(activity);
-    }
-
-    public static int num() {
-        return activitys.size();
     }
 
     public void remove() {

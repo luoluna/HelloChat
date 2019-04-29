@@ -6,9 +6,9 @@ package com.team.hellochat.bean;
  */
 public class DiscussionGroup {
     private int id;
-    private String group="";
-    private String title="";
-    private String imageUri="";
+    private String group = "";
+    private String title = "";
+    private String imageUri = "";
 
     public int getId() {
         return id;

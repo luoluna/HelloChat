@@ -5,5 +5,5 @@ package com.team.hellochat.interf;
  * Email:sweventears@Foxmail.com
  */
 public interface SendMessageCallBack {
-    void onResult(String message,String typeLabel);
+    void onResult(String message, String typeLabel);
 }

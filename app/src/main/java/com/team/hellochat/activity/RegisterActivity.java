@@ -9,7 +9,10 @@ import android.widget.TextView;
 
 import com.team.hellochat.BaseActivity;
 import com.team.hellochat.R;
+import com.team.hellochat.bean.User;
 import com.team.hellochat.interf.PhoneNumberTextWatcher;
+import com.team.hellochat.manager.UserDatabaseManager;
+import com.team.hellochat.utils.RegMatchUtil;
 import com.team.hellochat.utils.ToastUtil;
 import com.team.hellochat.view.LoadingDialog;
 
@@ -21,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final int FINISH_REGISTER = 0x25;
     //topBar
     private TextView title;
     private ImageView ivBack;
@@ -43,8 +47,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void bindView() {
-        title=findViewById(R.id.bar_title);
-        ivBack=findViewById(R.id.bar_back);
+        title = findViewById(R.id.bar_title);
+        ivBack = findViewById(R.id.bar_back);
 
         edUser = findViewById(R.id.input_user);
         edPhone = findViewById(R.id.input_phone_number);
@@ -78,35 +82,42 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if (v.getId()==R.id.bar_back){
+        if (v.getId() == R.id.bar_back) {
             finish();
             return;
         }
         loadingDialog.show();
         loadingDialog.setLoadingText(R.string.signIn);
-        String user = edUser.getText().toString();
+        String username = edUser.getText().toString();
         String phone = edPhone.getText().toString().replace(" ", "");
         String pass = edPass.getText().toString();
         String rePass = edRePass.getText().toString();
-        if (user.length() == 0) {
-            toast.showShort(R.string.nicknameNotEmpty);
-            edUser.findFocus();
-            loadingDialog.cancel();
+        if (username.length() == 0) {
+            toast.showShort(R.string.usernameNotEmpty);
         } else if (!verifyPhone(phone)) {
             toast.showShort(R.string.phoneError);
-            edPhone.findFocus();
-            loadingDialog.cancel();
         } else if (!verifyPass(pass, rePass)) {
             toast.showShort(R.string.passNotMatch);
-            loadingDialog.cancel();
         } else {
             //TODO 联网注册 注册成功保存信息到本地，跳转到登录界面
-            toast.showShort("注册成功");
-            Intent intent=new Intent();
-            intent.putExtra("user",user);
-            finish();
-            loadingDialog.cancel();
+            User user = new User();
+            user.setUser(username);
+            user.setPhone(phone);
+            user.setPassword(pass);
+            if (UserDatabaseManager.getInstance().getUserByUser(username) != null) {
+                toast.showShort("用户名已存在");
+            } else if (UserDatabaseManager.getInstance().getUserByPhone(phone) != null) {
+                toast.showShort("手机号已被注册");
+            } else {
+                toast.showShort("注册成功");
+                UserDatabaseManager.getInstance().registerNewUser(this, user);
+                Intent intent = new Intent();
+                intent.putExtra("username", username);
+                setResult(FINISH_REGISTER, intent);
+                finish();
+            }
         }
+        loadingDialog.cancel();
     }
 
     private boolean verifyPass(String pass, String rePass) {
@@ -114,6 +125,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private boolean verifyPhone(String phone) {
-        return phone.length() == 11 && phone.matches("^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$");
+        return phone.length() == 11 && RegMatchUtil.IsPhone(phone);
     }
 }

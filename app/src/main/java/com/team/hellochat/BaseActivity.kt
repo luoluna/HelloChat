@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import com.team.hellochat.utils.LogUtil
 import com.umeng.analytics.MobclickAgent
 import com.umeng.commonsdk.UMConfigure

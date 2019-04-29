@@ -34,16 +34,6 @@ public class ChatRoomListManager {
         return instance;
     }
 
-    public void sort() {
-        Set<ChatRoomItem> set = new HashSet<>();
-        Collections.sort(chatRoomList.getList(), new Comparator<ChatRoomItem>() {
-            @Override
-            public int compare(ChatRoomItem o1, ChatRoomItem o2) {
-                return (int) (o1.getRecentMessage().getTime() - o2.getRecentMessage().getTime());
-            }
-        });
-    }
-
     public static ChatRoomListManager getInstance(Context context) {
         if (instance == null) {
             synchronized (ChatRoomListManager.class) {
@@ -55,6 +45,15 @@ public class ChatRoomListManager {
         return instance;
     }
 
+    public void sort() {
+        Set<ChatRoomItem> set = new HashSet<>();
+        Collections.sort(chatRoomList.getList(), new Comparator<ChatRoomItem>() {
+            @Override
+            public int compare(ChatRoomItem o1, ChatRoomItem o2) {
+                return (int) (o1.getRecentMessage().getTime() - o2.getRecentMessage().getTime());
+            }
+        });
+    }
 
     public void addListItem(Context context, ChatRoomItem item) {
         if (!hasFile(item.getFile())) {

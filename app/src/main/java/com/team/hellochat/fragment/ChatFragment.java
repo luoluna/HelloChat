@@ -74,6 +74,7 @@ public class ChatFragment extends Fragment {
     }
 
     private void getChatRoomList() {
+        ChatRoomListManager.getInstance().sort();
         List<ChatRoomItem> items = ChatRoomListManager.getInstance().getList();
         list.clear();
         for (int i = 0; i < items.size(); i++) {
@@ -84,7 +85,6 @@ public class ChatFragment extends Fragment {
                 list.add(items.get(i));
             }
         }
-        ChatRoomListManager.getInstance().sort();
         if (chatRoomAdapter != null) {
             recyclerView.setAdapter(chatRoomAdapter);
         }

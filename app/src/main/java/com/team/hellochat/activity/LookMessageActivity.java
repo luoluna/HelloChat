@@ -29,6 +29,8 @@ public class LookMessageActivity extends BaseActivity implements View.OnTouchLis
 
     private MessageType type;
     private String message;
+    private Timer timer = new Timer();
+    private boolean click = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +83,6 @@ public class LookMessageActivity extends BaseActivity implements View.OnTouchLis
             }
         });
     }
-
-    private Timer timer = new Timer();
-    private boolean click = false;
-
 
     @SuppressLint("ClickableViewAccessibility")
     @Override

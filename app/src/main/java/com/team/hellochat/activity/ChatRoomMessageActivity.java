@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.service.autofill.UserData;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -175,7 +173,7 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
             public void run() {
                 MessageInfo info = new MessageInfo();
                 info.setUid(withId);
-                User user=UserDatabaseManager.getInstance(getApplicationContext()).getUser(withId);
+                User user = UserDatabaseManager.getInstance().getUserByUid(withId);
                 info.setNickname(user.getNickname());
                 info.setAvatar(user.getAvatar());
                 info.setType(MessageType.TEXT);

@@ -13,7 +13,6 @@ import android.util.AttributeSet;
 public class ChatMessageRecyclerView extends RecyclerView {
 
 
-
     public ChatMessageRecyclerView(@NonNull Context context) {
         super(context);
     }

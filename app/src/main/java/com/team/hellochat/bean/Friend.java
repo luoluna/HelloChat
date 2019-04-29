@@ -7,10 +7,10 @@ import com.team.hellochat.app.Setting;
  * Email:sweventears@Foxmail.com
  */
 public class Friend extends User {
-    private String group="";
-    private String imageUri="";
-    private String msg="";
-    private String remark="";
+    private String group = "";
+    private String imageUri = "";
+    private String msg = "";
+    private String remark = "";
 
     public String getImageUri() {
         return imageUri;

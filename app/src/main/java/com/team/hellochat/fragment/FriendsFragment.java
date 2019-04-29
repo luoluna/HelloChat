@@ -15,7 +15,6 @@ import com.team.hellochat.adapter.FriendsAdapter;
 import com.team.hellochat.base.BaseFragment;
 import com.team.hellochat.bean.AddressBook;
 import com.team.hellochat.bean.Friend;
-import com.team.hellochat.bean.HeadPicture;
 import com.team.hellochat.manager.AddressBookManager;
 import com.team.hellochat.view.ShowEmpty;
 

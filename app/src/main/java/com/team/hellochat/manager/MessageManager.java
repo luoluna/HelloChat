@@ -70,7 +70,7 @@ public class MessageManager {
         messages = MessageManager.getInstance(context, name).getMessages();
         this.file = name;
         messages.setFile(name);
-        messages.getList().add(0,messageInfo);
+        messages.getList().add(0, messageInfo);
         save(context);
     }
 

@@ -31,7 +31,7 @@ public class User {
     /**
      * 年龄
      */
-    private Integer age;
+    private int age;
     /**
      * 性别
      */
@@ -44,6 +44,54 @@ public class User {
      * 信用点
      */
     private int creditPoint;
+    /**
+     * 身份证
+     */
+    private String idCard = "";
+    /**
+     * 爱好
+     */
+    private String[] hobby = new String[5];
+    /**
+     * 签名
+     */
+    private String signature = "";
+    /**
+     * 密码
+     */
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
+    public String[] getHobby() {
+        return hobby;
+    }
+
+    public void setHobby(String[] hobby) {
+        this.hobby = hobby;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
 
     public int getCreditPoint() {
         return creditPoint;
@@ -101,11 +149,11 @@ public class User {
         this.address = address;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(int age) {
         this.age = age;
     }
 

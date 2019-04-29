@@ -40,6 +40,7 @@
                 android:padding="@dimen/dp_3"
                 android:text="@string/app_name" />
 
+
             <TextView
                 android:id="@+id/tv_discovery_card_age"
                 android:layout_width="wrap_content"
@@ -61,10 +62,20 @@
                 android:text="@string/app_name" />
 
             <TextView
-                android:id="@+id/tv_discovery_card_address"
+                android:id="@+id/tv_discovery_card_credit_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_discovery_card_sex"
+                android:layout_marginStart="@dimen/dp_2"
+                android:layout_marginBottom="@dimen/dp_3"
+                android:padding="@dimen/dp_3"
+                android:text="@string/app_name" />
+
+            <TextView
+                android:id="@+id/tv_discovery_card_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_discovery_card_credit_point"
                 android:layout_marginStart="@dimen/dp_2"
                 android:layout_marginBottom="@dimen/dp_3"
                 android:padding="@dimen/dp_3"

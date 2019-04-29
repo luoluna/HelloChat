@@ -19,4 +19,23 @@
         <item name="android:windowContentOverlay">@null</item><!-- 不要头部阴影 -->
         <item name="android:windowBackground">@color/transparent</item><!-- 背景颜色设置透明-->
     </style>
+
+    <style name="NormalDialogStyle">
+        <!--对话框背景 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!--没有标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 是否浮现在Activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!--背景透明 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 是否有覆盖 -->
+        <item name="android:windowContentOverlay">@null</item>
+        <!--进出的显示动画 -->
+        <!--<item name="android:windowAnimationStyle">@style/normalDialogAnim</item>-->
+        <!--背景变暗-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
 </resources>

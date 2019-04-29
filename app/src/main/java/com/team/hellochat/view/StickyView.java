@@ -93,7 +93,7 @@ public class StickyView extends View {
 
     public StickyView(Context context, View mDragView, WindowManager mWm) {
         super(context);
-        this.mContext=context;
+        this.mContext = context;
         this.mDragView = mDragView;
         this.mWm = mWm;
         init();
@@ -111,9 +111,9 @@ public class StickyView extends View {
         mDragViewWidth = mDragView.getMeasuredWidth() / 2;
         mDragRadius = mDragViewHeight;
 
-        mFixRadius= DisplayUtils.dip2Dimension(8,mContext);
-        mFarthestDistance=DisplayUtils.dip2Dimension(80,mContext);
-        mMinFixRadius=DisplayUtils.dip2Dimension(3f,mContext);
+        mFixRadius = DisplayUtils.dip2Dimension(8, mContext);
+        mFarthestDistance = DisplayUtils.dip2Dimension(80, mContext);
+        mMinFixRadius = DisplayUtils.dip2Dimension(3f, mContext);
 
         mParams = new WindowManager.LayoutParams();
         mParams.format = PixelFormat.TRANSLUCENT;
@@ -129,6 +129,7 @@ public class StickyView extends View {
 
     /**
      * 设置状态栏高度，最好外面传进来，当view还没有绑定到窗体的时候是测量不到的
+     *
      * @param mStatusBarHeight
      */
     public void setStatusBarHeight(int mStatusBarHeight) {
@@ -358,15 +359,15 @@ public class StickyView extends View {
     }
 
     private void updateManagerView(float x, float y) {
-        mParams.x=(int)(x-mDragViewWidth);
-        mParams.y=(int)(y-mDragViewHeight-mStatusBarHeight);
+        mParams.x = (int) (x - mDragViewWidth);
+        mParams.y = (int) (y - mDragViewHeight - mStatusBarHeight);
         try {
             mWm.updateViewLayout(mDragView, mParams);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -390,16 +391,18 @@ public class StickyView extends View {
 
     /**
      * 设置画笔颜色
+     *
      * @param mPaintColor
      */
     public void setPaintColor(int mPaintColor) {
-        if(mPaint!=null){
+        if (mPaint != null) {
             mPaint.setColor(mPaintColor);
         }
     }
 
     /**
      * 得到最大拖拽范围
+     *
      * @return
      */
     public float getmFarthestDistance() {
@@ -408,28 +411,33 @@ public class StickyView extends View {
 
     /**
      * 设置最大拖拽范围
+     *
      * @param mFarthestDistance
      */
     public void setFarthestDistance(float mFarthestDistance) {
         this.mFarthestDistance = mFarthestDistance;
     }
+
     public float getmMinFixRadius() {
         return mMinFixRadius;
     }
 
     /**
      * 设置拖拽过程中固定圆变化的最小半径值
+     *
      * @param mMinFixRadius
      */
     public void setMinFixRadius(float mMinFixRadius) {
         this.mMinFixRadius = mMinFixRadius;
     }
+
     public float getmDragRadius() {
         return mDragRadius;
     }
 
     /**
      * 设置拖拽圆半径
+     *
      * @param mDragRadius
      */
     public void setmDragRadius(float mDragRadius) {
@@ -442,40 +450,11 @@ public class StickyView extends View {
 
     /**
      * 设置固定圆半径
+     *
      * @param mFixRadius
      */
     public void setFixRadius(float mFixRadius) {
         this.mFixRadius = mFixRadius;
-    }
-    /**
-     * 拖拽过程监听接口
-     */
-    public interface DragStickViewListener {
-        /**
-         * 在范围内移动回调
-         * @param dragCanterPoint 拖拽的中心坐标
-         */
-        void inRangeMove(PointF dragCanterPoint);
-        /**
-         * 在范围外移动回调
-         * @param dragCanterPoint 拖拽的中心坐标
-         */
-        void outRangeMove(PointF dragCanterPoint);
-        /**
-         *  当移出了规定范围，最后在范围内松手的回调
-         * @param dragCanterPoint
-         */
-        void out2InRangeUp(PointF dragCanterPoint);
-        /**
-         * 当移出了规定范围，最后在范围外松手的回调
-         * @param dragCanterPoint
-         */
-        void outRangeUp(PointF dragCanterPoint);
-        /**
-         * 一直没有移动出范围，在范围内松手的回调
-         * @param dragCanterPoint
-         */
-        void inRangeUp(PointF dragCanterPoint);
     }
 
     public DragStickViewListener getDragStickViewListener() {
@@ -484,5 +463,45 @@ public class StickyView extends View {
 
     public void setDragStickViewListener(DragStickViewListener dragStickViewListener) {
         this.dragStickViewListener = dragStickViewListener;
+    }
+
+    /**
+     * 拖拽过程监听接口
+     */
+    public interface DragStickViewListener {
+        /**
+         * 在范围内移动回调
+         *
+         * @param dragCanterPoint 拖拽的中心坐标
+         */
+        void inRangeMove(PointF dragCanterPoint);
+
+        /**
+         * 在范围外移动回调
+         *
+         * @param dragCanterPoint 拖拽的中心坐标
+         */
+        void outRangeMove(PointF dragCanterPoint);
+
+        /**
+         * 当移出了规定范围，最后在范围内松手的回调
+         *
+         * @param dragCanterPoint
+         */
+        void out2InRangeUp(PointF dragCanterPoint);
+
+        /**
+         * 当移出了规定范围，最后在范围外松手的回调
+         *
+         * @param dragCanterPoint
+         */
+        void outRangeUp(PointF dragCanterPoint);
+
+        /**
+         * 一直没有移动出范围，在范围内松手的回调
+         *
+         * @param dragCanterPoint
+         */
+        void inRangeUp(PointF dragCanterPoint);
     }
 }

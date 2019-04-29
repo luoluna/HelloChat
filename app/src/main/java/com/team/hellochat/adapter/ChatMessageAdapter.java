@@ -32,6 +32,8 @@ import static com.team.hellochat.app.App.IntentLabel.MESSAGE_TYPE;
  */
 public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
 
+    private OnSendListener onSendListener;
+
     public ChatMessageAdapter(Activity activity, List<MessageInfo> list) {
         super(activity, list);
     }
@@ -99,6 +101,16 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
         notifyDataSetChanged();
     }
 
+    public void setOnSendListener(OnSendListener onSendListener) {
+        this.onSendListener = onSendListener;
+    }
+
+    public interface OnSendListener {
+        void onSuccess(int count, MessageInfo messageInfo);
+
+        void onFail();
+    }
+
     public class ChatMessageHoldView extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private RelativeLayout otherChat;
@@ -130,17 +142,5 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
             intent.putExtra(MESSAGE_INFO, list.get(getAdapterPosition()).getInformation());
             activity.startActivity(intent);
         }
-    }
-
-    private OnSendListener onSendListener;
-
-    public interface OnSendListener {
-        void onSuccess(int count, MessageInfo messageInfo);
-
-        void onFail();
-    }
-
-    public void setOnSendListener(OnSendListener onSendListener) {
-        this.onSendListener = onSendListener;
     }
 }

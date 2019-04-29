@@ -29,19 +29,17 @@ import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCR
  */
 public class XRecyclerView extends RecyclerView {
 
-    View header;// 顶部布局文件；
-    int headerHeight;// 顶部布局文件的高度；
-
-    int firstVisibleItem;// 当前第一个可见的item的位置；
-    int scrollState;// listview 当前滚动状态；
-    boolean isRemark;// 标记，当前是在listview最顶端摁下的；
-    int startY;// 摁下时的Y值；
-
-    int state;// 当前的状态；
     final int NONE = 0;// 正常状态；
     final int PULL = 1;// 提示下拉状态；
     final int RELEASE = 2;// 提示释放状态；
     final int REFRESHING = 3;// 刷新状态；
+    View header;// 顶部布局文件；
+    int headerHeight;// 顶部布局文件的高度；
+    int firstVisibleItem;// 当前第一个可见的item的位置；
+    int scrollState;// listview 当前滚动状态；
+    boolean isRemark;// 标记，当前是在listview最顶端摁下的；
+    int startY;// 摁下时的Y值；
+    int state;// 当前的状态；
     IRefreshListener iRefreshListener;//刷新数据的接口
 
     public XRecyclerView(@NonNull Context context) {
@@ -256,15 +254,16 @@ public class XRecyclerView extends RecyclerView {
         lastupdatetime.setText(time);
     }
 
-    public void setInterface(IRefreshListener iRefreshListener){
+    public void setInterface(IRefreshListener iRefreshListener) {
         this.iRefreshListener = iRefreshListener;
     }
 
     /**
      * 刷新数据接口
+     *
      * @author Administrator
      */
-    public interface IRefreshListener{
+    public interface IRefreshListener {
         public void onRefresh();
     }
 

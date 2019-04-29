@@ -114,7 +114,7 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
             intent.putExtra(CHAT_ROOM_TYPE, room.isGroup());
             intent.putExtra(MESSAGE_FILE, room.getMessage().getFile());
             intent.putExtra(CHAT_ROOM_WITH_ID, room.getWithUid());
-            intent.putExtra(CHAT_ROOM_ICON,room.getIcon());
+            intent.putExtra(CHAT_ROOM_ICON, room.getIcon());
             intent.putExtra(App.IntentLabel.CHAT_ROOM_TITLE, room.getTitle());
             activity.startActivity(intent);
             new Handler().postDelayed(new Runnable() {

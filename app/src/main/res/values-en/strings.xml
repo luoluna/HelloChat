@@ -22,7 +22,7 @@
     <string name="passNotMatch">The passwords do not match</string>
     <string name="phoneError">The phone number format is not correct</string>
     <string name="signIn">Sign In...</string>
-    <string name="nicknameNotEmpty">Nickname cannot be empty</string>
+    <string name="usernameNotEmpty">user cannot be empty</string>
     <string name="input_chat_message">输入聊天消息</string>
     <string name="loading">努力加载中……</string>
     <string name="load_fail">加载失败 o(╥﹏╥)o</string>
@@ -31,4 +31,8 @@
     <string name="send_message_not_allow_null">消息不能为空</string>
     <string name="personal_data">个人资料</string>
     <string name="discovery_fragment_title">偶遇</string>
+    <string name="my_collect">我的关注</string>
+    <string name="forget_password_activity_title">找回密码</string>
+    <string name="logout">退出登录</string>
+    <string name="setting_activity_title">设置</string>
 </resources>

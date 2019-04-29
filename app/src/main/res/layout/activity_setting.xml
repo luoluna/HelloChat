@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="vertical">
+
+    <include layout="@layout/action_bar_back" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/account_security_item"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/normal_item_height"
+            android:background="@drawable/item_press_color_change"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="24dp"
+                android:text="账号与安全"
+                android:textColor="#262525"
+                android:textSize="14sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginEnd="24dp"
+                android:src="@drawable/go_to_image" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/notification_item"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/normal_item_height"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@drawable/item_press_color_change"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="24dp"
+                android:gravity="center"
+                android:text="消息推送"
+                android:textColor="#262525"
+                android:textSize="14sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginEnd="24dp"
+                android:src="@drawable/go_to_image" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/clear_cache_item"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/normal_item_height"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/item_press_color_change"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="24dp"
+                android:gravity="center"
+                android:text="清除缓存"
+                android:textColor="#262525"
+                android:textSize="14sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/dp_24"
+                android:src="@drawable/go_to_image" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/accredit_item"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/normal_item_height"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/item_press_color_change"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="24dp"
+                android:gravity="center"
+                android:text="授权"
+                android:textColor="#262525"
+                android:textSize="14sp" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginEnd="24dp"
+                android:src="@drawable/go_to_image" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/check_update_item"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/item_press_color_change"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="24dp"
+                android:gravity="center"
+                android:text="检查更新"
+                android:textColor="#262525"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/version_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="24dp"
+                android:gravity="center|end"
+                android:src="@drawable/go_to_image"
+                android:text="当前版本 1.0"
+                android:textColor="#4d4c4c"
+                android:textSize="11sp"
+                tools:ignore="SmallSp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/tv_log_out"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@drawable/item_press_color_change"
+        android:gravity="center"
+        android:text="@string/logout"
+        android:textColor="#fff45a4c"
+        android:textSize="26sp" />
+</LinearLayout>

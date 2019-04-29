@@ -58,17 +58,17 @@ public class LoadingDialog extends Dialog {
         }
     }
 
-    public void setLoadingText(int resId) {
-        if (tvLoading != null) {
-            tvLoading.setText(resId);
-        }
-    }
-
     public String getLoadingText() {
         if (tvLoading != null) {
             return tvLoading.getText().toString();
         } else {
             return getContext().getResources().getString(R.string.text_loading);
+        }
+    }
+
+    public void setLoadingText(int resId) {
+        if (tvLoading != null) {
+            tvLoading.setText(resId);
         }
     }
 

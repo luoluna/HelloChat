@@ -194,6 +194,68 @@ public class CustomerActionBar extends LinearLayout {
                 .build();
     }
 
+    private void setImageObject(Object oLeft) {
+        if (oLeft instanceof Integer) {
+            setImage((Integer) oLeft);
+        } else if (oLeft instanceof Bitmap) {
+            setImage((Bitmap) oLeft);
+        } else if (oLeft instanceof Drawable) {
+            setImage((Drawable) oLeft);
+        } else if (oLeft instanceof URL) {
+            setImage((URL) oLeft);
+        } else if (oLeft instanceof Uri) {
+            setImage((Uri) oLeft);
+        }
+    }
+
+    public void setImage(int resId) {
+        if (which == LEFT_BTN) {
+            ivLeft.setImageResource(resId);
+        } else if (which == RIGHT_BTN) {
+            ivRight.setImageResource(resId);
+        }
+    }
+
+    public void setImage(Bitmap bm) {
+        if (which == LEFT_BTN) {
+            ivLeft.setImageBitmap(bm);
+        } else if (which == RIGHT_BTN) {
+            ivRight.setImageBitmap(bm);
+        }
+    }
+
+    public void setImage(Drawable drawable) {
+        if (which == LEFT_BTN) {
+            ivLeft.setImageDrawable(drawable);
+        } else if (which == RIGHT_BTN) {
+            ivRight.setImageDrawable(drawable);
+        }
+    }
+
+    public void setImage(URL url) {
+        if (which == LEFT_BTN) {
+            Glide.with(context)
+                    .load(url)
+                    .into(ivLeft);
+        } else if (which == RIGHT_BTN) {
+            Glide.with(context)
+                    .load(url)
+                    .into(ivRight);
+        }
+    }
+
+    public void setImage(Uri uri) {
+        if (which == LEFT_BTN) {
+            Glide.with(context)
+                    .load(uri)
+                    .into(ivLeft);
+        } else if (which == RIGHT_BTN) {
+            Glide.with(context)
+                    .load(uri)
+                    .into(ivRight);
+        }
+    }
+
     public class Which {
 
         private int which;
@@ -276,6 +338,45 @@ public class CustomerActionBar extends LinearLayout {
             return new Listener(this);
         }
 
+        private Which showLeft() {
+            customerActionBar.which = this.which;
+            customerActionBar.type = this.type;
+            customerActionBar.onClickLeftListener = this.onClickLeftListener;
+            customerActionBar.onClickRightListener = this.onClickRightListener;
+            customerActionBar.sLeft = this.sLeft;
+            customerActionBar.sRight = this.sRight;
+            customerActionBar.oLeft = this.oLeft;
+            customerActionBar.oRight = this.oRight;
+            customerActionBar.build();
+            this.which = LEFT_BTN;
+            return this;
+        }
+
+        private Which showRight() {
+            customerActionBar.which = this.which;
+            customerActionBar.type = this.type;
+            customerActionBar.onClickLeftListener = this.onClickLeftListener;
+            customerActionBar.onClickRightListener = this.onClickRightListener;
+            customerActionBar.sLeft = this.sLeft;
+            customerActionBar.sRight = this.sRight;
+            customerActionBar.oLeft = this.oLeft;
+            customerActionBar.oRight = this.oRight;
+            customerActionBar.build();
+            this.which = RIGHT_BTN;
+            return this;
+        }
+
+        private void build() {
+            customerActionBar.which = this.which;
+            customerActionBar.type = this.type;
+            customerActionBar.onClickLeftListener = this.onClickLeftListener;
+            customerActionBar.onClickRightListener = this.onClickRightListener;
+            customerActionBar.sLeft = this.sLeft;
+            customerActionBar.sRight = this.sRight;
+            customerActionBar.oLeft = this.oLeft;
+            customerActionBar.oRight = this.oRight;
+            customerActionBar.build();
+        }
 
         public class Listener {
 
@@ -319,108 +420,6 @@ public class CustomerActionBar extends LinearLayout {
 
         }
 
-        private Which showLeft() {
-            customerActionBar.which = this.which;
-            customerActionBar.type = this.type;
-            customerActionBar.onClickLeftListener = this.onClickLeftListener;
-            customerActionBar.onClickRightListener = this.onClickRightListener;
-            customerActionBar.sLeft = this.sLeft;
-            customerActionBar.sRight = this.sRight;
-            customerActionBar.oLeft = this.oLeft;
-            customerActionBar.oRight = this.oRight;
-            customerActionBar.build();
-            this.which = LEFT_BTN;
-            return this;
-        }
-
-        private Which showRight() {
-            customerActionBar.which = this.which;
-            customerActionBar.type = this.type;
-            customerActionBar.onClickLeftListener = this.onClickLeftListener;
-            customerActionBar.onClickRightListener = this.onClickRightListener;
-            customerActionBar.sLeft = this.sLeft;
-            customerActionBar.sRight = this.sRight;
-            customerActionBar.oLeft = this.oLeft;
-            customerActionBar.oRight = this.oRight;
-            customerActionBar.build();
-            this.which = RIGHT_BTN;
-            return this;
-        }
-
-        private void build() {
-            customerActionBar.which = this.which;
-            customerActionBar.type = this.type;
-            customerActionBar.onClickLeftListener = this.onClickLeftListener;
-            customerActionBar.onClickRightListener = this.onClickRightListener;
-            customerActionBar.sLeft = this.sLeft;
-            customerActionBar.sRight = this.sRight;
-            customerActionBar.oLeft = this.oLeft;
-            customerActionBar.oRight = this.oRight;
-            customerActionBar.build();
-        }
-
-    }
-
-    private void setImageObject(Object oLeft) {
-        if (oLeft instanceof Integer) {
-            setImage((Integer) oLeft);
-        } else if (oLeft instanceof Bitmap) {
-            setImage((Bitmap) oLeft);
-        } else if (oLeft instanceof Drawable) {
-            setImage((Drawable) oLeft);
-        } else if (oLeft instanceof URL) {
-            setImage((URL) oLeft);
-        } else if (oLeft instanceof Uri) {
-            setImage((Uri) oLeft);
-        }
-    }
-
-    public void setImage(int resId) {
-        if (which == LEFT_BTN) {
-            ivLeft.setImageResource(resId);
-        } else if (which == RIGHT_BTN) {
-            ivRight.setImageResource(resId);
-        }
-    }
-
-    public void setImage(Bitmap bm) {
-        if (which == LEFT_BTN) {
-            ivLeft.setImageBitmap(bm);
-        } else if (which == RIGHT_BTN) {
-            ivRight.setImageBitmap(bm);
-        }
-    }
-
-    public void setImage(Drawable drawable) {
-        if (which == LEFT_BTN) {
-            ivLeft.setImageDrawable(drawable);
-        } else if (which == RIGHT_BTN) {
-            ivRight.setImageDrawable(drawable);
-        }
-    }
-
-    public void setImage(URL url) {
-        if (which == LEFT_BTN) {
-            Glide.with(context)
-                    .load(url)
-                    .into(ivLeft);
-        } else if (which == RIGHT_BTN) {
-            Glide.with(context)
-                    .load(url)
-                    .into(ivRight);
-        }
-    }
-
-    public void setImage(Uri uri) {
-        if (which == LEFT_BTN) {
-            Glide.with(context)
-                    .load(uri)
-                    .into(ivLeft);
-        } else if (which == RIGHT_BTN) {
-            Glide.with(context)
-                    .load(uri)
-                    .into(ivRight);
-        }
     }
 
 }

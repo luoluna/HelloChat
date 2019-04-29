@@ -26,6 +26,10 @@ public class RefreshRecyclerView extends SwipeRefreshLayout {
     private LinearLayout llLoadMoreView;
     private LinearLayout llHeader, llFooter;
     private RecyclerViewNoBugLinearLayoutManager lin;
+    private int scrollDistance;
+    private boolean isLoadMore = false;
+    private boolean isCanLoadMore = true;
+    private OnRefreshListener refreshListener;
 
     public RefreshRecyclerView(Context context) {
         super(context);
@@ -135,7 +139,6 @@ public class RefreshRecyclerView extends SwipeRefreshLayout {
         isCanLoadMore = false;
     }
 
-
     private void initSwipeRefreshLayout() {
         super.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -159,11 +162,6 @@ public class RefreshRecyclerView extends SwipeRefreshLayout {
         typedArray.recycle();
         return accentColor;
     }
-
-
-    private int scrollDistance;
-    private boolean isLoadMore = false;
-    private boolean isCanLoadMore = true;
 
     private void initRecyclerView() {
         recyclerView.setNestedScrollingEnabled(false);
@@ -211,16 +209,8 @@ public class RefreshRecyclerView extends SwipeRefreshLayout {
         });
     }
 
-    private OnRefreshListener refreshListener;
-
     public void setOnRefreshListener(OnRefreshListener listener) {
         this.refreshListener = listener;
-    }
-
-    public interface OnRefreshListener {
-        void onRefresh();
-
-        void onLoadMore();
     }
 
     public RecyclerView getRecyclerView() {
@@ -266,8 +256,14 @@ public class RefreshRecyclerView extends SwipeRefreshLayout {
         return getRecyclerView();
     }
 
-
     public NestedScrollView getScrollView() {
         return scrollView;
+    }
+
+
+    public interface OnRefreshListener {
+        void onRefresh();
+
+        void onLoadMore();
     }
 }

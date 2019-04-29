@@ -17,9 +17,10 @@ import com.bumptech.glide.Glide;
 import com.team.hellochat.R;
 import com.team.hellochat.activity.ChatRoomMessageActivity;
 import com.team.hellochat.base.BaseRecyclerAdapter;
-import com.team.hellochat.bean.Discovery;
+import com.team.hellochat.bean.Collect;
 import com.team.hellochat.manager.CollectManager;
 import com.team.hellochat.manager.UserManager;
+import com.team.hellochat.utils.DialogUtil;
 import com.team.hellochat.utils.WindowUtil;
 
 import java.util.List;
@@ -34,9 +35,9 @@ import static com.team.hellochat.app.App.IntentLabel.MESSAGE_FILE;
  * Created by Sweven on 2019/4/27.
  * Email:sweventears@Foxmail.com
  */
-public class DiscoveryAdapter extends BaseRecyclerAdapter<Discovery> {
+public class CollectAdapter extends BaseRecyclerAdapter<Collect> {
 
-    public DiscoveryAdapter(Activity activity, List<Discovery> list) {
+    public CollectAdapter(Activity activity, List<Collect> list) {
         super(activity, list);
     }
 
@@ -44,29 +45,38 @@ public class DiscoveryAdapter extends BaseRecyclerAdapter<Discovery> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = inflater.inflate(R.layout.item_list_discovery, viewGroup, false);
-        return new DiscoveryViewHolder(view);
+        return new CollectViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        DiscoveryViewHolder holder = (DiscoveryViewHolder) viewHolder;
-        Discovery discovery = list.get(position);
+        CollectViewHolder holder = (CollectViewHolder) viewHolder;
+        Collect collect = list.get(position);
         int myCredit = UserManager.getInstance().getUser().getCreditPoint();
 
         Glide.with(activity)
                 .load(R.drawable.background_personal_head)
                 .into(holder.ivCardBackground);
-        holder.tvName.setText("昵称：" + discovery.getNickname());
-        holder.tvCreditPoint.setText(myCredit >= discovery.getCreditPoint() ? discovery.getCreditPoint() + "" : "***");
-        holder.tvAge.setText("性别：" + discovery.getSex().getLabel());
-        holder.tvSex.setText("年龄：" + String.valueOf(discovery.getAge()));
-        holder.tvAddress.setText("故乡：" + discovery.getAddress());
+        holder.tvName.setText("昵  称：" + collect.getNickname());
+        holder.tvSex.setText("年  龄：" + collect.getSex().getLabel());
+        holder.tvCreditPoint.setText("信用点：" + (myCredit >= collect.getCreditPoint() ? collect.getCreditPoint() : "***"));
+        holder.tvAge.setText("性  别：" + String.valueOf(collect.getAge()));
+        holder.tvAddress.setText("故  乡：" + collect.getAddress());
 
-        holder.ivCollect.setImageResource(CollectManager.getInstance().isCollect(discovery.getId()) ? R.drawable.ic_collected : R.drawable.ic_collect);
+        holder.ivCollect.setImageResource(R.drawable.ic_collected);
+        holder.lyCollect.setOnClickListener(v -> cancelCollect(position, collect.getId()));
     }
 
-    class DiscoveryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private void cancelCollect(int position, int uid) {
+        DialogUtil.ShowTips(activity, "确定取消关注？", () -> {
+            CollectManager.getInstance().cancelCollect(activity, uid);
+            list.remove(position);
+            notifyItemRemoved(position);
+        });
+    }
+
+    class CollectViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private CardView item;
         private ImageView ivCardBackground;
@@ -74,7 +84,7 @@ public class DiscoveryAdapter extends BaseRecyclerAdapter<Discovery> {
         private ImageView ivStarChat, ivCollect;
         private LinearLayout lyStarChat, lyCollect;
 
-        public DiscoveryViewHolder(@NonNull View view) {
+        public CollectViewHolder(@NonNull View view) {
             super(view);
             item = view.findViewById(R.id.card_item);
             ivCardBackground = view.findViewById(R.id.iv_discovery_card_background);
@@ -95,43 +105,32 @@ public class DiscoveryAdapter extends BaseRecyclerAdapter<Discovery> {
 
             item.setOnClickListener(this);
             lyStarChat.setOnClickListener(this);
-            lyCollect.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            Discovery discovery = list.get(getAdapterPosition());
+            Collect collect = list.get(getAdapterPosition());
             int myCredit = UserManager.getInstance().getUser().getCreditPoint();
             switch (v.getId()) {
                 case R.id.card_item:
-                    if (myCredit >= discovery.getCreditPoint()) {
+                    if (myCredit >= collect.getCreditPoint()) {
                         toast.showShort("打开个人主页或者详情");
                     } else {
                         toast.showShort("您的信用点不足以查看对方的信息");
                     }
                     break;
                 case R.id.ly_start_chat:
-                    if (myCredit >= discovery.getCreditPoint()) {
+                    if (myCredit >= collect.getCreditPoint()) {
                         toast.showShort("开始聊天");
                         Intent intent = new Intent(activity, ChatRoomMessageActivity.class);
                         intent.putExtra(CHAT_ROOM_TYPE, false);
                         intent.putExtra(MESSAGE_FILE, "");
-                        intent.putExtra(CHAT_ROOM_TITLE, discovery.getNickname());
-                        intent.putExtra(CHAT_ROOM_WITH_ID, discovery.getId());
-                        intent.putExtra(CHAT_ROOM_ICON, discovery.getAvatar());
+                        intent.putExtra(CHAT_ROOM_TITLE, collect.getNickname());
+                        intent.putExtra(CHAT_ROOM_WITH_ID, collect.getId());
+                        intent.putExtra(CHAT_ROOM_ICON, collect.getAvatar());
                         activity.startActivity(intent);
                     } else {
                         toast.showShort("您的信用点不足以与对方聊天");
-                    }
-                    break;
-                case R.id.ly_collect:
-                    list.get(getAdapterPosition()).setCollect(!discovery.isCollect());
-                    boolean isCollect = list.get(getAdapterPosition()).isCollect();
-                    ivCollect.setImageResource(isCollect ? R.drawable.ic_collected : R.drawable.ic_collect);
-                    if (isCollect) {
-                        CollectManager.getInstance().addCollect(activity, list.get(getAdapterPosition()));
-                    } else {
-                        CollectManager.getInstance().cancelCollect(activity, list.get(getAdapterPosition()).getId());
                     }
                     break;
             }

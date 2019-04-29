@@ -24,7 +24,8 @@ import com.team.hellochat.utils.DisplayUtils;
  */
 public class StickyViewHelper implements View.OnTouchListener, StickyView.DragStickViewListener {
 
-    private  int dragViewLayouId;
+    private final Context mContext;
+    private int dragViewLayouId;
     private Runnable viewInRangeMoveRun;
     private Runnable viewOutRangeMoveRun;
     private Runnable viewOut2InRangeUpRun;
@@ -34,7 +35,6 @@ public class StickyViewHelper implements View.OnTouchListener, StickyView.DragSt
     private WindowManager.LayoutParams mParams;
     private StickyView mStickyView;
     private View mDragView;
-    private final Context mContext;
     private View mShowView;
     private int mStatusBarHeight;
     private float mMinFixRadius;
@@ -46,7 +46,7 @@ public class StickyViewHelper implements View.OnTouchListener, StickyView.DragSt
     public StickyViewHelper(Context mContext, View mShowView, int dragViewLayouId) {
         this.mContext = mContext;
         this.mShowView = mShowView;
-        this.dragViewLayouId=dragViewLayouId;
+        this.dragViewLayouId = dragViewLayouId;
         /**
          * 这步比较关键，当触摸到外部小圆点的时候会执行StickyViewHelper实现的onTouch方法
          */
@@ -69,12 +69,12 @@ public class StickyViewHelper implements View.OnTouchListener, StickyView.DragSt
 
             mStatusBarHeight = DisplayUtils.getStatusBarHeight(mShowView);
             mShowView.setVisibility(View.INVISIBLE);
-         /**
-          * 当手指触摸小圆点的时候这个对象将被创建，我试过不这样，直接用mShowView，
-          *  动画做完以后WindowManager执行remove,mShowView再加添回其对应的父布局
-          *  看着没问题，但是下次再按下这个小圆点就得不到它在屏幕上的坐标，points里面是0，0
-          *  第一次计算的时候会产生误差。具体原因还在查询。
-          */
+            /**
+             * 当手指触摸小圆点的时候这个对象将被创建，我试过不这样，直接用mShowView，
+             *  动画做完以后WindowManager执行remove,mShowView再加添回其对应的父布局
+             *  看着没问题，但是下次再按下这个小圆点就得不到它在屏幕上的坐标，points里面是0，0
+             *  第一次计算的时候会产生误差。具体原因还在查询。
+             */
             mDragView = LayoutInflater.from(mContext).inflate(dragViewLayouId, null, false);
 //            文本内容复制
             copyText();
@@ -101,23 +101,23 @@ public class StickyViewHelper implements View.OnTouchListener, StickyView.DragSt
      * 初始化StickyView的
      */
     private void initStickyViewData() {
- //          计算小圆点在屏幕的坐标
+        //          计算小圆点在屏幕的坐标
         int[] points = new int[2];
         mShowView.getLocationInWindow(points);
         int x = points[0] + mShowView.getWidth() / 2;
         int y = points[1] + mShowView.getHeight() / 2;
 //           需要外部设置，当StickyView还没有执行完dispatchAttachedToWindow()时是计算不出其高度的
         mStickyView.setStatusBarHeight(mStatusBarHeight);
-        if(mFarthestDistance>0){
+        if (mFarthestDistance > 0) {
             mStickyView.setFarthestDistance(mFarthestDistance);
         }
-        if(mMinFixRadius>0){
+        if (mMinFixRadius > 0) {
             mStickyView.setMinFixRadius(mMinFixRadius);
         }
-        if(mFixRadius>0){
+        if (mFixRadius > 0) {
             mStickyView.setFixRadius(mFixRadius);
         }
-        if(mPathColor!=0){
+        if (mPathColor != 0) {
             mStickyView.setPaintColor(mPathColor);
         }
 //          初始化做作画的圆和控制点坐标
@@ -128,13 +128,14 @@ public class StickyViewHelper implements View.OnTouchListener, StickyView.DragSt
      * 复制文本内容
      */
     private void copyText() {
-        if(mShowView instanceof TextView &&mDragView instanceof TextView){
-            ((TextView)mDragView).setText((((TextView) mShowView).getText().toString()));
+        if (mShowView instanceof TextView && mDragView instanceof TextView) {
+            ((TextView) mDragView).setText((((TextView) mShowView).getText().toString()));
         }
     }
 
     /**
      * 设置最大拖拽范围
+     *
      * @param mFarthestDistance px
      */
     public void setFarthestDistance(float mFarthestDistance) {
@@ -143,6 +144,7 @@ public class StickyViewHelper implements View.OnTouchListener, StickyView.DragSt
 
     /**
      * 设置拖拽过程中固定圆变化的最小半径值
+     *
      * @param mMinFixRadius px
      */
     public void setMinFixRadius(float mMinFixRadius) {
@@ -151,6 +153,7 @@ public class StickyViewHelper implements View.OnTouchListener, StickyView.DragSt
 
     /**
      * 设置固定圆半径
+     *
      * @param mFixRadius px
      */
     public void setFixRadius(float mFixRadius) {
@@ -159,47 +162,53 @@ public class StickyViewHelper implements View.OnTouchListener, StickyView.DragSt
 
     /**
      * 设置绘制颜色
+     *
      * @param mPathColor
      */
     public void setmPathColor(int mPathColor) {
         this.mPathColor = mPathColor;
     }
+
     /**
      * 在范围内移动回调
+     *
      * @param dragCanterPoint 拖拽的中心坐标
      */
     @Override
     public void inRangeMove(PointF dragCanterPoint) {
-        if(viewInRangeMoveRun !=null){
+        if (viewInRangeMoveRun != null) {
             viewInRangeMoveRun.run();
         }
     }
 
     /**
      * 在范围外移动回调
+     *
      * @param dragCanterPoint 拖拽的中心坐标
      */
     @Override
     public void outRangeMove(PointF dragCanterPoint) {
-        if(viewOutRangeMoveRun !=null){
+        if (viewOutRangeMoveRun != null) {
             viewOutRangeMoveRun.run();
         }
     }
 
     /**
-     *  当移出了规定范围，最后在范围内松手的回调
+     * 当移出了规定范围，最后在范围内松手的回调
+     *
      * @param dragCanterPoint
      */
     @Override
     public void out2InRangeUp(PointF dragCanterPoint) {
         removeView();
-        if(viewOut2InRangeUpRun !=null){
+        if (viewOut2InRangeUpRun != null) {
             viewOut2InRangeUpRun.run();
         }
     }
 
     /**
      * 当移出了规定范围，最后在范围外松手的回调
+     *
      * @param dragCanterPoint
      */
     @Override
@@ -210,17 +219,20 @@ public class StickyViewHelper implements View.OnTouchListener, StickyView.DragSt
 
     /**
      * 一直没有移动出范围，在范围内松手的回调
+     *
      * @param dragCanterPoint
      */
     @Override
     public void inRangeUp(PointF dragCanterPoint) {
         removeView();
-        if(mViewInRangeUpRun !=null){
+        if (mViewInRangeUpRun != null) {
             mViewInRangeUpRun.run();
         }
     }
+
     /**
      * 播放移除动画(帧动画)，这个过程根据个人喜好
+     *
      * @param dragCanterPoint
      */
     private void playAnim(PointF dragCanterPoint) {
@@ -228,15 +240,15 @@ public class StickyViewHelper implements View.OnTouchListener, StickyView.DragSt
         imageView.setImageResource(R.drawable.out_anim);
         final AnimationDrawable mAnimDrawable = (AnimationDrawable) imageView
                 .getDrawable();
-        mParams.gravity= Gravity.TOP|Gravity.LEFT;
+        mParams.gravity = Gravity.TOP | Gravity.LEFT;
 //        这里得到的是其真实的大小，因为此时还得不到其测量值
         int intrinsicWidth = imageView.getDrawable().getIntrinsicWidth();
         int intrinsicHeight = imageView.getDrawable().getIntrinsicHeight();
 
-        mParams.x= (int) dragCanterPoint.x-intrinsicWidth/2;
-        mParams.y= (int) dragCanterPoint.y-intrinsicHeight/2-mStatusBarHeight;
-        mParams.width=WindowManager.LayoutParams.WRAP_CONTENT;
-        mParams.height=WindowManager.LayoutParams.WRAP_CONTENT;
+        mParams.x = (int) dragCanterPoint.x - intrinsicWidth / 2;
+        mParams.y = (int) dragCanterPoint.y - intrinsicHeight / 2 - mStatusBarHeight;
+        mParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        mParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
 //      获取播放一次帧动画的总时长
         long duration = getAnimDuration(mAnimDrawable);
 
@@ -253,59 +265,64 @@ public class StickyViewHelper implements View.OnTouchListener, StickyView.DragSt
                     viewOutRangeUpRun.run();
                 }
             }
-        },duration);
+        }, duration);
     }
 
     /**
      * 得到帧动画的摧毁时间
+     *
      * @param mAnimDrawable
      * @return
      */
     private long getAnimDuration(AnimationDrawable mAnimDrawable) {
-        long duration=0;
-        for(int i=0;i<mAnimDrawable.getNumberOfFrames();i++){
-             duration += mAnimDrawable.getDuration(i);
+        long duration = 0;
+        for (int i = 0; i < mAnimDrawable.getNumberOfFrames(); i++) {
+            duration += mAnimDrawable.getDuration(i);
         }
         return duration;
     }
 
-    
+
     private void removeView() {
         if (mWm != null && mStickyView.getParent() != null && mDragView.getParent() != null) {
             mWm.removeView(mStickyView);
             mWm.removeView(mDragView);
         }
     }
-    
+
     public Runnable getViewInRangeMoveRun() {
         return viewInRangeMoveRun;
     }
 
-    public Runnable getViewOutRangeMoveRun() {
-        return viewOutRangeMoveRun;
-    }
-
-    public Runnable getViewOut2InRangeUpRun() {
-        return viewOut2InRangeUpRun;
-    }
     /**
      * view在范围内移动指此此Runnable
+     *
      * @param viewInRangeMoveRun
      */
     public void setViewInRangeMoveRun(Runnable viewInRangeMoveRun) {
         this.viewInRangeMoveRun = viewInRangeMoveRun;
     }
 
+    public Runnable getViewOutRangeMoveRun() {
+        return viewOutRangeMoveRun;
+    }
+
     /**
      * view在范围外移动执行此Runnable
+     *
      * @param viewOutRangeMoveRun
      */
     public void setViewOutRangeMoveRun(Runnable viewOutRangeMoveRun) {
         this.viewOutRangeMoveRun = viewOutRangeMoveRun;
     }
 
+    public Runnable getViewOut2InRangeUpRun() {
+        return viewOut2InRangeUpRun;
+    }
+
     /**
      * view移出过范围，最后在范围内松手执行次Runnable
+     *
      * @param viewOut2InRangeUpRun
      */
     public void setViewOut2InRangeUpRun(Runnable viewOut2InRangeUpRun) {
@@ -314,23 +331,24 @@ public class StickyViewHelper implements View.OnTouchListener, StickyView.DragSt
 
     /**
      * view没有移出过范围，在范围内松手
+     *
      * @param mViewInRangeUpRun
      */
     public void setViewInRangeUpRun(Runnable mViewInRangeUpRun) {
         this.mViewInRangeUpRun = mViewInRangeUpRun;
     }
 
+    public Runnable getViewOutRangeUpRun() {
+        return viewOutRangeUpRun;
+    }
+
     /**
      * view移出范围，最后在范围外松手
+     *
      * @param viewOutRangeUpRun
      */
     public void setViewOutRangeUpRun(Runnable viewOutRangeUpRun) {
         this.viewOutRangeUpRun = viewOutRangeUpRun;
-    }
-
-
-    public Runnable getViewOutRangeUpRun() {
-        return viewOutRangeUpRun;
     }
 
     public Runnable getmViewInRangeUpRun() {

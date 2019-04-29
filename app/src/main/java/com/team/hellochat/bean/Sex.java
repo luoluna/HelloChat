@@ -49,7 +49,7 @@ public enum Sex {
     }
 
     public String getLabel() {
-        return label;
+        return label == null ? SECRECY.label : label;
     }
 
     public int getIndex() {

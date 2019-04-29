@@ -22,14 +22,14 @@ public class SwitchActivityUtil {
         context.startActivity(intent);
     }
 
-    public void startActivity(Class<?> cls, Bundle bundle){
-        Intent intent=new Intent(context,cls);
+    public void startActivity(Class<?> cls, Bundle bundle) {
+        Intent intent = new Intent(context, cls);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
 
-    public void startActivityForResult(Class<?> cls, Bundle bundle){
-        Intent intent=new Intent(context,cls);
+    public void startActivityForResult(Class<?> cls, Bundle bundle) {
+        Intent intent = new Intent(context, cls);
         intent.putExtras(bundle);
         context.startActivity(intent);
     }

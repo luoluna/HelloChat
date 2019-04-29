@@ -14,11 +14,15 @@ import com.team.hellochat.BaseActivity;
 import com.team.hellochat.MainActivity;
 import com.team.hellochat.R;
 import com.team.hellochat.manager.LogInManager;
+import com.team.hellochat.manager.UserDatabaseManager;
 import com.team.hellochat.manager.UserManager;
+import com.team.hellochat.utils.RegMatchUtil;
 import com.team.hellochat.utils.ToastUtil;
 import com.team.hellochat.view.LoadingDialog;
 
 import org.jetbrains.annotations.Nullable;
+
+import static com.team.hellochat.activity.RegisterActivity.FINISH_REGISTER;
 
 /**
  * Created by Sweven on 2019/3/31.
@@ -26,9 +30,13 @@ import org.jetbrains.annotations.Nullable;
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final int PHONE = 0x21;
+    public static final int EMAIL = 0x22;
+    public static final int USER = 0x23;
     private static final int START = 0;
     private static final int SUCCESS = 1;
     private static final int FAILS = -1;
+    private static final int GO_TO_REGISTER = 0x24;
 
     private EditText edLogName;
     private EditText edLogPass;
@@ -37,6 +45,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private TextView tvRegister;
     private LoadingDialog loading;
 
+    private int logInAccount;
+
     private ToastUtil toast;
 
     @SuppressLint("HandlerLeak")
@@ -44,24 +54,39 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == START) {
-                String name = edLogName.getText().toString();
-                String pass = edLogPass.getText().toString();
-                if (name.equals("111111") && pass.equals("111111")) {
-                    handler.sendEmptyMessage(SUCCESS);
-                } else {
-                    handler.sendEmptyMessage(FAILS);
-                }
+                verifyPass();
             } else if (msg.what == SUCCESS) {
+                UserManager.getInstance().logIn(getApplication(), logInAccount, edLogName.getText().toString(), edLogPass.getText().toString());
                 LogInManager.getInstance().setLog(getApplicationContext(), true);
-                UserManager.getInstance().logIn(getApplication(), edLogName.getText().toString(), edLogPass.getText().toString());
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             } else if (msg.what == FAILS) {
-                toast.showError("用户名或密码错误");
+                toast.showError("用户名不存在或密码错误");
             }
             loading.cancel();
         }
     };
+
+    private void verifyPass() {
+        String name = edLogName.getText().toString();
+        String pass = edLogPass.getText().toString();
+
+        String correctPass;
+        if (logInAccount == PHONE) {
+            correctPass = UserDatabaseManager.getInstance().getPassByPhone(name);
+        } else if (logInAccount == EMAIL) {
+            correctPass = UserDatabaseManager.getInstance().getPassByEmail(name);
+        } else {
+            correctPass = UserDatabaseManager.getInstance().getPassByUser(name);
+        }
+        if (correctPass == null) {
+            handler.sendEmptyMessage(FAILS);
+        } else {
+            if (correctPass.equals(pass)) {
+                handler.sendEmptyMessage(SUCCESS);
+            }
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,7 +139,29 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         String name = edLogName.getText().toString();
         String pass = edLogPass.getText().toString();
         name = name.replace(" ", "");
+        verifyLogInAccountType(name);
         return !name.isEmpty() && !pass.isEmpty();
+    }
+
+    private void verifyLogInAccountType(String name) {
+        if (RegMatchUtil.IsPhone(name)) {
+            logInAccount = PHONE;
+        } else if (RegMatchUtil.isEmail(name)) {
+            logInAccount = EMAIL;
+        } else {
+            logInAccount = USER;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GO_TO_REGISTER && resultCode == FINISH_REGISTER) {
+            if (data != null) {
+                edLogName.setText(data.getStringExtra("username"));
+                edLogPass.setText("");
+            }
+        }
     }
 
     @Override
@@ -135,12 +182,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 logIn();
                 break;
             case R.id.tv_forget_pass:
-                toast.showShort("该功能暂未开放");
-//                startActivity(new Intent(this, ForgetPassActivity.class));
+                startActivity(new Intent(this, ForgetPassActivity.class));
                 break;
             case R.id.tv_register:
                 Intent intent = new Intent(this, RegisterActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, GO_TO_REGISTER);
                 break;
         }
     }

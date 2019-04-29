@@ -7,7 +7,7 @@ package com.team.hellochat.bean;
 public class ChatRoomItem {
     private int withUid;
     private boolean isGroup;
-    private String title="";
+    private String title = "";
     private int icon;
     private boolean isTop;
     private String file = "";
@@ -30,20 +30,20 @@ public class ChatRoomItem {
         this.message = message;
     }
 
-    public void setRecentMessage(MessageInfo recentMessage) {
-        this.recentMessage = recentMessage;
-    }
-
     public MessageInfo getRecentMessage() {
         return recentMessage;
     }
 
-    public void setFile(String file) {
-        this.file = file;
+    public void setRecentMessage(MessageInfo recentMessage) {
+        this.recentMessage = recentMessage;
     }
 
     public String getFile() {
         return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
     }
 
     public int getWithUid() {

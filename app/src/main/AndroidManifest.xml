@@ -24,7 +24,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute">
-        <activity android:name=".activity.CollectActivity"></activity>
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.CollectActivity" />
         <activity android:name=".activity.PersonalHomePageActivity" />
 
         <service
@@ -51,6 +52,7 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.ChatRoomMessageActivity" />
+        <activity android:name=".activity.HeadPhotoStoreActivity" />
     </application>
 
 </manifest>

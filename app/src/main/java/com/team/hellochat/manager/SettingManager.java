@@ -42,7 +42,7 @@ public class SettingManager {
     }
 
     private void save(Context context) {
-        SharedPreferences.Editor editor= new PreferenceUtil(context, SETTING).getEditor();
+        SharedPreferences.Editor editor = new PreferenceUtil(context, SETTING).getEditor();
         editor.putBoolean(IS_FIRST, isFirstInstall);
         editor.apply();
     }
