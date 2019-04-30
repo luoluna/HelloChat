@@ -37,6 +37,7 @@ public class App {
         public static final String CHAT_ROOM_WITH_ID = "chat_room_with_id";
         public static final String CHAT_ROOM_ICON = "chat_room_icon";
         public static final String USER_ID = "uid";
+        public static final String ACTIVITY_NAME = "activity_name";
     }
 
     public class SimulatedData {

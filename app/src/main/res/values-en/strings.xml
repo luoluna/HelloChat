@@ -35,4 +35,5 @@
     <string name="forget_password_activity_title">找回密码</string>
     <string name="logout">退出登录</string>
     <string name="setting_activity_title">设置</string>
+    <string name="personal_home_page_title">个人资料</string>
 </resources>

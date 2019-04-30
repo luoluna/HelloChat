@@ -40,13 +40,82 @@
                     android:layout_toEndOf="@id/iv_head_picture"
                     android:layout_alignTop="@id/iv_head_picture"
                     android:layout_marginStart="@dimen/dp_20"
-                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_10"
                     android:textColor="@color/black"
                     android:text="@string/app_name"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="@dimen/sp_20"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
+                <TextView
+                    android:id="@+id/tv_signature"
+                    android:layout_toEndOf="@id/iv_head_picture"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_below="@id/tv_nickname"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:textColor="@color/black"
+                    android:hint="TA还没有签名"
+                    android:textSize="@dimen/sp_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/tv_sex"
+                    android:layout_alignStart="@id/iv_head_picture"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:textColor="@color/black"
+                    android:layout_below="@id/iv_head_picture"
+                    android:text="@string/app_name"
+                    android:textSize="@dimen/sp_18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/tv_age"
+                    android:layout_toEndOf="@id/tv_sex"
+                    android:layout_alignTop="@id/tv_sex"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_18"
+                    android:layout_width="wrap_content"
+                    android:text="@string/app_name"
+                    android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText" />
+                <TextView
+                    android:id="@+id/tv_hobby"
+                    android:layout_alignStart="@id/iv_head_picture"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:textColor="@color/black"
+                    android:layout_below="@id/tv_sex"
+                    android:text="@string/app_name"
+                    android:textSize="@dimen/sp_18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText" />
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_alignStart="@id/iv_head_picture"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:textColor="@color/black"
+                    android:layout_below="@id/tv_hobby"
+                    android:text="@string/app_name"
+                    android:textSize="@dimen/sp_18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText" />
+                <TextView
+                    android:id="@+id/tv_credit_point"
+                    android:layout_alignStart="@id/iv_head_picture"
+                    android:layout_marginTop="@dimen/dp_20"
+                    android:textColor="@color/black"
+                    android:layout_below="@id/tv_address"
+                    android:text="@string/app_name"
+                    android:textSize="@dimen/sp_18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 

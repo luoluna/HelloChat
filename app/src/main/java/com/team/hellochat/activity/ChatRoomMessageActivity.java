@@ -34,6 +34,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.team.hellochat.app.App.IntentLabel.ACTIVITY_NAME;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_ICON;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TITLE;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_TYPE;
@@ -256,13 +257,13 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
                 finish();
                 break;
             case R.id.bar_more:
-                ToastUtil.showShort(this, "查看聊天室详情");
                 if (isGroup) {
                     //TODO get group information
                 } else {
                     //TODO get people information
                     Intent intent = new Intent(this, PersonalHomePageActivity.class);
                     intent.putExtra(USER_ID, withId);
+                    intent.putExtra(ACTIVITY_NAME,ChatRoomMessageActivity.class.getName());
                     startActivity(intent);
                 }
                 break;

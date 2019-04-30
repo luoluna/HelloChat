@@ -143,6 +143,7 @@ public class UserManager {
         } else {
             user = UserDatabaseManager.getInstance().getUserByUser(loginName);
         }
+        this.uid = user.getId();
         this.username = user.getUser();
         this.nickname = user.getNickname();
 

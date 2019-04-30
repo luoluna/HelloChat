@@ -87,9 +87,20 @@ public class FriendsFragment extends BaseFragment {
         list = addressBook.getFriends();
         if (list.size() > 0) {
             showEmpty.hidden();
+            if (friendsAdapter != null) {
+                recyclerView.setAdapter(friendsAdapter);
+            }
         } else {
             showEmpty.loadNoData();
             showEmpty.setText("你还没有添加好友o(╥﹏╥)o");
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            getAddressBook();
         }
     }
 }

@@ -118,7 +118,7 @@ public class User {
     }
 
     public String getNickname() {
-        return nickname = Setting.isEmpty(nickname) ? user : nickname;
+        return Setting.isEmpty(nickname) ? user : nickname;
     }
 
     public void setNickname(String nickname) {

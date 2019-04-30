@@ -6,6 +6,7 @@ import com.team.hellochat.app.CreditRule;
 import com.team.hellochat.bean.Discovery;
 import com.team.hellochat.bean.Sex;
 import com.team.hellochat.bean.User;
+import com.team.hellochat.utils.Bean2AnotherBean;
 import com.team.hellochat.utils.JsonUtil;
 import com.team.hellochat.utils.PreferenceUtil;
 
@@ -44,7 +45,12 @@ public class UserDatabaseManager {
         if (instance.list.getUsers().size() > 0) {
             return instance;
         } else {
-            instance.list = new UserList();
+            new PreferenceUtil(context, USER_LIST).save(USER_LIST, defaultData());
+            String s = new PreferenceUtil(context, USER_LIST).getString(USER_LIST);
+            instance.list = JsonUtil.jsonToObject(s, new UserList());
+            for (int i = 0; i < instance.list.getUsers().size(); i++) {
+                instance.list.getUsers().get(i).setCreditPoint(new CreditRule(instance.list.getUsers().get(i)).getCreditPoint());
+            }
             new PreferenceUtil(context, USER_LIST).save(USER_LIST, JsonUtil.object2Json(instance.list));
             return instance;
         }
@@ -211,7 +217,6 @@ public class UserDatabaseManager {
     }
 
     public List<Discovery> getDiscovery(Context context) {
-        UserList list = UserDatabaseManager.getInstance(context).getList();
         List<User> users = list.getUsers();
         int meId = UserManager.getInstance().getUid();
         for (int i = 0; i < users.size(); i++) {
@@ -222,18 +227,7 @@ public class UserDatabaseManager {
         }
         List<Discovery> discoveries = new ArrayList<>();
         for (User user : users) {
-            Discovery discovery = new Discovery();
-            discovery.setId(user.getId());
-            discovery.setUser(user.getUser());
-            discovery.setSex(user.getSex());
-            discovery.setNickname(user.getNickname());
-            discovery.setEmail(user.getEmail());
-            discovery.setPhone(user.getPhone());
-            discovery.setCreditPoint(user.getCreditPoint());
-            discovery.setAvatar(user.getAvatar());
-            discovery.setAge(user.getAge());
-            discovery.setAddress(user.getAddress());
-            discovery.setCollect(false);
+            Discovery discovery = Bean2AnotherBean.User2Discovery(user);
             discoveries.add(discovery);
         }
         return discoveries;
@@ -249,5 +243,17 @@ public class UserDatabaseManager {
         public void setUsers(List<User> users) {
             this.users = users;
         }
+    }
+
+    private static String defaultData() {
+        return "{\"users\":" +
+                "[{\"address\":\"\",\"age\":20,\"avatar\":12,\"creditPoint\":181,\"email\":\"2653922@qq.com\",\"hobby\":[\"打篮球\",\"唱歌\",\"看书\",null,null],\"id\":0,\"idCard\":\"\",\"nickname\":\"一书在手\",\"password\":\"qqqqqq\",\"phone\":\"15532543374\",\"sex\":\"SECRECY\",\"signature\":\"天地任逍遥\",\"user\":\"new\"}," +
+                "{\"address\":\"\",\"age\":200,\"avatar\":3,\"creditPoint\":181,\"email\":\"243rer@foxmail.com\",\"hobby\":[\"宅漫\",null,null,null,null],\"id\":1,\"idCard\":\"51162219921020566\",\"nickname\":\"天涯无边\",\"password\":\"111111\",\"phone\":\"15523165464\",\"sex\":\"SECRECY\",\"signature\":\"emmm,没什么好说的\",\"user\":\"123\"}," +
+                "{\"address\":\"\",\"age\":372,\"avatar\":2,\"creditPoint\":181,\"email\":\"4546yh3265@gmail.com\",\"hobby\":[null,null,null,null,null],\"id\":2,\"idCard\":\"51162219921020566\",\"nickname\":\"小学生\",\"password\":\"qqqqqq\",\"phone\":\"15521655485\",\"sex\":\"SECRECY\",\"signature\":\"回家了\",\"user\":\"张呀\"}," +
+                "{\"address\":\"\",\"age\":22,\"avatar\":21,\"creditPoint\":181,\"email\":\"\",\"hobby\":[null,null,null,null,null],\"id\":3,\"idCard\":\"51162219921020566\",\"nickname\":\"天碰\",\"password\":\"qqqqqq\",\"phone\":\"15526478979\",\"sex\":\"SECRECY\",\"signature\":\"\",\"user\":\"天碰\"}," +
+                "{\"address\":\"\",\"age\":31,\"avatar\":12,\"creditPoint\":181,\"email\":\"\",\"hobby\":[null,null,null,null,null],\"id\":4,\"idCard\":\"51162219921020566\",\"nickname\":\"丫丫\",\"password\":\"qqqqqq\",\"phone\":\"13265647567\",\"sex\":\"SECRECY\",\"signature\":\"\",\"user\":\"丫丫\"}," +
+                "{\"address\":\"\",\"age\":16,\"avatar\":2,\"creditPoint\":181,\"email\":\"\",\"hobby\":[null,null,null,null,null],\"id\":5,\"idCard\":\"51162219921020566\",\"nickname\":\"user\",\"password\":\"qqqqqq\",\"phone\":\"15514888044\",\"sex\":\"SECRECY\",\"signature\":\"早就绝望了\",\"user\":\"user\"}," +
+                "{\"address\":\"\",\"age\":20,\"avatar\":25,\"creditPoint\":181,\"email\":\"\",\"hobby\":[null,null,null,null,null],\"id\":6,\"idCard\":\"\",\"nickname\":\"和两\",\"password\":\"qqqqqq\",\"phone\":\"13244124857\",\"sex\":\"SECRECY\",\"signature\":\"\",\"user\":\"和两\"}," +
+                "{\"address\":\"\",\"age\":0,\"avatar\":18,\"creditPoint\":181,\"email\":\"\",\"hobby\":[null,null,null,null,null],\"id\":7,\"idCard\":\"\",\"nickname\":\"不一样的验烟火\",\"password\":\"qqqqqq\",\"phone\":\"14778562645\",\"sex\":\"SECRECY\",\"signature\":\"\",\"user\":\"不一样的验烟火\"}]}";
     }
 }
