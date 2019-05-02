@@ -75,6 +75,7 @@
                 android:id="@+id/tv_discovery_card_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_below="@id/tv_discovery_card_credit_point"
                 android:layout_marginStart="@dimen/dp_2"
                 android:layout_marginBottom="@dimen/dp_3"

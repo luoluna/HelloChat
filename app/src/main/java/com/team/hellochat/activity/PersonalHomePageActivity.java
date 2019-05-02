@@ -91,8 +91,8 @@ public class PersonalHomePageActivity extends BaseActivity implements View.OnCli
         ivHeadPicture.setImageResource(HeadPicture.getResId(user.getAvatar()));
         tvName.setText(user.getNickname());
         tvSignature.setText(user.getSignature());
-        tvSex.setText(user.getSex().getLabel());
-        tvAge.setText(user.getAge() + "岁");
+        tvSex.setText("性别：" + user.getSex().getLabel());
+        tvAge.setText("\t年龄：" + user.getAge() + "岁");
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < user.getHobby().length; i++) {
