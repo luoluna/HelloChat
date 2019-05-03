@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.WindowManager;
+import android.view.View;
 import android.widget.TextView;
 
 import com.team.hellochat.R;
@@ -18,8 +18,7 @@ public class LoadingDialog extends Dialog {
     private TextView tvLoading;
 
     public LoadingDialog(@NonNull Context context) {
-//        super(context);
-        this(context, R.style.loading);
+        this(context, R.style.NormalDialogStyle);
     }
 
     public LoadingDialog(@NonNull Context context, int themeResId) {
@@ -38,12 +37,10 @@ public class LoadingDialog extends Dialog {
 
     private void init() {
         setCancelable(true);
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.height = -1;
-        params.width = -1;
-        params.format = 1;
-        params.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
-        getWindow().setAttributes(params);
+    }
+
+    public void hiddenText() {
+        tvLoading.setVisibility(View.GONE);
     }
 
     public void setLoadingText(String text) {

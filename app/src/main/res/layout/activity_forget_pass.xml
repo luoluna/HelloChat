@@ -6,12 +6,181 @@
     android:orientation="vertical"
     tools:context=".activity.ForgetPassActivity">
 
-    <include layout="@layout/action_bar_back" />
+    <include layout="@layout/action_bar_done" />
 
-    <RelativeLayout
+
+    <FrameLayout
+        android:id="@+id/fragment_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:id="@+id/ly_input_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
-    </RelativeLayout>
+            <EditText
+                android:id="@+id/ed_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_50"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:gravity="center|start"
+                android:hint="请输入要找回密码的账号"
+                android:imeOptions="actionGo"
+                android:inputType="text"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_20"
+                tools:ignore="Autofill,HardcodedText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ly_verify_user"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_verify_user_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_50"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:gravity="center"
+                android:text="@string/use_this_method_to_find_pss"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16" />
+
+            <EditText
+                android:id="@+id/ed_id_card"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_50"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:gravity="center|start"
+                android:hint="请输入身份证号进行验证"
+                android:imeOptions="actionGo"
+                android:inputType="text"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_20"
+                tools:ignore="Autofill,HardcodedText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ly_input_new_pass"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="@dimen/dp_30"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="新密码："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_16"
+                    tools:ignore="HardcodedText" />
+
+                <EditText
+                    android:id="@+id/input_new_pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#F2F2F2"
+                    android:hint="请输入密码"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:left="10dp"
+                    android:lines="1"
+                    android:maxLength="16"
+                    android:paddingStart="@dimen/dp_8"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:top="110dp"
+                    tools:ignore="Autofill,HardcodedText,RtlSymmetry" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="确认密码："
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_16"
+                    tools:ignore="HardcodedText" />
+
+                <EditText
+                    android:id="@+id/input_re_new_pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#F2F2F2"
+                    android:hint="再次输入密码"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone"
+                    android:left="10dp"
+                    android:lines="1"
+                    android:maxLength="13"
+                    android:paddingStart="@dimen/dp_8"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:top="110dp"
+                    tools:ignore="Autofill,HardcodedText,RtlSymmetry" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="以字母开头，长度在6~18之间，只能包含字母、数字和下划线。"
+                    android:textColor="@color/red"
+                    android:focusable="true"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_sure_register"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:background="#FFF76968"
+                android:fontFamily="Roboto"
+                android:gravity="center"
+                android:left="9dp"
+                android:text="完成修改"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:top="355dp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+    </FrameLayout>
+
 </LinearLayout>

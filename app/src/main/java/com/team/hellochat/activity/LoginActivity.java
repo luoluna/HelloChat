@@ -23,6 +23,7 @@ import com.team.hellochat.view.LoadingDialog;
 import org.jetbrains.annotations.Nullable;
 
 import static com.team.hellochat.activity.RegisterActivity.FINISH_REGISTER;
+import static com.team.hellochat.app.App.SharedLabel.USER_NAME;
 
 /**
  * Created by Sweven on 2019/3/31.
@@ -158,7 +159,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GO_TO_REGISTER && resultCode == FINISH_REGISTER) {
             if (data != null) {
-                edLogName.setText(data.getStringExtra("username"));
+                edLogName.setText(data.getStringExtra(USER_NAME));
                 edLogPass.setText("");
             }
         }

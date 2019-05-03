@@ -72,6 +72,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             case R.id.notification_item:
                 break;
             case R.id.clear_cache_item:
+                DialogUtil.ShowTips(this, "将会清除聊天记录，是否继续？", () -> cleaCache());
                 break;
             case R.id.check_update_item:
                 break;
@@ -80,6 +81,10 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
                 break;
         }
+    }
+
+    private void cleaCache() {
+
     }
 
     private void logout() {

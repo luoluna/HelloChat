@@ -233,6 +233,16 @@ public class UserDatabaseManager {
         return discoveries;
     }
 
+    public boolean fixPass(String pass, String user) {
+        for (int i = 0; i < list.getUsers().size(); i++) {
+            if (list.getUsers().get(i).getUser().equals(user)) {
+                list.getUsers().get(i).setPassword(pass);
+                return true;
+            }
+        }
+        return false;
+    }
+
     static class UserList {
         private List<User> users = new ArrayList<>();
 

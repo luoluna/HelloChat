@@ -135,7 +135,7 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
     private void showCutHeadPictureDialog() {
         String[] s = new String[]{"头像库", "相机", "图库"};
         new AlertDialog.Builder(activity)
-                .setTitle("头像来源")
+                .setTitle("更换头像")
                 .setItems(s, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

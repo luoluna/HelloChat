@@ -19,7 +19,7 @@
     <string name="send">send</string>
     <string name="text_loading">loading...</string>
     <string name="jsonError">jsonError</string>
-    <string name="passNotMatch">The passwords do not match</string>
+    <string name="passNotMatch2">The passwords do not match</string>
     <string name="phoneError">The phone number format is not correct</string>
     <string name="signIn">Sign In...</string>
     <string name="usernameNotEmpty">user cannot be empty</string>
@@ -36,4 +36,10 @@
     <string name="logout">退出登录</string>
     <string name="setting_activity_title">设置</string>
     <string name="personal_home_page_title">个人资料</string>
+    <string name="help_feedback_activity_title">帮助与反馈</string>
+    <string name="find_pass_no_method">当前没有任何方式可找回密码</string>
+    <string name="use_this_method_to_find_pss">请使用以下方式找回密码</string>
+    <string name="next_step">下一步</string>
+    <string name="finish_text">完成</string>
+    <string name="passNotMatch">密码格式不正确</string>
 </resources>

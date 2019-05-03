@@ -60,7 +60,7 @@ public class RegMatchUtil {
      * @return 如果是符合格式的字符串, 返回 <b>true </b>,否则为 <b>false </b>
      */
     public static boolean IsPassword(String str) {
-        String regex = "[A-Za-z]+[0-9]";
+        String regex = "^[a-zA-Z]\\w{5,17}$";
         return match(regex, str);
     }
 

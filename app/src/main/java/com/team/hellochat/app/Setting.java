@@ -1,9 +1,12 @@
 package com.team.hellochat.app;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 
 import com.team.hellochat.manager.UserManager;
 import com.team.hellochat.utils.LogUtil;
@@ -69,5 +72,12 @@ public class Setting {
         for (ActivityInfo activity : activities) {
             new LogUtil("activity name").i(activity.name);
         }
+    }
+
+    public static void concat(Context activity){
+        Intent intent=new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        intent.setData(Uri.parse("tencent://message/?menu=yes&uin=2653922416&websitename=im.qq.com"));
+        activity.startActivity(intent);
     }
 }

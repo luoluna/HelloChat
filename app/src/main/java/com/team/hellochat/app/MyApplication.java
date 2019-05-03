@@ -45,9 +45,9 @@ public class MyApplication extends Application {
                 "OuYu", UMConfigure.DEVICE_TYPE_PHONE,
                 MD5Util.getMD5(FacilityUtil.getAndroidID(this)));
 
-        CrashHandler crashHandler = CrashHandler.getInstance();
-        crashHandler.init(this);
-
+//        CrashHandler crashHandler = CrashHandler.getInstance();
+//        crashHandler.init(this);
+        ;
         // 初始化单例管理器
         UserDatabaseManager.getInstance(this);
         SettingManager.getInstance(this);

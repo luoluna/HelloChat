@@ -23,6 +23,7 @@ public class MessageDialog extends Dialog implements View.OnClickListener {
 
     private TextView tvTips, TvConfirm, tvCancel;
     private LinearLayout item;
+    private View line;
 
     private OnClickChooseListener onClickChooseListener;
 
@@ -47,7 +48,8 @@ public class MessageDialog extends Dialog implements View.OnClickListener {
         tvTips = findViewById(R.id.tips);
         TvConfirm = findViewById(R.id.confirm);
         tvCancel = findViewById(R.id.cancel);
-        item=findViewById(R.id.item);
+        item = findViewById(R.id.item);
+        line = findViewById(R.id.item_line);
     }
 
     private void defaultData() {
@@ -57,14 +59,32 @@ public class MessageDialog extends Dialog implements View.OnClickListener {
         TvConfirm.setOnClickListener(this);
         tvCancel.setOnClickListener(this);
 
-        int width= WindowUtil.getWindowWidth((Activity) context);
-        LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) item.getLayoutParams();
-        layoutParams.width=width/2;
+        int width = WindowUtil.getWindowWidth((Activity) context);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) item.getLayoutParams();
+        layoutParams.width = width / 2;
         item.setLayoutParams(layoutParams);
+    }
+
+    public void onlySure(String tips) {
+        tvTips.setText(tips);
+        TvConfirm.setText("确定");
+        line.setVisibility(View.GONE);
+        tvCancel.setVisibility(View.GONE);
+    }
+
+    public void onlySure(int resId) {
+        tvTips.setText(resId);
+        TvConfirm.setText("确定");
+        line.setVisibility(View.GONE);
+        tvCancel.setVisibility(View.GONE);
     }
 
     public void setTips(String tips) {
         tvTips.setText(tips);
+    }
+
+    public void setTips(int resId) {
+        tvTips.setText(resId);
     }
 
     public void setTips(SpannableStringBuilder tips) {

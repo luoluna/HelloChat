@@ -18,6 +18,8 @@ import com.team.hellochat.view.LoadingDialog;
 
 import org.jetbrains.annotations.Nullable;
 
+import static com.team.hellochat.app.App.SharedLabel.USER_NAME;
+
 /**
  * Created by Sweven on 2019/3/31.
  * Email:sweventears@Foxmail.com
@@ -96,8 +98,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             toast.showShort(R.string.usernameNotEmpty);
         } else if (!verifyPhone(phone)) {
             toast.showShort(R.string.phoneError);
-        } else if (!verifyPass(pass, rePass)) {
+        } else if (!verifyPass(pass)) {
             toast.showShort(R.string.passNotMatch);
+        } else if (!verifyPass(pass, rePass)) {
+            toast.showShort(R.string.passNotMatch2);
         } else {
             //TODO 联网注册 注册成功保存信息到本地，跳转到登录界面
             User user = new User();
@@ -112,12 +116,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 toast.showShort("注册成功");
                 UserDatabaseManager.getInstance().registerNewUser(this, user);
                 Intent intent = new Intent();
-                intent.putExtra("username", username);
+                intent.putExtra(USER_NAME, username);
                 setResult(FINISH_REGISTER, intent);
                 finish();
             }
         }
         loadingDialog.cancel();
+    }
+
+    private boolean verifyPass(String pass) {
+        return RegMatchUtil.IsPassword(pass) && pass.length() >= 8;
     }
 
     private boolean verifyPass(String pass, String rePass) {

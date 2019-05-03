@@ -175,8 +175,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="密码长度8-16位，必须包含数字和字母。"
+                        android:text="以字母开头，长度在6~18之间，只能包含字母、数字和下划线。"
                         android:textColor="@color/red"
+                        android:focusable="true"
                         tools:ignore="HardcodedText" />
                 </LinearLayout>
             </LinearLayout>

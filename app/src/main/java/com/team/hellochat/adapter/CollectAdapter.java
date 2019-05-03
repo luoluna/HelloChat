@@ -3,6 +3,7 @@ package com.team.hellochat.adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.opengl.ETC1;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -73,7 +74,9 @@ public class CollectAdapter extends BaseRecyclerAdapter<Collect> {
     private void cancelCollect(int position, int uid) {
         DialogUtil.ShowTips(activity, "确定取消关注？", () -> {
             CollectManager.getInstance().cancelCollect(activity, uid);
-            list.remove(position);
+            if (getItemCount()>position+1) {
+                list.remove(position);
+            }
             notifyItemRemoved(position);
         });
     }
