@@ -1,10 +1,11 @@
 package com.team.hellochat.activity;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
+import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.IBinder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -21,17 +22,16 @@ import com.team.hellochat.bean.ChatMessage;
 import com.team.hellochat.bean.ChatRoomItem;
 import com.team.hellochat.bean.MessageInfo;
 import com.team.hellochat.bean.MessageType;
-import com.team.hellochat.bean.User;
+import com.team.hellochat.interf.ChatCallBack;
 import com.team.hellochat.manager.ChatRoomListManager;
 import com.team.hellochat.manager.MessageManager;
-import com.team.hellochat.manager.UserDatabaseManager;
 import com.team.hellochat.manager.UserManager;
+import com.team.hellochat.service.ChatService;
 import com.team.hellochat.utils.ToastUtil;
 import com.team.hellochat.view.ChatMessageRecyclerView;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.team.hellochat.app.App.IntentLabel.ACTIVITY_NAME;
@@ -80,6 +80,9 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
     private int withId;
     private int icon;
 
+    private ServiceConnection serviceConnection;
+    private ChatService chatService;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,6 +91,27 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
 
         bindView();
         initData();
+        initService();
+    }
+
+    private void initService() {
+        serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                chatService = ((ChatService.MyBinder) service).getService();
+                chatService.setChatCallBack(new ChatCallBack() {
+                    @Override
+                    public void postMessage(int withId, String information) {
+                        putData();
+                    }
+                });
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        };
     }
 
     private void bindView() {
@@ -159,7 +183,7 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
                 MessageManager.getInstance().addMessageInfo(getApplicationContext(), file, messageInfo);
                 add2ChatList();
                 layoutManager.scrollToPositionWithOffset(0, 0);
-                receiveMessage();
+                receiveMessage(messageInfo.getInformation());
             }
 
             @Override
@@ -169,32 +193,10 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
         });
     }
 
-    private void receiveMessage() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                MessageInfo info = new MessageInfo();
-                info.setUid(withId);
-                User user = UserDatabaseManager.getInstance().getUserByUid(withId);
-                info.setNickname(user.getNickname());
-                info.setAvatar(user.getAvatar());
-                info.setType(MessageType.TEXT);
-                info.setInformation("你还有多久到站");
-                info.setTime(System.currentTimeMillis());
-                info.setRead(false);
-                List<MessageInfo> uploads = new ArrayList<>();
-                uploads.add(info);
-
-                for (MessageInfo upload : uploads) {
-                    MessageManager.getInstance().addMessageInfo(getApplicationContext(), file, upload);
-                }
-                MessageManager.getInstance().clearMessage();
-                chatMessageAdapter.acceptMessage(uploads);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && isActivityTransitionRunning()) {
-                    markRead();
-                }
-            }
-        }, 3000);
+    private void receiveMessage(String information) {
+        if (chatService!=null) {
+            chatService.sendMessage(information, withId);
+        }
     }
 
     /**
@@ -263,7 +265,7 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
                     //TODO get people information
                     Intent intent = new Intent(this, PersonalHomePageActivity.class);
                     intent.putExtra(USER_ID, withId);
-                    intent.putExtra(ACTIVITY_NAME,ChatRoomMessageActivity.class.getName());
+                    intent.putExtra(ACTIVITY_NAME, ChatRoomMessageActivity.class.getName());
                     startActivity(intent);
                 }
                 break;
@@ -292,12 +294,14 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onStart() {
         markRead();
+        bindService(new Intent(this, ChatService.class), serviceConnection, 0);
         super.onStart();
     }
 
     @Override
     protected void onStop() {
         markRead();
+        unbindService(serviceConnection);
         super.onStop();
     }
 

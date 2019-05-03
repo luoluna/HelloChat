@@ -17,6 +17,7 @@ import com.team.hellochat.activity.CollectActivity;
 import com.team.hellochat.activity.HeadPhotoStoreActivity;
 import com.team.hellochat.activity.HelpFeedbackActivity;
 import com.team.hellochat.activity.LoginActivity;
+import com.team.hellochat.activity.PersonalCenterActivity;
 import com.team.hellochat.activity.SettingActivity;
 import com.team.hellochat.base.BaseFragment;
 import com.team.hellochat.bean.HeadPicture;
@@ -116,6 +117,7 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
                 showCutHeadPictureDialog();
                 break;
             case R.id.personal_info_layout:
+                startActivity(new Intent(activity, PersonalCenterActivity.class));
                 break;
             case R.id.personal_collects_item:
                 startActivity(new Intent(activity, CollectActivity.class));
