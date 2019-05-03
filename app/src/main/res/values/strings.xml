@@ -41,4 +41,5 @@
     <string name="next_step">下一步</string>
     <string name="finish_text">完成</string>
     <string name="passNotMatch">密码格式不正确</string>
+    <string name="personal_center_activity_title">个人中心</string>
 </resources>

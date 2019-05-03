@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.team.hellochat.R;
 import com.team.hellochat.activity.CollectActivity;
 import com.team.hellochat.activity.HeadPhotoStoreActivity;
+import com.team.hellochat.activity.HelpFeedbackActivity;
 import com.team.hellochat.activity.LoginActivity;
 import com.team.hellochat.activity.SettingActivity;
 import com.team.hellochat.base.BaseFragment;
@@ -126,6 +127,7 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
                 startActivityForResult(intent, OPEN_SETTING);
                 break;
             case R.id.personal_help_feedback_item:
+                startActivity(new Intent(activity, HelpFeedbackActivity.class));
                 break;
             case R.id.personal_about_we_item:
                 break;

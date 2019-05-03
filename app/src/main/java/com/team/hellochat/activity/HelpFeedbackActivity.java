@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.team.hellochat.BaseActivity;
 import com.team.hellochat.R;
+import com.team.hellochat.utils.DialogUtil;
 
 public class HelpFeedbackActivity extends BaseActivity implements View.OnClickListener {
 
@@ -30,6 +31,8 @@ public class HelpFeedbackActivity extends BaseActivity implements View.OnClickLi
 
     private void initData() {
         barTitle.setText(R.string.help_feedback_activity_title);
+
+        DialogUtil.onlyTips(this, "暂无数据");
 
         barBack.setOnClickListener(this);
     }
