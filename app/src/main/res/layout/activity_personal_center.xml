@@ -71,7 +71,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="@dimen/dp_10"
-                    android:background="#ffffff"
+                    android:background="@color/transparent"
                     android:maxLength="18"
                     android:singleLine="true"
                     android:text="@string/app_name"
@@ -108,7 +108,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_toStartOf="@+id/user_nickname_finish"
                     android:layout_toEndOf="@+id/user_nickname_label"
-                    android:background="#ffffff"
+                    android:background="@color/transparent"
                     android:imeOptions="actionDone"
                     android:maxLength="18"
                     android:singleLine="true"
@@ -133,9 +133,10 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="10dp"
+                    android:background="@color/transparent"
                     android:gravity="center"
                     android:textColor="#ff2a2929"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 
@@ -198,9 +199,10 @@
                     android:layout_marginEnd="@dimen/dp_5"
                     android:layout_toStartOf="@id/user_hobby_finish"
                     android:layout_toEndOf="@id/user_hobby_label"
-                    android:background="@color/white"
+                    android:background="@color/transparent"
                     android:gravity="center|start"
-                    android:hint="最多五组，以空格分组"
+                    android:hint="以空格分组"
+                    android:imeOptions="actionDone"
                     android:inputType="text"
                     android:lines="1"
                     android:text="@string/app_name"
@@ -257,13 +259,14 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_toEndOf="@+id/user_signature_label"
-                    android:background="#ffffff"
+                    android:background="@color/transparent"
                     android:hint="用几句话简单介绍自己，限字30字以内"
                     android:imeOptions="actionDone"
                     android:maxLength="30"
                     android:singleLine="true"
                     android:textColor="#ff2a2929"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:ignore="HardcodedText" />
 
             </RelativeLayout>
 

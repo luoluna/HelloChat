@@ -31,7 +31,7 @@
             android:layout_toEndOf="@id/iv_chat_room_icon"
             android:ellipsize="end"
             android:lines="1"
-            android:text="向着梦想的地方远航" />
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/tv_chat_room_message"
@@ -44,8 +44,7 @@
             android:layout_toStartOf="@id/tv_chat_room_get_time"
             android:layout_toEndOf="@id/iv_chat_room_icon"
             android:ellipsize="end"
-            android:lines="1"
-            android:text="我就不知道你这是怎么了？" />
+            android:lines="1" />
 
         <TextView
             android:id="@+id/tv_chat_room_get_time"
@@ -54,8 +53,7 @@
             android:layout_alignTop="@id/iv_chat_room_icon"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginEnd="@dimen/dp_5"
-            android:text="23:00" />
+            android:layout_marginEnd="@dimen/dp_5" />
 
         <include
             layout="@layout/red_point"

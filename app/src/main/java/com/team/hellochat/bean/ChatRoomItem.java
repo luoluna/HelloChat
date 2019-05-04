@@ -12,7 +12,7 @@ public class ChatRoomItem {
     private boolean isTop;
     private String file = "";
     private ChatMessage message;
-    private MessageInfo recentMessage;
+    private MessageInfo recentMessage=new MessageInfo();
 
     public boolean isGroup() {
         return isGroup;

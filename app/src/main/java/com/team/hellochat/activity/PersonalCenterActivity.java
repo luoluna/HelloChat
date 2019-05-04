@@ -1,7 +1,15 @@
 package com.team.hellochat.activity;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -9,14 +17,21 @@ import android.widget.TextView;
 
 import com.team.hellochat.BaseActivity;
 import com.team.hellochat.R;
+import com.team.hellochat.bean.HeadPicture;
+import com.team.hellochat.bean.Sex;
 import com.team.hellochat.bean.User;
 import com.team.hellochat.manager.UserManager;
+import com.team.hellochat.utils.RegMatchUtil;
 import com.team.hellochat.utils.ToastUtil;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PersonalCenterActivity extends BaseActivity implements View.OnClickListener {
 
+    private static final int OPEN_HEAD_STORE = 0x01;
     //top
     private ImageView barBack;
     private TextView barTitle;
@@ -27,6 +42,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
     private EditText edNickname, edHobby, edSignature;
 
     private User user;
+    private boolean amendNick = false, amendHobby = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +91,29 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
         edHobby.setVisibility(View.GONE);
         tvHobbyFinish.setVisibility(View.GONE);
 
+        edHobby.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String content = s.toString();
+                String reg = "\\s{2,}";
+                if (RegMatchUtil.isHobby(content)) {
+                    content = content.trim();
+                    content = content.replaceAll(reg, " ");
+                    edHobby.setText(content);
+                }
+            }
+        });
+
         rlHeadPicture.setOnClickListener(this);
         rlUsername.setOnClickListener(this);
         rlNickname.setOnClickListener(this);
@@ -89,7 +128,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
     }
 
     private void setData() {
-        headPicture.setImageResource(user.getAvatar());
+        headPicture.setImageResource(HeadPicture.getResId(user.getAvatar()));
 
         tvUsername.setText(user.getUser());
 
@@ -123,37 +162,125 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.bar_back:
+                finish();
+                break;
             case R.id.user_head_picture_view:
+                amendHeadPicture();
                 break;
             case R.id.user_username_view:
                 ToastUtil.showShort(this, "用户名无法修改");
                 break;
             case R.id.user_nickname_view:
-                edNickname.setVisibility(View.VISIBLE);
-                edNickname.setText("");
-                edNickname.setHint(tvNickname.getText().toString());
-                tvNickname.setVisibility(View.GONE);
-                tvNicknameFinish.setVisibility(View.GONE);
+                if (!amendNick) {
+                    edNickname.setVisibility(View.VISIBLE);
+                    edNickname.setHint(tvNickname.getText().toString());
+                    tvNickname.setVisibility(View.GONE);
+                    tvNicknameFinish.setVisibility(View.VISIBLE);
+                    amendNick = true;
+                }
                 break;
             case R.id.user_sex_view:
                 amendSex();
                 break;
             case R.id.user_hobby_view:
-                edHobby.setVisibility(View.VISIBLE);
-                edHobby.setText("");
-                tvHobby.setVisibility(View.GONE);
-                tvHobbyFinish.setVisibility(View.GONE);
+                if (!amendHobby) {
+                    edHobby.setVisibility(View.VISIBLE);
+                    edHobby.setText("");
+                    tvHobby.setVisibility(View.GONE);
+                    tvHobbyFinish.setVisibility(View.VISIBLE);
+                    amendHobby = true;
+                }
                 break;
             case R.id.user_signature_view:
                 break;
             case R.id.user_nickname_finish:
+                hiddenInput();
+                tvNickname.setVisibility(View.VISIBLE);
+                String nick = edNickname.getText().toString().replace(" ", "");
+                if (!nick.equals("")) {
+                    tvNickname.setText(edNickname.getText().toString());
+                    UserManager.getInstance().getUser().setNickname(nick);
+                }
+                edNickname.setText("");
+                edNickname.setVisibility(View.GONE);
+                tvNicknameFinish.setVisibility(View.GONE);
+                amendNick = false;
                 break;
             case R.id.user_hobby_finish:
+                hiddenInput();
+                tvHobby.setVisibility(View.VISIBLE);
+                String s = edHobby.getText().toString().trim();
+                if (!s.equals("")) {
+                    String[] hobby = s.split(" ");
+                    UserManager.getInstance().getUser().setHobby(hobby);
+                    updateUser();
+                    setHobby(hobby);
+                }
+                edHobby.setVisibility(View.GONE);
+                tvHobbyFinish.setVisibility(View.GONE);
+                amendHobby = false;
                 break;
         }
     }
 
-    private void amendSex() {
+    private void hiddenInput() {
+        InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        manager.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+    }
 
+    private void amendHeadPicture() {
+        String[] s = new String[]{"头像库", "相机", "图库"};
+        new AlertDialog.Builder(this)
+                .setTitle("更换头像")
+                .setItems(s, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                Intent intent = new Intent(getApplicationContext(), HeadPhotoStoreActivity.class);
+                                startActivityForResult(intent, OPEN_HEAD_STORE);
+                                break;
+                            default:
+                                ToastUtil.showShort(getApplicationContext(), "暂不支持，敬请期待~");
+                                break;
+                        }
+                    }
+                })
+                .setNegativeButton("取消", null)
+                .create()
+                .show();
+    }
+
+    private void amendSex() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String[] arr = new String[]{Sex.SECRECY.getLabel(), Sex.MAN.getLabel(), Sex.WOMEN.getLabel()};
+        builder.setItems(arr, (dialog, which) -> {
+            String sex = arr[which];
+            UserManager.getInstance().getUser().setSex(Sex.getSex(sex));
+            updateUser();
+            tvSex.setText(user.getSex().getLabel());
+        });
+        builder.show();
+    }
+
+    private void updateUser() {
+        UserManager.getInstance().update(getApplicationContext());
+        user = UserManager.getInstance().getUser();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == OPEN_HEAD_STORE && resultCode == RESULT_OK) {
+            user = UserManager.getInstance().getUser();
+            headPicture.setImageResource(HeadPicture.getResId(user.getAvatar()));
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        UserManager.getInstance().getUser().setSignature(edSignature.getText().toString());
+        updateUser();
+        super.onStop();
     }
 }

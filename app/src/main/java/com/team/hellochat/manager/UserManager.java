@@ -97,6 +97,10 @@ public class UserManager {
         save(context);
     }
 
+    public void update(Context context){
+        save(context);
+    }
+
     private void save(Context context) {
         Editor editor = new PreferenceUtil(context).getEditor();
         editor.putInt(USER_ID, uid);

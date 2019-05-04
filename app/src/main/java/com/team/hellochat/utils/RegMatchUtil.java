@@ -244,10 +244,19 @@ public class RegMatchUtil {
      * @return
      */
     public static boolean isError(String message) {
-        String regex = "黄群|淫乱|深夜福利|习近平";//等等关键词
+        String regex = "黄群|深夜福利|习近平";//等等关键词
         return match(regex, message);
     }
-
+    /**
+     * 验证消息合法性
+     *
+     * @param message
+     * @return
+     */
+    public static boolean isHobby(String message) {
+        String regex = "[^.$]*\\s{2,}[^.$]*";//等等关键词
+        return match(regex, message);
+    }
     /**
      * @param regex 正则表达式字符串
      * @param str   要匹配的字符串

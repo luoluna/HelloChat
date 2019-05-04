@@ -13,7 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.team.hellochat.R;
+import com.team.hellochat.activity.AboutWeActivity;
 import com.team.hellochat.activity.CollectActivity;
+import com.team.hellochat.activity.CreditActivity;
 import com.team.hellochat.activity.HeadPhotoStoreActivity;
 import com.team.hellochat.activity.HelpFeedbackActivity;
 import com.team.hellochat.activity.LoginActivity;
@@ -123,6 +125,7 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
                 startActivity(new Intent(activity, CollectActivity.class));
                 bindView();
             case R.id.personal_credit_point_item:
+                startActivity(new Intent(activity, CreditActivity.class));
                 break;
             case R.id.personal_setting_item:
                 Intent intent = new Intent(activity, SettingActivity.class);
@@ -132,6 +135,7 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
                 startActivity(new Intent(activity, HelpFeedbackActivity.class));
                 break;
             case R.id.personal_about_we_item:
+                startActivity(new Intent(activity, AboutWeActivity.class));
                 break;
         }
     }

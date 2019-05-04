@@ -1,6 +1,8 @@
 package com.team.hellochat.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -10,6 +12,8 @@ import com.team.hellochat.BaseActivity;
 import com.team.hellochat.R;
 import com.team.hellochat.app.Setting;
 import com.team.hellochat.utils.DialogUtil;
+import com.team.hellochat.utils.ToastUtil;
+import com.team.hellochat.view.LoadingDialog;
 
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
 
@@ -68,19 +72,33 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.account_security_item:
+                startActivity(new Intent(this, AccountSecurityActivity.class));
                 break;
             case R.id.notification_item:
+                startActivity(new Intent(this, NotificationActivity.class));
                 break;
             case R.id.clear_cache_item:
-                DialogUtil.ShowTips(this, "将会清除聊天记录，是否继续？", () -> cleaCache());
+                DialogUtil.ShowTips(this, "将会清除聊天记录，是否继续？", this::cleaCache);
                 break;
             case R.id.check_update_item:
+                checkUpdate();
                 break;
             case R.id.tv_log_out:
                 logout();
 
                 break;
         }
+    }
+
+    private void checkUpdate() {
+        int currentCode = Setting.getVersionCode(this);
+        final LoadingDialog loadingDialog = new LoadingDialog(this);
+        loadingDialog.show();
+        loadingDialog.setLoadingText("检查更新中……");
+        new Handler().postDelayed(() -> {
+            ToastUtil.showShort(getApplicationContext(), "当前版本已是最新版本！");
+            loadingDialog.cancel();
+        }, 2000);
     }
 
     private void cleaCache() {

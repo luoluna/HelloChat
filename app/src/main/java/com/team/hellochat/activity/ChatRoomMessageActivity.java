@@ -194,7 +194,10 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
     }
 
     private void receiveMessage(String information) {
-        if (chatService!=null) {
+        if (chatService == null) {
+            initService();
+        }
+        if (chatService != null) {
             chatService.sendMessage(information, withId);
         }
     }
@@ -301,7 +304,9 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onStop() {
         markRead();
-        unbindService(serviceConnection);
+        if (serviceConnection != null && chatService != null) {
+            unbindService(serviceConnection);
+        }
         super.onStop();
     }
 

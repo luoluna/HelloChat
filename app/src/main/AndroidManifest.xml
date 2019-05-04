@@ -24,7 +24,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning,UnusedAttribute">
-        <activity android:name=".activity.PersonalCenterActivity"></activity>
+        <activity android:name=".activity.AccountSecurityActivity" />
+        <activity android:name=".activity.PersonalCenterActivity" />
         <activity android:name=".activity.HelpFeedbackActivity" />
         <activity android:name=".activity.SendAddFriendRequestActivity" />
         <activity android:name=".activity.SettingActivity" />
@@ -56,6 +57,9 @@
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.ChatRoomMessageActivity" />
         <activity android:name=".activity.HeadPhotoStoreActivity" />
+        <activity android:name=".activity.AboutWeActivity" />
+        <activity android:name=".activity.CreditActivity" />
+        <activity android:name=".activity.NotificationActivity" />
     </application>
 
 </manifest>

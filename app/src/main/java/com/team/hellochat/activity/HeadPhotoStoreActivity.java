@@ -52,9 +52,7 @@ public class HeadPhotoStoreActivity extends BaseActivity implements View.OnClick
         adapter.setOnclickItemListener(new HeadStoreAdapter.OnclickItemListener() {
             @Override
             public void onClick(int avatar) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("avatar", avatar);
-                setResult(RESULT_OK, intent);
+                setResult(RESULT_OK);
                 UserManager.getInstance().setAvatar(getApplicationContext(), avatar);
                 finish();
             }
