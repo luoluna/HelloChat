@@ -29,7 +29,7 @@ public class NotificationActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initData() {
-        barTitle.setText(R.string.about_we_activity_title);
+        barTitle.setText(R.string.notification_activity_title);
 
         barBack.setOnClickListener(this);
     }
