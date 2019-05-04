@@ -123,7 +123,7 @@ public class PersonalFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.personal_collects_item:
                 startActivity(new Intent(activity, CollectActivity.class));
-                bindView();
+                break;
             case R.id.personal_credit_point_item:
                 startActivity(new Intent(activity, CreditActivity.class));
                 break;
