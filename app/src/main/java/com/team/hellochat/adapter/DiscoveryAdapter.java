@@ -114,18 +114,14 @@ public class DiscoveryAdapter extends BaseRecyclerAdapter<Discovery> {
                     }
                     break;
                 case R.id.ly_start_chat:
-                    if (myCredit >= discovery.getCreditPoint()) {
-                        toast.showShort("开始聊天");
-                        Intent intent = new Intent(activity, ChatRoomMessageActivity.class);
-                        intent.putExtra(CHAT_ROOM_TYPE, false);
-                        intent.putExtra(MESSAGE_FILE, "");
-                        intent.putExtra(CHAT_ROOM_TITLE, discovery.getNickname());
-                        intent.putExtra(CHAT_ROOM_WITH_ID, discovery.getId());
-                        intent.putExtra(CHAT_ROOM_ICON, discovery.getAvatar());
-                        activity.startActivity(intent);
-                    } else {
-                        toast.showShort("您的信用点不足以与对方聊天");
-                    }
+                    toast.showShort("开始聊天");
+                    Intent intent = new Intent(activity, ChatRoomMessageActivity.class);
+                    intent.putExtra(CHAT_ROOM_TYPE, false);
+                    intent.putExtra(MESSAGE_FILE, "");
+                    intent.putExtra(CHAT_ROOM_TITLE, discovery.getNickname());
+                    intent.putExtra(CHAT_ROOM_WITH_ID, discovery.getId());
+                    intent.putExtra(CHAT_ROOM_ICON, discovery.getAvatar());
+                    activity.startActivity(intent);
                     break;
                 case R.id.ly_collect:
                     list.get(getAdapterPosition()).setCollect(!discovery.isCollect());
