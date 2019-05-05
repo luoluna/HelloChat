@@ -1,6 +1,5 @@
 package com.team.hellochat.app;
 
-import com.team.hellochat.manager.AddressBookManager;
 import com.team.hellochat.manager.UserManager;
 
 import java.util.HashMap;
@@ -16,7 +15,7 @@ public class MessageMap {
     static {
         map.put("你好", "你好啊");
         map.put("你叫什么", "我是" + "李天一" + "，你呢");
-        map.put("我是" + UserManager.getInstance().getUser().getNickname(), "很高兴认识你");
+        map.put("我是" + UserManager.getInstance().getUser().getNickname(),UserManager.getInstance().getUser().getNickname()+ "很高兴认识你");
         map.put("hello", "hi!");
         map.put("额", "莫名其妙");
         map.put("123456", "78910J");
@@ -28,12 +27,8 @@ public class MessageMap {
 
     public static String getBack(String message) {
         String msg = "你说什么啊？我听不懂";
-        try {
-            msg = map.get(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return msg;
+        String result = map.get(message);
+        return result == null ? msg : result;
     }
 
 }

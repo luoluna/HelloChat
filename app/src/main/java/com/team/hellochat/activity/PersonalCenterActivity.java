@@ -24,9 +24,6 @@ import com.team.hellochat.manager.UserManager;
 import com.team.hellochat.utils.RegMatchUtil;
 import com.team.hellochat.utils.ToastUtil;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PersonalCenterActivity extends BaseActivity implements View.OnClickListener {
@@ -107,9 +104,9 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
                 String content = s.toString();
                 String reg = "\\s{2,}";
                 if (RegMatchUtil.isHobby(content)) {
-                    content = content.trim();
                     content = content.replaceAll(reg, " ");
                     edHobby.setText(content);
+                    edHobby.focusSearch(edHobby.getText().length() - 1);
                 }
             }
         });

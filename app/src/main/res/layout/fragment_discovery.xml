@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
-            android:background="#aa000000" />
+            android:background="@color/line" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
             <ImageView
                 android:id="@+id/iv_discovery_search"
                 android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_24"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/dp_10"
                 android:padding="@dimen/dp_3"
                 android:src="@drawable/ic_search"
@@ -52,9 +52,10 @@
 
             <ImageView
                 android:id="@+id/iv_discovery_add"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/dp_10"
+                android:visibility="gone"
                 android:src="@drawable/ic_add_black_24dp"
                 tools:ignore="ContentDescription" />
         </LinearLayout>

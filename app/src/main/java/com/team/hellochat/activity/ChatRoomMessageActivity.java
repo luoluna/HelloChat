@@ -17,14 +17,17 @@ import android.widget.TextView;
 import com.team.hellochat.BaseActivity;
 import com.team.hellochat.R;
 import com.team.hellochat.adapter.ChatMessageAdapter;
+import com.team.hellochat.app.MessageMap;
 import com.team.hellochat.app.Setting;
 import com.team.hellochat.bean.ChatMessage;
 import com.team.hellochat.bean.ChatRoomItem;
 import com.team.hellochat.bean.MessageInfo;
 import com.team.hellochat.bean.MessageType;
+import com.team.hellochat.bean.User;
 import com.team.hellochat.interf.ChatCallBack;
 import com.team.hellochat.manager.ChatRoomListManager;
 import com.team.hellochat.manager.MessageManager;
+import com.team.hellochat.manager.UserDatabaseManager;
 import com.team.hellochat.manager.UserManager;
 import com.team.hellochat.service.ChatService;
 import com.team.hellochat.utils.ToastUtil;
@@ -200,6 +203,16 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
         if (chatService != null) {
             chatService.sendMessage(information, withId);
         }
+        MessageInfo info = new MessageInfo();
+        info.setUid(withId);
+        User user = UserDatabaseManager.getInstance().getUserByUid(withId);
+        info.setNickname(user.getNickname());
+        info.setAvatar(user.getAvatar());
+        info.setType(MessageType.TEXT);
+        info.setInformation(MessageMap.getBack(information));
+        info.setTime(System.currentTimeMillis());
+        info.setRead(false);
+        MessageManager.getInstance().addMessageInfo(this, file, info);
     }
 
     /**
@@ -266,10 +279,14 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
                     //TODO get group information
                 } else {
                     //TODO get people information
-                    Intent intent = new Intent(this, PersonalHomePageActivity.class);
-                    intent.putExtra(USER_ID, withId);
-                    intent.putExtra(ACTIVITY_NAME, ChatRoomMessageActivity.class.getName());
-                    startActivity(intent);
+                    if (UserManager.getInstance().getUser().getCreditPoint() >= UserDatabaseManager.getInstance().getUserByUid(withId).getCreditPoint()) {
+                        Intent intent = new Intent(this, PersonalHomePageActivity.class);
+                        intent.putExtra(USER_ID, withId);
+                        intent.putExtra(ACTIVITY_NAME, ChatRoomMessageActivity.class.getName());
+                        startActivity(intent);
+                    }else {
+                        ToastUtil.showShort(this,"您的信用点不足以查看对方的信息");
+                    }
                 }
                 break;
             case R.id.btn_send_message:
@@ -297,7 +314,7 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onStart() {
         markRead();
-        bindService(new Intent(this, ChatService.class), serviceConnection, 0);
+//        bindService(new Intent(this, ChatService.class), serviceConnection, 0);
         super.onStart();
     }
 

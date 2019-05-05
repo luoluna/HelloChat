@@ -74,7 +74,7 @@ public class Setting {
         }
     }
 
-    public static void concat(Context activity){
+    public static void contact(Context activity){
         Intent intent=new Intent();
         intent.setAction("android.intent.action.VIEW");
         intent.setData(Uri.parse("tencent://message/?menu=yes&uin=2653922416&websitename=im.qq.com"));

@@ -15,6 +15,7 @@ import com.team.hellochat.R;
 import com.team.hellochat.adapter.DiscoveryAdapter;
 import com.team.hellochat.base.BaseFragment;
 import com.team.hellochat.bean.Discovery;
+import com.team.hellochat.bean.User;
 import com.team.hellochat.manager.UserDatabaseManager;
 
 import java.util.ArrayList;
@@ -74,8 +75,21 @@ public class DiscoveryFragment extends BaseFragment implements View.OnClickListe
         ivSearch.setOnClickListener(this);
     }
 
+    long[] currentPosition;
+    int LONGITUDE = 0;
+    int LATITUDE = 1;
+    private static final int RANGE = 300;
+    private List<User> users=new ArrayList<>();
+
     private void receiveData() {
-        list = UserDatabaseManager.getInstance().getDiscovery(activity);
+//        users=searchUser(currentPosition[LONGITUDE],currentPosition[LATITUDE],RANGE);
+
+        this.list = UserDatabaseManager.getInstance().getDiscovery(activity);
+    }
+
+    private List<User> searchUser(long currentLongitude,long currentLatitude, long range) {
+
+        return new ArrayList<>();
     }
 
     /**
@@ -85,13 +99,19 @@ public class DiscoveryFragment extends BaseFragment implements View.OnClickListe
      */
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.iv_discovery_add:
+                break;
+            case R.id.iv_discovery_search:
+                toast.showShort("待开发中，敬请期待~");
+                break;
+        }
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden){
+        if (!hidden) {
             receiveData();
             recyclerView.setAdapter(discoveryAdapter);
         }

@@ -39,6 +39,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private static final int FAILS = -1;
     private static final int GO_TO_REGISTER = 0x24;
 
+    //top
+    private TextView barTitle;
+
     private EditText edLogName;
     private EditText edLogPass;
     private Button btnLogIn;
@@ -100,6 +103,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void bindView() {
+        barTitle = findViewById(R.id.bar_title);
+
         edLogName = findViewById(R.id.input_log_name);
         edLogPass = findViewById(R.id.input_password);
         btnLogIn = findViewById(R.id.btn_log_in);
@@ -110,6 +115,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void initData() {
+        barTitle.setText(R.string.login_activity_title);
+
         if (LogInManager.getInstance().isLogin()) {
             UserManager manager = UserManager.getInstance();
             edLogName.setText(manager.getLoginName());
