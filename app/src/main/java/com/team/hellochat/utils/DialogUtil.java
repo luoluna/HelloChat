@@ -91,6 +91,24 @@ public class DialogUtil {
         dialog.show();
     }
 
+    public static void onlyTips(Activity activity, String tips,boolean isCancel) {
+        final MessageDialog dialog = new MessageDialog(activity);
+        dialog.onlySure(tips);
+        dialog.setCanceledOnTouchOutside(isCancel);
+        dialog.setOnClickChooseListener(new OnClickChooseListener() {
+            @Override
+            public void onCancel() {
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onConfirm() {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
     public interface OnConfirmListener {
         void onClick();
     }

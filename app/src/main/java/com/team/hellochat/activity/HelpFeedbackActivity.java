@@ -1,6 +1,7 @@
 package com.team.hellochat.activity;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,7 +33,7 @@ public class HelpFeedbackActivity extends BaseActivity implements View.OnClickLi
     private void initData() {
         barTitle.setText(R.string.help_feedback_activity_title);
 
-        DialogUtil.onlyTips(this, "暂无数据");
+        DialogUtil.onlyTips(this, "暂无数据",false);
 
         barBack.setOnClickListener(this);
     }
@@ -44,5 +45,14 @@ public class HelpFeedbackActivity extends BaseActivity implements View.OnClickLi
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.ACTION_DOWN){
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

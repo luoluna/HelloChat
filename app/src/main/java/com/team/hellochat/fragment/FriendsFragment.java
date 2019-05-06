@@ -92,7 +92,7 @@ public class FriendsFragment extends BaseFragment {
             }
         } else {
             showEmpty.loadNoData();
-            showEmpty.setText("你还没有添加好友o(╥﹏╥)o");
+            showEmpty.setText("你还没有一个好友o(╥﹏╥)o");
         }
     }
 

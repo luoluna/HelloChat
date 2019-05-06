@@ -74,7 +74,7 @@ public class ChatFragment extends Fragment {
     }
 
     private void getChatRoomList() {
-//        ChatRoomListManager.getInstance().sort();
+        ChatRoomListManager.getInstance().sort();
         List<ChatRoomItem> items = ChatRoomListManager.getInstance().getList();
         list.clear();
         for (int i = 0; i < items.size(); i++) {

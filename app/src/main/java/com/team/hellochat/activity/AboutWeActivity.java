@@ -2,12 +2,14 @@ package com.team.hellochat.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.team.hellochat.BaseActivity;
 import com.team.hellochat.R;
+import com.team.hellochat.utils.DialogUtil;
 
 public class AboutWeActivity extends BaseActivity implements View.OnClickListener {
 
@@ -32,6 +34,8 @@ public class AboutWeActivity extends BaseActivity implements View.OnClickListene
     private void initData() {
         barTitle.setText(R.string.about_we_activity_title);
 
+        DialogUtil.onlyTips(this, "暂无数据",false);
+
         barBack.setOnClickListener(this);
     }
 
@@ -47,5 +51,14 @@ public class AboutWeActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode==KeyEvent.ACTION_DOWN){
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

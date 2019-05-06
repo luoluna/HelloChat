@@ -117,12 +117,9 @@ public class ChatRoomAdapter extends RecyclerView.Adapter<ChatRoomAdapter.ChatRo
             intent.putExtra(CHAT_ROOM_ICON, room.getIcon());
             intent.putExtra(App.IntentLabel.CHAT_ROOM_TITLE, room.getTitle());
             activity.startActivity(intent);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    redPoint.setText(getMessageCount(0));
-                    redPoint.setVisibility(View.GONE);
-                }
+            new Handler().postDelayed(() -> {
+                redPoint.setText(getMessageCount(0));
+                redPoint.setVisibility(View.GONE);
             }, 1000);
 
         }
