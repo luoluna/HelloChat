@@ -62,7 +62,7 @@ public class DiscoveryAdapter extends BaseRecyclerAdapter<Discovery> {
         holder.tvName.setText("昵称：" + discovery.getNickname());
         holder.tvAge.setText("性别：" + discovery.getSex().getLabel());
         holder.tvSex.setText("年龄：" + discovery.getAge());
-        holder.tvCreditPoint.setText("信用点：" + (myCredit >= discovery.getCreditPoint() ? discovery.getCreditPoint() : "***"));
+        holder.tvCreditPoint.setText("信用点：" + discovery.getCreditPoint()/*(myCredit >= discovery.getCreditPoint() ? discovery.getCreditPoint() : "***")*/);
 
         holder.ivCollect.setImageResource(CollectManager.getInstance().isCollect(discovery.getId()) ? R.drawable.ic_collected : R.drawable.ic_collect);
     }

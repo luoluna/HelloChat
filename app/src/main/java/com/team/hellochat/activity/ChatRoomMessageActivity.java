@@ -36,6 +36,8 @@ import com.team.hellochat.view.ChatMessageRecyclerView;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.team.hellochat.app.App.IntentLabel.ACTIVITY_NAME;
 import static com.team.hellochat.app.App.IntentLabel.CHAT_ROOM_ICON;
@@ -67,11 +69,7 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
     private EditText etMessage;
     private ImageView ivVoice;
     private Button btnSend;
-    private ImageView ivPhone;
-    private ImageView ivVideo;
-    private ImageView ivImage;
-    private ImageView ivCamera;
-    private ImageView ivFaces;
+    private ImageView ivPhone, ivVideo, ivImage, ivCamera, ivFaces;
 
     //data
     private ChatMessage message = new ChatMessage();
@@ -168,7 +166,14 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
         more.setOnClickListener(this);
         ivVoice.setOnClickListener(this);
         btnSend.setOnClickListener(this);
+
+        //ivPhone,ivVideo,ivImage,ivCamera,ivFaces;
+        ivPhone.setOnClickListener(this);
         ivVideo.setOnClickListener(this);
+        ivImage.setOnClickListener(this);
+        ivCamera.setOnClickListener(this);
+        ivFaces.setOnClickListener(this);
+
     }
 
     private void hiddenSoftInput(View v) {
@@ -212,8 +217,17 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
         info.setInformation(MessageMap.getBack(information));
         info.setTime(System.currentTimeMillis());
         info.setRead(false);
-        MessageManager.getInstance().addMessageInfo(this, file, info);
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                MessageManager.getInstance().addMessageInfo(getApplicationContext(), file, info);
+                runOnUiThread(() -> chatMessageAdapter.acceptMessage(info));
+            }
+        };
+        timer.schedule(timerTask, 3000);
     }
+
+    private Timer timer = new Timer();
 
     /**
      * 设置数据
@@ -284,8 +298,8 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
                         intent.putExtra(USER_ID, withId);
                         intent.putExtra(ACTIVITY_NAME, ChatRoomMessageActivity.class.getName());
                         startActivity(intent);
-                    }else {
-                        ToastUtil.showShort(this,"您的信用点不足以查看对方的信息");
+                    } else {
+                        ToastUtil.showShort(this, "您的信用点不足以查看对方的信息");
                     }
                 }
                 break;
@@ -299,6 +313,12 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
                 }
                 break;
             case R.id.message_voice:
+            case R.id.iv_phone:
+            case R.id.iv_video:
+            case R.id.iv_image:
+            case R.id.iv_camera:
+            case R.id.iv_faces:
+                ToastUtil.showShort(this, "待开发中，敬请期待~");
                 break;
         }
     }

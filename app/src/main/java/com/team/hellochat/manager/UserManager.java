@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences.Editor;
 
 import com.team.hellochat.app.App;
+import com.team.hellochat.app.CreditRule;
 import com.team.hellochat.bean.User;
 import com.team.hellochat.utils.JsonUtil;
 import com.team.hellochat.utils.PreferenceUtil;
@@ -97,7 +98,7 @@ public class UserManager {
         save(context);
     }
 
-    public void update(Context context){
+    public void update(Context context) {
         save(context);
     }
 
@@ -133,6 +134,7 @@ public class UserManager {
     }
 
     public User getUser() {
+        user.setCreditPoint(new CreditRule(user).getCreditPoint());
         return user;
     }
 

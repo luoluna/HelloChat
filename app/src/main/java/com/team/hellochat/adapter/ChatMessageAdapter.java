@@ -94,10 +94,8 @@ public class ChatMessageAdapter extends BaseRecyclerAdapter<MessageInfo> {
         notifyDataSetChanged();
     }
 
-    public void acceptMessage(List<MessageInfo> list) {
-        for (MessageInfo info : list) {
-            this.list.add(0, info);
-        }
+    public void acceptMessage(MessageInfo info) {
+        this.list.add(0, info);
         notifyDataSetChanged();
     }
 

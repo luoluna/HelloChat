@@ -1,6 +1,7 @@
 package com.team.hellochat.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -8,10 +9,17 @@ import android.widget.TextView;
 
 import com.team.hellochat.BaseActivity;
 import com.team.hellochat.R;
+import com.team.hellochat.adapter.CreditAdapter;
 import com.team.hellochat.bean.User;
 import com.team.hellochat.manager.UserManager;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class CreditActivity extends BaseActivity implements View.OnClickListener {
+
+    public static final int GOTO_ACCOUNT = 0x01;
+    private static final String DEFAULT_CREDIT = "000";
 
     //top
     private ImageView barBack;
@@ -20,7 +28,10 @@ public class CreditActivity extends BaseActivity implements View.OnClickListener
     private TextView tvCredit;
     private TextView tvTips;
     private RecyclerView recyclerView;
+    private CreditAdapter creditAdapter;
+
     private User user;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,23 +54,65 @@ public class CreditActivity extends BaseActivity implements View.OnClickListener
     private void initData() {
         barTitle.setText(R.string.credit_activity_title);
 
-        user = UserManager.getInstance().getUser();
-        tvCredit.setText(String.valueOf(user.getCreditPoint()));
+        tvCredit.setText(DEFAULT_CREDIT);
+        setInfo();
+        creditAdapter = new CreditAdapter(this, user);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(creditAdapter);
 
         barBack.setOnClickListener(this);
     }
 
-    /**
-     * Called when a view has been clicked.
-     *
-     * @param v The view that was clicked.
-     */
+    private void setInfo() {
+        user = UserManager.getInstance().getUser();
+        creditNum = 0;
+        setCredit();
+    }
+
+    int creditNum = 0;
+
+    private void setCredit() {
+        timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (creditNum <= user.getCreditPoint()) {
+                    setCreditText(creditNum);
+                    creditNum++;
+                } else {
+                    timer.cancel();
+                }
+            }
+        };
+        timer.schedule(timerTask, 100, 10);
+    }
+
+    private void setCreditText(int credit) {
+        String s = credit < 10 ? "00" + credit : (credit < 100 ? "0" + credit : credit) + "";
+        runOnUiThread(() -> tvCredit.setText(s));
+    }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.bar_back:
-                finish();
-                break;
+        if (v.getId() == R.id.bar_back) {
+            finish();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        setInfo();
+        if (creditAdapter != null) {
+            creditAdapter.update(user);
+        }
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        timer.cancel();
+        super.onStop();
     }
 }

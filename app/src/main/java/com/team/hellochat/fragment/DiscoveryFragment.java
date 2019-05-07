@@ -82,7 +82,7 @@ public class DiscoveryFragment extends BaseFragment implements View.OnClickListe
     private List<User> users=new ArrayList<>();
 
     private void receiveData() {
-        users=searchUser(currentPosition[LONGITUDE],currentPosition[LATITUDE],RANGE);
+//        users=searchUser(currentPosition[LONGITUDE],currentPosition[LATITUDE],RANGE);
 
         this.list = UserDatabaseManager.getInstance().getDiscovery(activity);
     }

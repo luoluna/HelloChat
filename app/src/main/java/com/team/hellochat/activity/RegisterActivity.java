@@ -125,7 +125,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     private boolean verifyPass(String pass) {
-        return RegMatchUtil.IsPassword(pass) && pass.length() >= 8;
+        return RegMatchUtil.IsPassword(pass) && pass.length() >= 6;
     }
 
     private boolean verifyPass(String pass, String rePass) {

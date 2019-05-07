@@ -12,10 +12,12 @@ import android.widget.TextView;
 import com.team.hellochat.BaseActivity;
 import com.team.hellochat.R;
 import com.team.hellochat.app.App;
+import com.team.hellochat.app.CreditRule;
 import com.team.hellochat.bean.HeadPicture;
 import com.team.hellochat.bean.User;
 import com.team.hellochat.manager.AddressBookManager;
 import com.team.hellochat.manager.UserDatabaseManager;
+import com.team.hellochat.manager.UserManager;
 import com.team.hellochat.utils.ToastUtil;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -125,6 +127,9 @@ public class PersonalHomePageActivity extends BaseActivity implements View.OnCli
                     @Override
                     public void run() {
                         AddressBookManager.getInstance().addNewFriend(getApplicationContext(), user.getId());
+                        user = UserManager.getInstance().getUser();
+                        user.setCreditPoint(new CreditRule(user).getCreditPoint());
+                        UserManager.getInstance().setUser(getApplicationContext(), user);
                     }
                 }, 10000);
                 break;

@@ -1,6 +1,7 @@
 package com.team.hellochat.app;
 
 import com.team.hellochat.bean.User;
+import com.team.hellochat.manager.AddressBookManager;
 import com.team.hellochat.utils.RegMatchUtil;
 
 /**
@@ -43,12 +44,12 @@ public class CreditRule {
     }
 
     private int beCollected() {
-        int mun = 32;
+        int mun = 12;
         return mun / 5;
     }
 
     private int friend() {
-        int mun = 7;
+        int mun = AddressBookManager.getInstance().getFriends().size();
         return mun / 2;
     }
 
