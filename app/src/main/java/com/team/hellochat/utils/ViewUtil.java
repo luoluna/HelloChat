@@ -3,6 +3,7 @@ package com.team.hellochat.utils;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -27,6 +28,26 @@ public class ViewUtil {
             height = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         }
         view.measure(width, height);
+    }
+
+    /**
+     * {@link View view}的父类组件必须是{@link ViewGroup}类型的才行
+     * 好像不用啊？？
+     * 设置 {@param scale=0} 即表示高度自适应
+     *
+     * @param activity .
+     * @param view     组件
+     * @param multiple 占真个屏幕宽度的倍数
+     * @param scale    长宽比例 例：16:9
+     */
+    public static void setWidthHeight(Activity activity, View view, double multiple, double scale) {
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        int width = (int) (WindowUtil.getWindowWidth(activity) * multiple);
+        layoutParams.width = width;
+        if (scale != 0) {
+            layoutParams.height = (int) (width / scale);
+        }
+        view.setLayoutParams(layoutParams);
     }
 
     private void animOpen(final View view, int height) {
