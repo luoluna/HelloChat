@@ -6,6 +6,7 @@ import android.content.SharedPreferences.Editor;
 import com.team.hellochat.app.App;
 import com.team.hellochat.app.CreditRule;
 import com.team.hellochat.bean.User;
+import com.team.hellochat.utils.Bean2AnotherBean;
 import com.team.hellochat.utils.JsonUtil;
 import com.team.hellochat.utils.PreferenceUtil;
 
@@ -171,6 +172,16 @@ public class UserManager {
 //        friends.add(friend);
 //        addressBook.setFriends(friends);
 //        AddressBookManager.getInstance().setAddressBook(context, addressBook);
+        save(context);
+    }
+
+    public void logIn(Context context, com.team.hellochat.net.entity.User user) {
+        this.loginName = user.getUser();
+        this.password = user.getU_passWord();
+        this.uid = user.getU_ID();
+        this.username = user.getUser();
+        this.nickname = user.getU_nickName();
+        this.user = Bean2AnotherBean.User2NetUser(user);
         save(context);
     }
 }

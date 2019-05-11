@@ -7,83 +7,110 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class BaseDao {
-	private Connection conn = null;
 
-	public Connection getConnection() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
+    private static final String uri = "139.199.5.186";
+    private static final String port = "3306";
+    private static final String dataBase = "hospital";
+    private static final String extra = "serverTimezone=UTC";
+    private static final String encoding = "useUnicode=true&characterEncoding=utf-8";
+    private static final String user = "tears";
+    private static final String password = "fall9527sweven";
+    private static final String url = "jdbc:mysql://" + uri + ":" + port + "/" + dataBase + "?" + extra + "&" + encoding;
+    protected ResultSet rs;
+    protected String sql;
+    private Connection conn;
+    private PreparedStatement pre;
 
-			this.conn = DriverManager.getConnection(
-					"jdbc:mysql://139.199.5.186:3306/im?useUnicode=true&characterEncoding=utf-8", "sweven", "luoluna");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		System.out.println("连接数据库成功！");
-		return this.conn;
-	}
+    /**
+     * make mysql connection
+     *
+     * @return 连接
+     */
+    private Connection getConnection() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(url, user, password);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return conn;
+    }
 
-	public int update(String sql, Object[] objects) {
-		int num = -1;
-		try {
-			this.conn = getConnection();
-			try {
-				this.conn.setAutoCommit(false);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			PreparedStatement ps = this.conn.prepareStatement(sql);
-			if ((objects != null) && (objects.length > 0)) {
-				for (int i = 0; i < objects.length; i++) {
-					ps.setObject(i + 1, objects[i]);
-				}
-			}
+    /**
+     * update table. Ex. update,delete,insert
+     *
+     * @param sql     执行语句
+     * @param objects 参数
+     * @return 成功的行数
+     */
+    public int update(String sql, Object[] objects) {
+        conn = getConnection();
 
-			System.out.println(ps.toString());
-			num = ps.executeUpdate();
-			this.conn.commit();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return num;
-	}
+        pre = null;
+        try {
+            // cancel auto commit sql
+            conn.setAutoCommit(false);
+            pre = conn.prepareStatement(sql);
+            if (objects != null && objects.length > 0) {
+                for (int i = 0; i < objects.length; i++) {
+                    pre.setObject(i + 1, objects[i]);
+                }
 
-	public ResultSet getResultSet(String sql, Object[] objects) {
-		ResultSet rs = null;
-		try {
-			this.conn = getConnection();
+            }
+            int result = pre.executeUpdate();
 
-			PreparedStatement ps = this.conn.prepareStatement(sql);
-			if ((objects != null) && (objects.length > 0)) {
-				for (int i = 0; i < objects.length; i++) {
-					ps.setObject(i + 1, objects[i]);
-				}
-			}
+            // commit sql
+            conn.commit();
+            return result;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        } finally {
+            close();
+        }
+    }
 
-			rs = ps.executeQuery();
-			System.out.println(ps.toString());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return rs;
-	}
+    /**
+     * get ResultSet . Ex. select * from user
+     *
+     * @param sql     执行语句
+     * @param objects 参数
+     * @return 结果集
+     */
+    public ResultSet getResultSet(String sql, Object[] objects) {
+        conn = getConnection();
+        pre = null;
+        try {
+            pre = conn.prepareStatement(sql);
+            if (objects != null && objects.length > 0) {
+                for (int i = 0; i < objects.length; i++) {
+                    pre.setObject(i + 1, objects[i]);
+                }
+            }
+            rs = pre.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-	public void close(Connection con, PreparedStatement ps, ResultSet rs) {
-		try {
-			if (rs != null) {
-				rs.close();
-			}
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+
+    public void close() {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pre != null) {
+                pre.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

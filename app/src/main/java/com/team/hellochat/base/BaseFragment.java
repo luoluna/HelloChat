@@ -78,8 +78,8 @@ public class BaseFragment extends Fragment {
 
     @Override
     public void onStart() {
-        activity.bindService(new Intent(activity, ChatService.class), chatSC, 0);
-        activity.bindService(new Intent(activity, AddNewFriendService.class), addNewFriendSC, 0);
+//        activity.bindService(new Intent(activity, ChatService.class), chatSC, 0);
+//        activity.bindService(new Intent(activity, AddNewFriendService.class), addNewFriendSC, 0);
         super.onStart();
     }
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class User {
 	private int u_ID;
+	private String user;
 	private String u_nickName;
 	private String u_passWord;
 	private String u_signaTure;
@@ -25,6 +26,14 @@ public class User {
 	private int u_cityID;
 	private int u_userStateID;
 	private Date u_createTime;
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
 
 	public int getU_ID() {
 		return this.u_ID;
@@ -205,7 +214,7 @@ public class User {
 	public String toJson() {
 		return
 
-		"{\"u_ID\":" + this.u_ID + ",\"u_nickName\":\"" + this.u_nickName + "\",\"u_passWord\":\"" + this.u_passWord
+		"{\"u_ID\":" + this.u_ID +",\"u_user\":"+this.user+ ",\"u_nickName\":\"" + this.u_nickName + "\",\"u_passWord\":\"" + this.u_passWord
 				+ "\",\"u_signaTure\":\"" + this.u_signaTure + "\",\"u_sex\":" + this.u_sex + ",\"u_birthday\":\""
 				+ this.u_birthday + "\",\"u_telephone\":\"" + this.u_telephone + "\",\"u_name\":\"" + this.u_name
 				+ "\",\"u_email\":\"" + this.u_email + "\",\"u_intro\":\"" + this.u_intro + "\",\"u_headPortrait\":\""
@@ -219,7 +228,7 @@ public class User {
 	public String toString() {
 		return
 
-		"User [getU_ID()=" + getU_ID() + ", getU_nickName()=" + getU_nickName() + ", getU_passWord()=" + getU_passWord()
+		"User [getU_ID()=" + getU_ID() +", getUser()=" + getUser() + ", getU_nickName()=" + getU_nickName() + ", getU_passWord()=" + getU_passWord()
 				+ ", getU_signaTure()=" + getU_signaTure() + ", getU_sex()=" + getU_sex() + ", getU_birthday()="
 				+ getU_birthday() + ", getU_telephone()=" + getU_telephone() + ", getU_name()=" + getU_name()
 				+ ", getU_email()=" + getU_email() + ", getU_intro()=" + getU_intro() + ", getU_headPortrait()="

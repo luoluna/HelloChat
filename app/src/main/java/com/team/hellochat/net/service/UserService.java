@@ -9,6 +9,8 @@ public abstract interface UserService {
 	//查询用户
 	public abstract User selectUserById(int u_id);
 
+	User loginByUser(String user,String pass);
+
 	//修改密码
 	public abstract int updateUserById(User user);
 	

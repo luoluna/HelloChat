@@ -1,7 +1,9 @@
 package com.team.hellochat.utils;
 
+import com.team.hellochat.app.CreditRule;
 import com.team.hellochat.bean.Discovery;
 import com.team.hellochat.bean.Friend;
+import com.team.hellochat.bean.Sex;
 import com.team.hellochat.bean.User;
 
 /**
@@ -27,6 +29,7 @@ public class Bean2AnotherBean {
         friend.setUser(user.getUser());
         return friend;
     }
+
     public static Discovery User2Discovery(User user) {
         Discovery discovery = new Discovery();
         discovery.setId(user.getId());
@@ -43,5 +46,23 @@ public class Bean2AnotherBean {
         discovery.setSignature(user.getSignature());
         discovery.setUser(user.getUser());
         return discovery;
+    }
+
+    public static User User2NetUser(com.team.hellochat.net.entity.User netUser){
+        User user= new User();
+        user.setId(netUser.getU_ID());
+        user.setAvatar(Integer.parseInt(netUser.getU_headPortrait()));
+        user.setNickname(netUser.getU_nickName());
+//        user1.setAddress(netUser.getAddress());
+        user.setAge(netUser.getU_age());
+        user.setEmail(netUser.getU_email());
+//        user1.setHobby(netUser.getHobby());
+//        user1.setIdCard(netUser.getU_ID());
+        user.setPhone(netUser.getU_telephone());
+        user.setSex(Sex.getSex(netUser.getU_sex()==1?Sex._MAN:Sex._WOMEN));
+        user.setSignature(netUser.getU_signaTure());
+        user.setCreditPoint(new CreditRule(user).getCreditPoint());
+        user.setUser(netUser.getUser());
+        return user;
     }
 }

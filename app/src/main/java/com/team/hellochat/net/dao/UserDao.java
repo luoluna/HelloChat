@@ -6,6 +6,8 @@ public abstract interface UserDao {
 	public abstract int insertUser(User paramUser);
 
 	public abstract User selectUserById(int paramInt);
+	
+	public abstract User selectExistByUserPass(String user,String pass);
 
 	public abstract int updateUserById(User paramUser);
 	
