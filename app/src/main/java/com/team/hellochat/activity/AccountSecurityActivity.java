@@ -111,9 +111,6 @@ public class AccountSecurityActivity extends BaseActivity implements View.OnClic
                         ToastUtil.showError(this, "身份证不正确，请重新填写");
                     } else if (!email.equals("") && !isEmail) {
                         ToastUtil.showError(this, "邮箱格式不正确");
-                    } else if (UserDatabaseManager.getInstance().getUserByEmail(email) != null ||
-                            !email.equals(user.getEmail())) {
-                        ToastUtil.showShort(this, "该邮箱已被绑定");
                     } else {
                         user.setEmail(email);
                         user.setIdCard(idCard);

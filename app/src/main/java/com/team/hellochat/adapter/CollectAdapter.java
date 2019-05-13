@@ -3,7 +3,6 @@ package com.team.hellochat.adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.opengl.ETC1;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -63,7 +62,7 @@ public class CollectAdapter extends BaseRecyclerAdapter<Collect> {
                 .into(holder.ivCardBackground);
         holder.tvName.setText("昵  称：" + collect.getNickname());
         holder.tvSex.setText("年  龄：" + collect.getSex().getLabel());
-        holder.tvCreditPoint.setText("信用点：" + (myCredit >= collect.getCreditPoint() ? collect.getCreditPoint() : "***"));
+        holder.tvCreditPoint.setText("信用点：" + collect.getCreditPoint());
         holder.tvAge.setText("性  别：" + String.valueOf(collect.getAge()));
         holder.tvAddress.setText("故  乡：" + collect.getAddress());
 
@@ -74,7 +73,7 @@ public class CollectAdapter extends BaseRecyclerAdapter<Collect> {
     private void cancelCollect(int position, int uid) {
         DialogUtil.ShowTips(activity, "确定取消关注？", () -> {
             CollectManager.getInstance().cancelCollect(activity, uid);
-            if (getItemCount()>position+1) {
+            if (getItemCount() > position + 1) {
                 list.remove(position);
             }
             notifyItemRemoved(position);
@@ -127,18 +126,14 @@ public class CollectAdapter extends BaseRecyclerAdapter<Collect> {
                     }
                     break;
                 case R.id.ly_start_chat:
-                    if (myCredit >= collect.getCreditPoint()) {
-                        toast.showShort("开始聊天");
-                        Intent intent = new Intent(activity, ChatRoomMessageActivity.class);
-                        intent.putExtra(CHAT_ROOM_TYPE, false);
-                        intent.putExtra(MESSAGE_FILE, "");
-                        intent.putExtra(CHAT_ROOM_TITLE, collect.getNickname());
-                        intent.putExtra(CHAT_ROOM_WITH_ID, collect.getId());
-                        intent.putExtra(CHAT_ROOM_ICON, collect.getAvatar());
-                        activity.startActivity(intent);
-                    } else {
-                        toast.showShort("您的信用点不足以与对方聊天");
-                    }
+                    toast.showShort("开始聊天");
+                    Intent intent = new Intent(activity, ChatRoomMessageActivity.class);
+                    intent.putExtra(CHAT_ROOM_TYPE, false);
+                    intent.putExtra(MESSAGE_FILE, "");
+                    intent.putExtra(CHAT_ROOM_TITLE, collect.getNickname());
+                    intent.putExtra(CHAT_ROOM_WITH_ID, collect.getId());
+                    intent.putExtra(CHAT_ROOM_ICON, collect.getAvatar());
+                    activity.startActivity(intent);
                     break;
             }
         }

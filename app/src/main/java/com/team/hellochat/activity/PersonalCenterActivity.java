@@ -106,7 +106,7 @@ public class PersonalCenterActivity extends BaseActivity implements View.OnClick
                 if (RegMatchUtil.isHobby(content)) {
                     content = content.replaceAll(reg, " ");
                     edHobby.setText(content);
-                    edHobby.focusSearch(edHobby.getText().length() - 1);
+                    edHobby.focusSearch(edHobby.getText().length());
                 }
             }
         });

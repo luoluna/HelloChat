@@ -191,7 +191,7 @@ public class ChatRoomMessageActivity extends BaseActivity implements View.OnClic
                 MessageManager.getInstance().addMessageInfo(getApplicationContext(), file, messageInfo);
                 add2ChatList();
                 layoutManager.scrollToPositionWithOffset(0, 0);
-                receiveMessage(messageInfo.getInformation());
+//                receiveMessage(messageInfo.getInformation());
             }
 
             @Override

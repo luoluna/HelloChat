@@ -121,6 +121,9 @@ public class PersonalHomePageActivity extends BaseActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.bar_back:
+                finish();
+                break;
             case R.id.ly_add_friend:
                 ToastUtil.showShort(this, "已发送添加请求");
                 new Handler().postDelayed(new Runnable() {

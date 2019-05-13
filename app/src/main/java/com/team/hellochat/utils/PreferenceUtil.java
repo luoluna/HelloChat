@@ -1,5 +1,6 @@
 package com.team.hellochat.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -147,5 +148,14 @@ public class PreferenceUtil {
 
     public Map<String, ?> getAll() {
         return preferences.getAll();
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    public void remove(String[] name) {
+        Editor editor = preferences.edit();
+        for (String aName : name) {
+            editor.remove(aName);
+        }
+        editor.apply();
     }
 }

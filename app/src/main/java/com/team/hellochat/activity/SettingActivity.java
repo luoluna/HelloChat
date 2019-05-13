@@ -11,9 +11,21 @@ import android.widget.TextView;
 import com.team.hellochat.BaseActivity;
 import com.team.hellochat.R;
 import com.team.hellochat.app.Setting;
+import com.team.hellochat.bean.ChatRoomItem;
+import com.team.hellochat.manager.AddressBookManager;
+import com.team.hellochat.manager.ChatRoomListManager;
+import com.team.hellochat.manager.CollectManager;
 import com.team.hellochat.utils.DialogUtil;
+import com.team.hellochat.utils.PreferenceUtil;
 import com.team.hellochat.utils.ToastUtil;
 import com.team.hellochat.view.LoadingDialog;
+
+import java.util.List;
+
+import static com.team.hellochat.app.App.SharedLabel.ADDRESS_BOOK;
+import static com.team.hellochat.app.App.SharedLabel.CHAT_ROOM_LIST;
+import static com.team.hellochat.app.App.SharedLabel.COLLECTS;
+import static com.team.hellochat.app.App.SharedLabel.MESSAGE_INFO;
 
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
 
@@ -102,7 +114,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void cleaCache() {
-
+        ChatRoomListManager manager = ChatRoomListManager.getInstance();
+        List<ChatRoomItem> items = manager.getList();
+        for (int i = 0; i < items.size(); i++) {
+            new PreferenceUtil(this, items.get(i).getFile()).remove(new String[]{MESSAGE_INFO});
+        }
+        new PreferenceUtil(this).remove(new String[]{CHAT_ROOM_LIST});
+        ToastUtil.showShort(this, "清除成功");
     }
 
     private void logout() {
@@ -110,6 +128,15 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 () -> {
                     setResult(LOG_OUT);
                     finish();
+                    ChatRoomListManager manager = ChatRoomListManager.getInstance();
+                    List<ChatRoomItem> items = manager.getList();
+                    for (int i = 0; i < items.size(); i++) {
+                        new PreferenceUtil(this, items.get(i).getFile()).remove(new String[]{MESSAGE_INFO});
+                    }
+                    new PreferenceUtil(this).remove(new String[]{CHAT_ROOM_LIST, ADDRESS_BOOK, COLLECTS});
+                    AddressBookManager.getInstance(this);
+                    ChatRoomListManager.getInstance(this);
+                    CollectManager.getInstance(this);
                 });
     }
 }

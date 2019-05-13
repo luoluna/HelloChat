@@ -63,6 +63,6 @@ public class CreditRule {
     }
 
     public int getCreditPoint() {
-        return user.getCreditPoint();
+        return user.getCreditPoint() + 26;
     }
 }
