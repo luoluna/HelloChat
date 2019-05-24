@@ -38,7 +38,7 @@ public class ViewUtil {
      * @param activity .
      * @param view     组件
      * @param multiple 占真个屏幕宽度的倍数
-     * @param scale    长宽比例 例：16:9
+     * @param scale    宽高比例 例：宽高比例为16:9则输入16/9.0
      */
     public static void setWidthHeight(Activity activity, View view, double multiple, double scale) {
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
@@ -46,6 +46,38 @@ public class ViewUtil {
         layoutParams.width = width;
         if (scale != 0) {
             layoutParams.height = (int) (width / scale);
+        }
+        view.setLayoutParams(layoutParams);
+    }
+
+    /**
+     * 同时为多个组件设置相同宽高
+     *
+     * @param activity .
+     * @param views    多个组件
+     * @param multiple 占真个屏幕宽度的倍数
+     * @param scale    宽高比例 例：宽高比例为16:9则输入16/9.0
+     */
+    public static void setWidthHeightForViews(Activity activity, View[] views, double multiple, double scale) {
+        for (View view : views) {
+            setWidthHeight(activity, view, multiple, scale);
+        }
+    }
+
+    /**
+     * {@link View view}的父类组件必须是{@link ViewGroup}类型的才行
+     *
+     * @param view      组件
+     * @param width_dp  view的宽度 等于0时为不设置
+     * @param height_dp view的高度 等于0时为不设置
+     */
+    public static void setWidthHeight(View view, int width_dp, int height_dp) {
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        if (width_dp != 0) {
+            layoutParams.width = width_dp;
+        }
+        if (height_dp != 0) {
+            layoutParams.height = height_dp;
         }
         view.setLayoutParams(layoutParams);
     }
@@ -72,7 +104,7 @@ public class ViewUtil {
     /**
      * 使用动画的方式来改变高度解决visible不一闪而过出现
      *
-     * @param view
+     * @param view  组件
      * @param start 初始状态值
      * @param end   结束状态值
      * @return
