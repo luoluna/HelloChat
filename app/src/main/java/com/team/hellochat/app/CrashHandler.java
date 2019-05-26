@@ -1,7 +1,6 @@
 package com.team.hellochat.app;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -10,7 +9,6 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.team.hellochat.activity.LaunchActivity;
 import com.team.hellochat.utils.FileUtil;
 
 import java.io.FileOutputStream;
@@ -176,7 +174,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             String time = formatter.format(new Date());
             String fileName = "crash-" + time + "-" + timestamp + ".log";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String path = FileUtil.getExternalStoragePath() + "/crash/";
+                String path = FileUtil.getSDCardPath() + "crash/";
                 FileUtil.directory(path);
                 FileUtil.file(path + fileName);
                 FileOutputStream fos = new FileOutputStream(path + fileName);
