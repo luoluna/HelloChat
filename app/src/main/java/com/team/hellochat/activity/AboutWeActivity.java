@@ -1,13 +1,12 @@
 package com.team.hellochat.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.team.hellochat.BaseActivity;
+import com.team.hellochat.base.BaseActivity;
 import com.team.hellochat.R;
 import com.team.hellochat.utils.DialogUtil;
 

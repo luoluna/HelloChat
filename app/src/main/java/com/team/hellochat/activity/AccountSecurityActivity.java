@@ -8,12 +8,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.team.hellochat.BaseActivity;
+import com.team.hellochat.base.BaseActivity;
 import com.team.hellochat.R;
 import com.team.hellochat.app.CreditRule;
 import com.team.hellochat.app.Setting;
 import com.team.hellochat.bean.User;
-import com.team.hellochat.manager.UserDatabaseManager;
 import com.team.hellochat.manager.UserManager;
 import com.team.hellochat.utils.DialogUtil;
 import com.team.hellochat.utils.PreferenceUtil;

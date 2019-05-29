@@ -1,6 +1,5 @@
 package com.team.hellochat.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -8,8 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.team.hellochat.BaseActivity;
-import com.team.hellochat.MainActivity;
+import com.team.hellochat.base.BaseActivity;
 import com.team.hellochat.R;
 import com.team.hellochat.adapter.HeadStoreAdapter;
 import com.team.hellochat.manager.UserManager;

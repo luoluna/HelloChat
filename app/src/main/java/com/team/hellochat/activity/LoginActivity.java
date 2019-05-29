@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.team.hellochat.BaseActivity;
+import com.team.hellochat.base.BaseActivity;
 import com.team.hellochat.MainActivity;
 import com.team.hellochat.R;
 import com.team.hellochat.manager.LogInManager;

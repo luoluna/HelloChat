@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.KeyEvent
 import com.team.hellochat.app.MyApplication
+import com.team.hellochat.base.BaseActivity
 import com.team.hellochat.fragment.ChatFragment
 import com.team.hellochat.fragment.DiscoveryFragment
 import com.team.hellochat.fragment.FriendsFragment

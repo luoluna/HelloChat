@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.team.hellochat.BaseActivity;
+import com.team.hellochat.base.BaseActivity;
 import com.team.hellochat.R;
 import com.team.hellochat.bean.MessageType;
 import com.team.hellochat.utils.WindowUtil;

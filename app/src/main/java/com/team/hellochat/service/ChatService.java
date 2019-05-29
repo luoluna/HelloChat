@@ -64,7 +64,7 @@ public class ChatService extends Service {
                     handler.sendEmptyMessage(HAS_MESSAGE);
                     info = null;
                 }
-                new LogUtil(TAG).i("死循环定时获取信息");
+                new LogUtil(TAG).i("死循环一直获取信息");
             }
         };
         timer.schedule(timerTask, 1000, 0);

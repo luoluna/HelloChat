@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.team.hellochat.BaseActivity;
+import com.team.hellochat.base.BaseActivity;
 import com.team.hellochat.R;
 import com.team.hellochat.bean.HeadPicture;
 import com.team.hellochat.bean.Sex;

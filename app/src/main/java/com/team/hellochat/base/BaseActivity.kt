@@ -1,4 +1,4 @@
-package com.team.hellochat
+package com.team.hellochat.base
 
 import android.annotation.SuppressLint
 import android.app.ActivityManager
