@@ -2,50 +2,64 @@ package com.team.hellochat.utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class FileUtil {
 
-    private static LogUtil log=new LogUtil("FileUtil");
+    private static LogUtil log = new LogUtil("FileUtil");
 
-    public static String headPhotoPath(Context context) {
-        return getExternalFilesDir(context).getPath() + "head_photo.png";
-    }
-
-    public static String saveHeadPhoto(Context context, int resId) {
-        File file = new File(headPhotoPath(context));
-        //使用BitmapFactory把res下的图片转换成Bitmap对象
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resId);
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(file);
-            //使用图片压缩对图片进行处理  压缩的格式  可以是JPEG、PNG、WEBP
-            //第二个参数是图片的压缩比例，第三个参数是写入流
-            boolean success = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            return success ? file.getPath() : null;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.flush();
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+    /**
+     * 安全获取文件夹路径：
+     * 不存在则创建
+     *
+     * @param path 文件夹路径
+     * @return File
+     */
+    public static File directory(String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            if (!file.mkdirs()) {
+                log.w("Unable to create external files directory");
+                return null;
             }
         }
+        return file;
     }
 
+    /**
+     * 安全获取文件路径：
+     * 不存在则创建
+     *
+     * @param path 文件路径
+     * @return File
+     */
+    public static File file(String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            try {
+                if (!file.createNewFile()) {
+                    log.w("Unable to create external files");
+                    return null;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                log.w("Unable to create external files");
+                return null;
+            }
+        }
+        return file;
+    }
+
+    /**
+     * 获取app数据默认储存路径的files路径
+     *
+     * @param context 上下文
+     * @return File
+     */
     public static File getExternalFilesDir(Context context) {
         File dataDir = new File(new File(getSDCardPath(), "Android"), "data");
         File appFilesDir = new File(new File(dataDir, context.getPackageName()), "files");
@@ -58,6 +72,12 @@ public class FileUtil {
         return appFilesDir;
     }
 
+    /**
+     * 获取app数据默认储存路径的cache路径
+     *
+     * @param context 上下文
+     * @return File
+     */
     private static File getExternalCacheDir(Context context) {
         File dataDir = new File(new File(getSDCardPath(), "Android"), "data");
         File appCacheDir = new File(new File(dataDir, context.getPackageName()), "cache");
@@ -70,11 +90,27 @@ public class FileUtil {
         return appCacheDir;
     }
 
+    /**
+     * @return 手机根目录File
+     */
+    public static File getSDCard() {
+        return Environment.getExternalStorageDirectory();
+    }
+
+    /**
+     * @return 手机根目录path
+     */
     public static String getSDCardPath() {
         return Environment.getExternalStorageDirectory() + "/";
     }
 
-    public static void  installApk(Context context, String apkPath){
+    /**
+     * 安装软件
+     *
+     * @param context 上下文
+     * @param apkPath apk文件路径
+     */
+    public static void installApk(Context context, String apkPath) {
         File apkFile = new File(apkPath);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //如果没有添加这条，安装完毕后不会有打开选项，而是直接退出。
@@ -108,7 +144,7 @@ public class FileUtil {
     /**
      * delete directory
      */
-    public static boolean deleteFiles(File root) {
+    public static boolean deleteDirectory(File root) {
         File files[] = root.listFiles();
         if (files != null) {
             for (File f : files) {
